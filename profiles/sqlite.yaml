@@ -1,0 +1,22 @@
+schema: 1
+id: sqlite
+kind: database
+description: SQLite database skills and the agents used to plan, implement, review, and verify SQLite work.
+
+skills:
+  include:
+    - databases/sqlite/**
+
+agents:
+  include:
+    - planner
+    - tdd-implementer
+    - reviewer
+    - database-reviewer
+    - security-reviewer
+    - test-reviewer
+    - repo-doctor
+
+external_skills:
+  - tdd
+  - code-review

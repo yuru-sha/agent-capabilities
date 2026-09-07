@@ -1,0 +1,22 @@
+schema: 1
+id: postgresql
+kind: database
+description: PostgreSQL database skills and the agents used to plan, implement, review, and verify PostgreSQL work.
+
+skills:
+  include:
+    - databases/postgresql/**
+
+agents:
+  include:
+    - planner
+    - tdd-implementer
+    - reviewer
+    - database-reviewer
+    - security-reviewer
+    - test-reviewer
+    - repo-doctor
+
+external_skills:
+  - tdd
+  - code-review

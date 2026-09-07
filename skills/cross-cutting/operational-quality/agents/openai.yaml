@@ -1,0 +1,3 @@
+interface:
+  display_name: "Operational Quality"
+  short_description: "Logging, observability, config, and runtime quality"

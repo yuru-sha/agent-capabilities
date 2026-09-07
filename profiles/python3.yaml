@@ -1,0 +1,20 @@
+schema: 1
+id: python3
+kind: language
+description: Python 3 language skills and the agents used to plan, implement, review, and verify Python work.
+
+skills:
+  include:
+    - languages/python3/**
+
+agents:
+  include:
+    - planner
+    - tdd-implementer
+    - reviewer
+    - test-reviewer
+    - repo-doctor
+
+external_skills:
+  - tdd
+  - code-review
