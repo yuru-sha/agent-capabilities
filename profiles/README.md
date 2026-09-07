@@ -38,8 +38,8 @@ From the project that should use the capabilities, run:
 /path/to/agent-capabilities/scripts/install-profile rust sqlite workflows
 ```
 
-The installer resolves the union of the selected profiles and copies Skills to
-`.agents/skills/` and Agents to `.codex/agents/`. It skips existing entries by
-default; pass `--force` to replace them. Pass `--link` to reference the
-checkout instead of copying it. External Skills are printed as requirements and
-remain managed by the consumer's global Skill installation.
+The installer resolves the union of the selected profiles and links Skills into
+`.agents/skills/` and Agents into `.codex/agents/` by default. It skips existing
+entries; pass `--force` to replace them. Pass `--copy` for a self-contained
+installation. External Skills are printed as requirements and remain managed by
+the consumer's global Skill installation.

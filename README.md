@@ -55,9 +55,9 @@ absolute or relative path to this repository:
 
 Use `github` instead of `workflows` when `commit-push` is not needed.
 
-The command copies the selected Skill directories to the project's
-`.agents/skills/` and the selected Agent definitions to `.codex/agents/`.
-Use `--target /path/to/project` when running it from elsewhere. Use `--link`
-for a local development checkout instead of copying, and `--force` to replace
-entries installed by an earlier run. External Skills such as `$tdd` and
-`$code-review` are reported but not copied.
+The command links the selected Skill directories into the project's
+`.agents/skills/` and the selected Agent definitions into `.codex/agents/`.
+Use `--target /path/to/project` when running it from elsewhere. Use `--copy`
+for a self-contained copy, and `--force` to replace entries installed by an
+earlier run. `--link` is also accepted as an explicit spelling of the default.
+External Skills such as `$tdd` and `$code-review` are reported but not copied.

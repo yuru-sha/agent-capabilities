@@ -148,10 +148,16 @@ def parse_args() -> argparse.Namespace:
         default=".",
         help="target project directory (default: current directory)",
     )
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
         "--link",
         action="store_true",
-        help="create links to this checkout instead of copying files",
+        help="create links to this checkout (default)",
+    )
+    mode.add_argument(
+        "--copy",
+        action="store_true",
+        help="copy files instead of creating links",
     )
     parser.add_argument(
         "--force",
@@ -189,7 +195,8 @@ def main() -> int:
 
     skill_destination = target / ".agents" / "skills"
     agent_destination = target / ".codex" / "agents"
-    mode = "linked" if args.link else "copied"
+    link = not args.copy
+    mode = "linked" if link else "copied"
     installed = 0
     skipped = 0
 
@@ -197,7 +204,7 @@ def main() -> int:
         result = install(
             source,
             skill_destination / name,
-            link=args.link,
+            link=link,
             force=args.force,
         )
         installed += result == "installed"
@@ -207,7 +214,7 @@ def main() -> int:
         result = install(
             source,
             agent_destination / f"{name}.md",
-            link=args.link,
+            link=link,
             force=args.force,
         )
         installed += result == "installed"
