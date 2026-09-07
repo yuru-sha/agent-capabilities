@@ -38,6 +38,9 @@ Profiles for software engineering and GitHub workflows.
   scanning alerts.
 - Update the README/catalog and relevant Profile when adding or removing a
   capability; do not create speculative placeholder Skills.
+- Update `docs/commands.md` when a Skill introduces a concrete external CLI or
+  changes a required command family; keep repository-specific scripts in the
+  consumer repository.
 
 ## Validation
 

@@ -27,4 +27,6 @@ ID. `$tdd`, `$code-review`, and `$gh-fix-ci` remain external global
 dependencies and are not redefined here.
 
 See [Profiles](profiles/README.md) and the
-[software-engineering catalog](docs/software-engineering.md).
+[software-engineering catalog](docs/software-engineering.md). The command
+families and external CLIs used by the Skills are listed in the
+[command reference](docs/commands.md).
