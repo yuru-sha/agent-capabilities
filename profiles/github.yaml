@@ -1,18 +1,18 @@
 schema: 1
 id: github
 kind: workflow
-description: GitHub-hosted pull request, issue, release, Copilot review, and security alert skills.
+description: GitHub operation Skills from the operations/github pack, excluding commit and push.
 
 skills:
   include:
-    - create-pr
-    - create-draft-pr
-    - mark-pr-ready
-    - request-copilot-review
-    - github-release
-    - create-issue
-    - security-alerts
-    - post-merge-cleanup
+    - packs/operations/github/skills/create-pr/**
+    - packs/operations/github/skills/create-draft-pr/**
+    - packs/operations/github/skills/mark-pr-ready/**
+    - packs/operations/github/skills/request-copilot-review/**
+    - packs/operations/github/skills/github-release/**
+    - packs/operations/github/skills/create-issue/**
+    - packs/operations/github/skills/security-alerts/**
+    - packs/operations/github/skills/post-merge-cleanup/**
 
 agents:
   include: []

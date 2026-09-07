@@ -36,45 +36,20 @@ Agent定義は7個です。
 
 ```text
 agent-capabilities/
-├── docs/software-engineering.md
-├── docs/software-engineering-design.md
-├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,workflows,github}.yaml
-├── skills/
-│   ├── {commit-push,create-pr,create-draft-pr,mark-pr-ready,
-│   │       request-copilot-review,github-release,create-issue,
-│   │       security-alerts,post-merge-cleanup}/SKILL.md
-│   ├── languages/
-│   │   ├── go/{testing,...,data-race-check,idiomatic-code-check,struct-json-tags,
-│   │   │       goroutine-leak-deadlock-check,fuzzing,http-server,code-generation,
-│   │   │       api-compatibility}/SKILL.md
-│   │   ├── typescript/{testing,...,data-race-check,idiomatic-code-check,
-│   │   │       type-design,module-build,runtime-validation,package-publishing,
-│   │   │       dom-accessibility}/SKILL.md
-│   │   ├── python3/{testing,...,data-race-check,idiomatic-code-check,
-│   │   │       type-checking,packaging,subprocess,data-modeling,web-server}/SKILL.md
-│   │   └── rust/{testing,...,data-race-check,idiomatic-code-check,
-│   │           unsafe-audit,ffi-abi,api-compatibility,msrv,features-workspaces,
-│   │           async-runtime}/SKILL.md
-│   ├── databases/
-│   │   ├── postgresql/{design,sql,indexes,transactions,locking,migrations,performance,review,
-│   │   │              roles-rls,backup-restore,vacuum-maintenance,partitioning,
-│   │   │              replication-ha,query-plan-regression}/SKILL.md
-│   │   ├── mysql/{design,sql,indexes,transactions,locking,migrations,performance,review,
-│   │   │          roles-privileges,backup-restore,replication-ha,online-ddl,
-│   │   │          partitioning,compatibility-upgrade}/SKILL.md
-│   │   └── sqlite/{design,sql,indexes,transactions,locking,migrations,performance,review,
-│   │                  backup-restore,wal-checkpoint,integrity-recovery,
-│   │                  vacuum-maintenance,version-compatibility,extensions}/SKILL.md
-│   ├── openapi/{design,schema-governance,review,lint,generate-spec,codegen,
-│   │           mock-generation,sample-generation,auth-security-review,
-│   │           documentation,versioning-migration,breaking-change-detection,
-│   │           contract-testing}/SKILL.md
-│   └── cross-cutting/{change-review,security-review,operational-quality,
-│                     fuzzing-property-testing,benchmark-regression,
-│                     package-release-compatibility,sbom-license-review,
-│                     test-fixture-design,zero-downtime-migration}/SKILL.md
-└── agents/{planner,tdd-implementer,reviewer,database-reviewer,
-           security-reviewer,test-reviewer,repo-doctor}.md
+├── packs/
+│   ├── software-engineering/
+│   │   ├── skills/{languages,databases,openapi,cross-cutting}/...
+│   │   └── agents/{planner,tdd-implementer,reviewer,database-reviewer,
+│   │              security-reviewer,test-reviewer,repo-doctor}.md
+│   └── operations/github/
+│       └── skills/{commit-push,create-pr,create-draft-pr,mark-pr-ready,
+│                   request-copilot-review,github-release,create-issue,
+│                   security-alerts,post-merge-cleanup}/SKILL.md
+├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
+│             cross-cutting,workflows,github}.yaml
+├── shared/
+├── scripts/install-profile
+└── docs/
 ```
 
 ## Skillの合成

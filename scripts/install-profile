@@ -1,0 +1,580 @@
+#!/usr/bin/env python3
+"""Install or uninstall selected agent-capabilities profiles."""
+
+from __future__ import annotations
+
+import argparse
+import filecmp
+import json
+import re
+import shutil
+import sys
+from pathlib import Path, PurePosixPath
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+PROFILE_ROOT = REPO_ROOT / "profiles"
+SOURCE_ROOT = REPO_ROOT
+AGENT_ROOT = REPO_ROOT / "packs" / "software-engineering" / "agents"
+NAME_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
+MANIFEST_SCHEMA = 1
+
+
+def scalar(value: str) -> str:
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+        return value[1:-1]
+    return value
+
+
+def profile_id(profile_name: str) -> str:
+    return profile_name.removesuffix(".yaml")
+
+
+def load_profile(profile_name: str) -> dict[str, list[str]]:
+    profile_name = profile_id(profile_name)
+    path = PROFILE_ROOT / f"{profile_name}.yaml"
+    if not path.is_file():
+        raise ValueError(f"unknown profile: {profile_name}")
+
+    values: dict[str, list[str]] = {
+        "skills": [],
+        "agents": [],
+        "external_skills": [],
+    }
+    declared_id = None
+    section = None
+    subsection = None
+
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        if not raw_line.strip() or raw_line.lstrip().startswith("#"):
+            continue
+        indent = len(raw_line) - len(raw_line.lstrip(" "))
+        line = raw_line.strip()
+
+        if indent == 0:
+            subsection = None
+            if line.endswith(":"):
+                section = line[:-1]
+            elif line.startswith("id:"):
+                declared_id = scalar(line.split(":", 1)[1])
+            continue
+
+        if indent == 2 and line.endswith(":"):
+            subsection = line[:-1]
+            continue
+
+        if not line.startswith("- "):
+            continue
+        value = scalar(line[2:])
+        if section == "skills" and subsection == "include":
+            values["skills"].append(value)
+        elif section == "agents" and subsection == "include":
+            values["agents"].append(value)
+        elif section == "external_skills" and indent == 2:
+            values["external_skills"].append(value)
+
+    if declared_id != profile_name:
+        raise ValueError(f"profile id mismatch in {path}: {declared_id!r}")
+    return values
+
+
+def skill_name(skill_dir: Path) -> str:
+    frontmatter = skill_dir / "SKILL.md"
+    lines = frontmatter.read_text(encoding="utf-8").splitlines()
+    if not lines or lines[0].strip() != "---":
+        raise ValueError(f"missing frontmatter: {frontmatter}")
+    for line in lines[1:]:
+        if line.strip() == "---":
+            break
+        if line.startswith("name:"):
+            name = scalar(line.split(":", 1)[1])
+            if NAME_PATTERN.fullmatch(name) is None:
+                raise ValueError(f"invalid Skill name {name!r}: {frontmatter}")
+            return name
+    raise ValueError(f"missing Skill name: {frontmatter}")
+
+
+def resolve_skills(patterns: list[str]) -> dict[str, Path]:
+    resolved: dict[str, Path] = {}
+    for pattern in patterns:
+        matches = sorted(
+            path
+            for path in SOURCE_ROOT.glob(pattern)
+            if path.is_dir() and (path / "SKILL.md").is_file()
+        )
+        if not matches:
+            raise ValueError(f"Skill selector matched nothing: {pattern}")
+        for path in matches:
+            name = skill_name(path)
+            previous = resolved.get(name)
+            if previous is not None and previous != path:
+                raise ValueError(f"duplicate Skill name {name!r}: {previous} and {path}")
+            resolved[name] = path.resolve()
+    return dict(sorted(resolved.items()))
+
+
+def resolve_agents(agent_ids: list[str]) -> dict[str, Path]:
+    resolved = {}
+    for agent_id in sorted(set(agent_ids)):
+        if NAME_PATTERN.fullmatch(agent_id) is None:
+            raise ValueError(f"invalid Agent id: {agent_id!r}")
+        path = AGENT_ROOT / f"{agent_id}.md"
+        if not path.is_file():
+            raise ValueError(f"Agent not found: {path}")
+        resolved[agent_id] = path.resolve()
+    return resolved
+
+
+def resolve_profile(profile_name: str, *, strict: bool = True) -> dict:
+    normalized_id = profile_id(profile_name)
+    values = load_profile(normalized_id)
+    try:
+        skills = resolve_skills(values["skills"])
+    except ValueError:
+        if strict:
+            raise
+        skills = {}
+    try:
+        agents = resolve_agents(values["agents"])
+    except ValueError:
+        if strict:
+            raise
+        agents = {}
+
+    entries = [
+        {
+            "path": f".agents/skills/{name}",
+            "source": source,
+            "kind": "skill",
+        }
+        for name, source in skills.items()
+    ]
+    entries.extend(
+        {
+            "path": f".codex/agents/{name}.md",
+            "source": source,
+            "kind": "agent",
+        }
+        for name, source in agents.items()
+    )
+    return {
+        "id": normalized_id,
+        "entries": entries,
+        "external_skills": values["external_skills"],
+    }
+
+
+def resolve_profiles(profile_names: list[str], *, strict: bool = True) -> list[dict]:
+    resolved = {}
+    for name in profile_names:
+        profile = resolve_profile(name, strict=strict)
+        resolved[profile["id"]] = profile
+    return [resolved[name] for name in sorted(resolved)]
+
+
+def empty_manifest() -> dict:
+    return {"schema": MANIFEST_SCHEMA, "profiles": {}, "entries": {}}
+
+
+def manifest_path(target: Path) -> Path:
+    return target / ".agents" / "agent-capabilities" / "manifest.json"
+
+
+def validate_relative_path(value: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise ValueError("manifest contains an invalid empty path")
+    path = PurePosixPath(value)
+    if path.is_absolute() or any(part in ("", ".", "..") for part in path.parts):
+        raise ValueError(f"manifest contains an unsafe path: {value!r}")
+    return path.as_posix()
+
+
+def load_manifest(target: Path) -> dict:
+    path = manifest_path(target)
+    if not path.is_file():
+        return empty_manifest()
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(f"cannot read manifest {path}: {error}") from error
+    if not isinstance(data, dict) or data.get("schema") != MANIFEST_SCHEMA:
+        raise ValueError(f"unsupported manifest schema: {path}")
+
+    profiles = data.get("profiles")
+    entries = data.get("entries")
+    if not isinstance(profiles, dict) or not isinstance(entries, dict):
+        raise ValueError(f"invalid manifest structure: {path}")
+
+    normalized_profiles = {}
+    for name, paths in profiles.items():
+        if not isinstance(name, str) or not isinstance(paths, list):
+            raise ValueError(f"invalid profile entry in manifest: {path}")
+        normalized_profiles[name] = sorted({validate_relative_path(item) for item in paths})
+
+    normalized_entries = {}
+    for raw_path, record in entries.items():
+        relative_path = validate_relative_path(raw_path)
+        if not isinstance(record, dict):
+            raise ValueError(f"invalid manifest record for {raw_path!r}")
+        source = record.get("source")
+        mode = record.get("mode")
+        kind = record.get("kind")
+        if (
+            not isinstance(source, str)
+            or not Path(source).is_absolute()
+            or mode not in {"linked", "copied"}
+            or kind not in {"skill", "agent"}
+        ):
+            raise ValueError(f"invalid manifest record for {raw_path!r}")
+        normalized_entries[relative_path] = {
+            "source": source,
+            "mode": mode,
+            "kind": kind,
+        }
+    return {
+        "schema": MANIFEST_SCHEMA,
+        "profiles": normalized_profiles,
+        "entries": normalized_entries,
+    }
+
+
+def save_manifest(target: Path, manifest: dict) -> None:
+    path = manifest_path(target)
+    manifest["profiles"] = {
+        name: sorted(set(paths))
+        for name, paths in manifest["profiles"].items()
+        if paths
+    }
+    referenced = {
+        relative_path
+        for paths in manifest["profiles"].values()
+        for relative_path in paths
+    }
+    manifest["entries"] = {
+        relative_path: manifest["entries"][relative_path]
+        for relative_path in referenced
+        if relative_path in manifest["entries"]
+    }
+    if not manifest["profiles"] and not manifest["entries"]:
+        if path.exists() or path.is_symlink():
+            path.unlink()
+        try:
+            path.parent.rmdir()
+        except OSError:
+            pass
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def same_tree(source: Path, destination: Path) -> bool:
+    if source.is_symlink() or destination.is_symlink():
+        return (
+            source.is_symlink()
+            and destination.is_symlink()
+            and source.resolve(strict=False) == destination.resolve(strict=False)
+        )
+    if source.is_file():
+        return destination.is_file() and filecmp.cmp(source, destination, shallow=False)
+    if source.is_dir():
+        if not destination.is_dir():
+            return False
+        source_children = {path.name for path in source.iterdir()}
+        destination_children = {path.name for path in destination.iterdir()}
+        return source_children == destination_children and all(
+            same_tree(source / name, destination / name) for name in source_children
+        )
+    return False
+
+
+def source_matches(destination: Path, source: Path) -> bool:
+    return (
+        destination.is_symlink()
+        and destination.resolve(strict=False) == source.resolve(strict=False)
+    )
+
+
+def remove_path(path: Path) -> None:
+    if path.is_symlink() or path.is_file():
+        path.unlink()
+    elif path.is_dir():
+        shutil.rmtree(path)
+
+
+def safe_remove(
+    destination: Path,
+    record: dict | None,
+    fallback: dict | None,
+    *,
+    force: bool,
+) -> bool:
+    if not destination.exists() and not destination.is_symlink():
+        return True
+    if record is not None and force:
+        remove_path(destination)
+        return True
+    info = record or fallback
+    if info is None:
+        return False
+    source = Path(info["source"])
+    if info["mode"] == "linked":
+        if source_matches(destination, source):
+            remove_path(destination)
+            return True
+        return False
+    if info["mode"] == "copied" and source.exists() and same_tree(source, destination):
+        remove_path(destination)
+        return True
+    return False
+
+
+def install_entry(source: Path, destination: Path, *, link: bool, force: bool) -> str:
+    if destination.exists() or destination.is_symlink():
+        if not force:
+            return "skipped"
+        remove_path(destination)
+
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if link:
+        destination.symlink_to(source, target_is_directory=source.is_dir())
+    elif source.is_dir():
+        shutil.copytree(source, destination)
+    else:
+        shutil.copy2(source, destination)
+    return "installed"
+
+
+def merge_entry(desired: dict[str, dict], entry: dict) -> None:
+    relative_path = validate_relative_path(entry["path"])
+    candidate = {
+        "path": relative_path,
+        "source": entry["source"].resolve(),
+        "kind": entry["kind"],
+    }
+    previous = desired.get(relative_path)
+    if previous is not None and (
+        previous["source"] != candidate["source"] or previous["kind"] != candidate["kind"]
+    ):
+        raise ValueError(
+            f"conflicting entries for {relative_path}: "
+            f"{previous['source']} and {candidate['source']}"
+        )
+    desired[relative_path] = candidate
+
+
+def detect_existing_mode(source: Path, destination: Path) -> str | None:
+    if not destination.exists() and not destination.is_symlink():
+        return None
+    if source_matches(destination, source):
+        return "linked"
+    if source.exists() and same_tree(source, destination):
+        return "copied"
+    return None
+
+
+def install_profiles(target: Path, profiles: list[dict], *, link: bool, force: bool) -> int:
+    manifest = load_manifest(target)
+    desired = {}
+    for profile in profiles:
+        for entry in profile["entries"]:
+            merge_entry(desired, entry)
+
+    for relative_path, entry in desired.items():
+        previous = manifest["entries"].get(relative_path)
+        if previous is not None and Path(previous["source"]).resolve() != entry["source"]:
+            raise ValueError(
+                f"manifest source conflict for {relative_path}: "
+                f"{previous['source']} and {entry['source']}"
+            )
+
+    installed = 0
+    skipped = 0
+    recognized = set()
+    mode = "linked" if link else "copied"
+    for relative_path, entry in desired.items():
+        source = entry["source"]
+        destination = target / Path(relative_path)
+        existing_mode = detect_existing_mode(source, destination)
+        result = install_entry(source, destination, link=link, force=force)
+        if result == "installed":
+            installed += 1
+            recognized.add(relative_path)
+        elif existing_mode is not None or relative_path in manifest["entries"]:
+            skipped += 1
+            recognized.add(relative_path)
+        else:
+            skipped += 1
+
+        if relative_path in recognized:
+            manifest["entries"][relative_path] = {
+                "source": str(source),
+                "mode": mode if result == "installed" else existing_mode or manifest["entries"].get(relative_path, {}).get("mode", mode),
+                "kind": entry["kind"],
+            }
+
+    selected_ids = {profile["id"] for profile in profiles}
+    for profile in profiles:
+        manifest["profiles"][profile["id"]] = sorted(
+            relative_path
+            for relative_path in (entry["path"] for entry in profile["entries"])
+            if relative_path in recognized
+        )
+    for profile_id_value in selected_ids:
+        if profile_id_value not in manifest["profiles"]:
+            manifest["profiles"][profile_id_value] = []
+    save_manifest(target, manifest)
+    external_skills = sorted(
+        {
+            skill
+            for profile in profiles
+            for skill in profile["external_skills"]
+        }
+    )
+
+    print(f"Profiles: {', '.join(profile['id'] for profile in profiles)}")
+    print(f"Target: {target}")
+    print(f"Installed {installed} entries ({mode}); skipped {skipped} existing entries.")
+    print(f"Manifest: {manifest_path(target)}")
+    print(f"Skills: {target / '.agents' / 'skills'}")
+    print(f"Agents: {target / '.codex' / 'agents'}")
+    if external_skills:
+        print("External Skills required (not copied): " + ", ".join(f"${name}" for name in external_skills))
+    return 0
+
+
+def uninstall_profiles(target: Path, profile_names: list[str], *, force: bool) -> int:
+    manifest = load_manifest(target)
+    profiles = resolve_profiles(profile_names, strict=False)
+    selected_ids = {profile["id"] for profile in profiles}
+    selected_paths = {
+        relative_path
+        for profile_id_value in selected_ids
+        for relative_path in manifest["profiles"].get(profile_id_value, [])
+    }
+    fallback = {}
+    for profile in profiles:
+        for entry in profile["entries"]:
+            relative_path = validate_relative_path(entry["path"])
+            selected_paths.add(relative_path)
+            fallback.setdefault(
+                relative_path,
+                {
+                    "source": str(entry["source"]),
+                    "mode": "linked",
+                    "kind": entry["kind"],
+                },
+            )
+
+    remaining_paths = {
+        relative_path
+        for profile_id_value, paths in manifest["profiles"].items()
+        if profile_id_value not in selected_ids
+        for relative_path in paths
+    }
+    removed = 0
+    shared = 0
+    kept = 0
+    skipped = 0
+    for relative_path in sorted(selected_paths):
+        if relative_path in remaining_paths:
+            shared += 1
+            for profile_id_value in selected_ids:
+                manifest["profiles"][profile_id_value] = [
+                    item
+                    for item in manifest["profiles"].get(profile_id_value, [])
+                    if item != relative_path
+                ]
+            continue
+
+        record = manifest["entries"].get(relative_path)
+        removed_now = safe_remove(
+            target / Path(relative_path),
+            record,
+            fallback.get(relative_path),
+            force=force,
+        )
+        if removed_now:
+            removed += 1
+            manifest["entries"].pop(relative_path, None)
+            for profile_id_value, paths in list(manifest["profiles"].items()):
+                manifest["profiles"][profile_id_value] = [
+                    item for item in paths if item != relative_path
+                ]
+        elif record is not None:
+            kept += 1
+        else:
+            skipped += 1
+
+    for profile_id_value in selected_ids:
+        if not manifest["profiles"].get(profile_id_value):
+            manifest["profiles"].pop(profile_id_value, None)
+    save_manifest(target, manifest)
+
+    print(f"Profiles: {', '.join(sorted(selected_ids))}")
+    print(f"Target: {target}")
+    print(f"Uninstalled {removed} entries; kept {kept} modified entries; "
+          f"skipped {skipped} untracked entries; preserved {shared} shared entries.")
+    if kept:
+        print("Use --force to remove modified managed copies.")
+    if manifest_path(target).is_file():
+        print(f"Manifest: {manifest_path(target)}")
+    return 0
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Install or uninstall agent-capabilities profiles in a project."
+    )
+    parser.add_argument("profiles", nargs="+", help="profile IDs, for example: rust sqlite")
+    parser.add_argument(
+        "--target",
+        default=".",
+        help="target project directory (default: current directory)",
+    )
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
+        "--link",
+        action="store_true",
+        help="create links to this checkout (default for installation)",
+    )
+    mode.add_argument(
+        "--copy",
+        action="store_true",
+        help="copy files instead of creating links",
+    )
+    parser.add_argument(
+        "--uninstall",
+        action="store_true",
+        help="remove entries installed for the selected profiles",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="replace existing entries, or remove modified managed copies when uninstalling",
+    )
+    args = parser.parse_args()
+    if args.uninstall and args.copy:
+        parser.error("--copy cannot be used with --uninstall")
+    return args
+
+
+def main() -> int:
+    args = parse_args()
+    target = Path(args.target).expanduser().resolve()
+    if not target.is_dir():
+        print(f"target directory does not exist: {target}", file=sys.stderr)
+        return 2
+
+    try:
+        if args.uninstall:
+            return uninstall_profiles(target, args.profiles, force=args.force)
+        profiles = resolve_profiles(args.profiles)
+        return install_profiles(target, profiles, link=not args.copy, force=args.force)
+    except (OSError, ValueError) as error:
+        print(f"error: {error}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

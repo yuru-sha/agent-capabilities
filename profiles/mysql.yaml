@@ -5,7 +5,7 @@ description: MySQL database skills and the agents used to plan, implement, revie
 
 skills:
   include:
-    - databases/mysql/**
+    - packs/software-engineering/skills/databases/mysql/**
 
 agents:
   include:

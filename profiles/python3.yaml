@@ -5,7 +5,7 @@ description: Python 3 language skills and the agents used to plan, implement, re
 
 skills:
   include:
-    - languages/python3/**
+    - packs/software-engineering/skills/languages/python3/**
 
 agents:
   include:

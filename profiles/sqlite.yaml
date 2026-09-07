@@ -5,7 +5,7 @@ description: SQLite database skills and the agents used to plan, implement, revi
 
 skills:
   include:
-    - databases/sqlite/**
+    - packs/software-engineering/skills/databases/sqlite/**
 
 agents:
   include:

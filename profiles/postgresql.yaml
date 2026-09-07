@@ -5,7 +5,7 @@ description: PostgreSQL database skills and the agents used to plan, implement, 
 
 skills:
   include:
-    - databases/postgresql/**
+    - packs/software-engineering/skills/databases/postgresql/**
 
 agents:
   include:

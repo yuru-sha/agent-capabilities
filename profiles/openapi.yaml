@@ -5,7 +5,7 @@ description: OpenAPI contract skills and the agents used to plan, implement, rev
 
 skills:
   include:
-    - openapi/**
+    - packs/software-engineering/skills/openapi/**
 
 agents:
   include:
