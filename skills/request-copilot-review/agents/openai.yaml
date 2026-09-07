@@ -1,0 +1,3 @@
+interface:
+  display_name: "Request Copilot Review"
+  short_description: "Request a GitHub Copilot PR review"

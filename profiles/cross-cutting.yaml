@@ -1,0 +1,19 @@
+schema: 1
+id: cross-cutting
+kind: cross-cutting
+description: Cross-cutting review, security, operations, compatibility, testing, and release skills.
+
+skills:
+  include:
+    - cross-cutting/**
+
+agents:
+  include:
+    - planner
+    - reviewer
+    - security-reviewer
+    - test-reviewer
+    - repo-doctor
+
+external_skills:
+  - code-review

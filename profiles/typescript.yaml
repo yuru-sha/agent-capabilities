@@ -1,0 +1,20 @@
+schema: 1
+id: typescript
+kind: language
+description: TypeScript language skills and the agents used to plan, implement, review, and verify TypeScript work.
+
+skills:
+  include:
+    - languages/typescript/**
+
+agents:
+  include:
+    - planner
+    - tdd-implementer
+    - reviewer
+    - test-reviewer
+    - repo-doctor
+
+external_skills:
+  - tdd
+  - code-review

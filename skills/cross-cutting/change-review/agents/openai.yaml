@@ -1,0 +1,3 @@
+interface:
+  display_name: "Change Review"
+  short_description: "Cross-cutting evidence lens for code review"

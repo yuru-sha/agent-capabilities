@@ -1,0 +1,21 @@
+schema: 1
+id: github
+kind: workflow
+description: GitHub-hosted pull request, issue, release, Copilot review, and security alert skills.
+
+skills:
+  include:
+    - create-pr
+    - create-draft-pr
+    - mark-pr-ready
+    - request-copilot-review
+    - github-release
+    - create-issue
+    - security-alerts
+    - post-merge-cleanup
+
+agents:
+  include: []
+
+external_skills:
+  - gh-fix-ci

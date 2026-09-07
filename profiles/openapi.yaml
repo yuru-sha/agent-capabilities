@@ -1,0 +1,21 @@
+schema: 1
+id: openapi
+kind: contract
+description: OpenAPI contract skills and the agents used to plan, implement, review, and verify API changes.
+
+skills:
+  include:
+    - openapi/**
+
+agents:
+  include:
+    - planner
+    - tdd-implementer
+    - reviewer
+    - security-reviewer
+    - test-reviewer
+    - repo-doctor
+
+external_skills:
+  - tdd
+  - code-review

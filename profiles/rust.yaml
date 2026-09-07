@@ -1,0 +1,20 @@
+schema: 1
+id: rust
+kind: language
+description: Rust language skills and the agents used to plan, implement, review, and verify Rust work.
+
+skills:
+  include:
+    - languages/rust/**
+
+agents:
+  include:
+    - planner
+    - tdd-implementer
+    - reviewer
+    - test-reviewer
+    - repo-doctor
+
+external_skills:
+  - tdd
+  - code-review
