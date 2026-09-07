@@ -41,5 +41,16 @@ From the project that should use the capabilities, run:
 The installer resolves the union of the selected profiles and links Skills into
 `.agents/skills/` and Agents into `.codex/agents/` by default. It skips existing
 entries; pass `--force` to replace them. Pass `--copy` for a self-contained
-installation. External Skills are printed as requirements and remain managed by
-the consumer's global Skill installation.
+installation. Installation ownership is recorded in
+`.agents/agent-capabilities/manifest.json`, which enables profile-specific
+uninstallation:
+
+```sh
+/path/to/agent-capabilities/scripts/install-profile \
+  --target /path/to/project --uninstall rust sqlite
+```
+
+Modified managed copies are kept by default; pass `--force` to remove them.
+External Skills are printed as requirements and remain managed by the
+consumer's global Skill installation. Legacy link-only installs without a
+manifest are recognized when their links still point to this checkout.

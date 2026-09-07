@@ -57,7 +57,20 @@ Use `github` instead of `workflows` when `commit-push` is not needed.
 
 The command links the selected Skill directories into the project's
 `.agents/skills/` and the selected Agent definitions into `.codex/agents/`.
+The installer records ownership in
+`.agents/agent-capabilities/manifest.json`, so selected profiles can be
+removed later:
+
+```sh
+/path/to/agent-capabilities/scripts/install-profile \
+  --target /path/to/project --uninstall rust sqlite workflows
+```
+
 Use `--target /path/to/project` when running it from elsewhere. Use `--copy`
 for a self-contained copy, and `--force` to replace entries installed by an
-earlier run. `--link` is also accepted as an explicit spelling of the default.
-External Skills such as `$tdd` and `$code-review` are reported but not copied.
+earlier run. During uninstall, modified managed copies are kept unless
+`--force` is specified. `--link` is also accepted as an explicit spelling of
+the default. External Skills such as `$tdd` and `$code-review` are reported
+but not copied. Legacy link-only installs without a manifest are also removed
+when their links still point to this checkout; untracked copies are left in
+place.
