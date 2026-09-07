@@ -1,0 +1,3 @@
+interface:
+  display_name: "Security Alerts"
+  short_description: "Inspect GitHub security findings"

@@ -11,6 +11,7 @@ is the smallest named engineering concern from the requested catalog.
 
 - `$tdd` owns red-green-refactor, seam selection, and test anti-patterns.
 - `$code-review` owns fixed-point diff review and the Standards/Spec split.
+- `$gh-fix-ci` owns GitHub Actions failure diagnosis and approved remediation.
 - Language specialists own language mechanics for one concern.
 - Database specialists own one engine and one database concern.
 - OpenAPI specialists own one contract concern.
@@ -35,11 +36,11 @@ The three original cross-cutting adapter Skills retain their existing
 `agents/openai.yaml`; specialist UI metadata for the additional Skills is
 intentionally omitted until a concrete install/catalog surface needs it.
 
-The repository also ships seven workflow Skills: `commit-push`, `create-pr`,
-`create-draft-pr`, `mark-pr-ready`, `github-release`, `create-issue`, and
-`post-merge-cleanup`. They are selected through `profiles/workflows.yaml` and
-are separate from the 162 language, database, OpenAPI, and cross-cutting
-specialists.
+The repository also ships nine workflow Skills: `commit-push`, `create-pr`,
+`create-draft-pr`, `mark-pr-ready`, `request-copilot-review`, `github-release`,
+`create-issue`, `security-alerts`, and `post-merge-cleanup`. They are selected
+through `profiles/workflows.yaml` and are separate from the 162 language,
+database, OpenAPI, and cross-cutting specialists.
 
 ## Profiles and composition
 
@@ -57,8 +58,9 @@ profiles:
 The resolver unions selected Skills and de-duplicates Agents by ID. A generated
 `go+sqlite` bundle is an output artifact, not a new aggregate Skill.
 
-Workflow consumers can select `workflows` separately when GitHub lifecycle
-operations are needed.
+Workflow consumers can select `workflows` for the complete local/GitHub
+lifecycle. Consumers that need only remote GitHub operations can select
+`github`, which declares `$gh-fix-ci` as an external Skill.
 
 ## Capability map
 
@@ -117,6 +119,13 @@ integrity/recovery, vacuum/maintenance, version compatibility, and extensions.
 `mock-generation`, `sample-generation`, `auth-security-review`,
 `documentation`, `versioning-migration`, `breaking-change-detection`,
 `contract-testing`.
+
+### GitHub workflow boundaries
+
+`request-copilot-review` changes only the reviewer request on an existing PR.
+`security-alerts` inventories Dependabot, code scanning, and secret scanning in
+read-only mode. `security-review` remains the code and trust-boundary review;
+alert remediation is intentionally outside both Skills.
 
 ## Composition
 

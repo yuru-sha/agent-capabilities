@@ -6,10 +6,10 @@ agents.
 ## Contents
 
 - 162 language, database, OpenAPI, and cross-cutting engineering Skills
-- 7 repository workflow Skills: commit/push, pull requests, GitHub releases,
-  issues, and post-merge cleanup
+- 9 repository workflow Skills: commit/push, pull requests, Copilot review,
+  GitHub releases, security alerts, issues, and post-merge cleanup
 - 7 reusable Agents
-- composable Profiles such as `go.yaml` and `sqlite.yaml`
+- 11 composable Profiles, including `go.yaml`, `sqlite.yaml`, and `github.yaml`
 
 ## Compose Profiles
 
@@ -23,8 +23,8 @@ profiles:
 ```
 
 The resolver takes the union of selected Skills and de-duplicates Agents by
-ID. `$tdd` and `$code-review` remain external global dependencies and are not
-redefined here.
+ID. `$tdd`, `$code-review`, and `$gh-fix-ci` remain external global
+dependencies and are not redefined here.
 
 See [Profiles](profiles/README.md) and the
 [software-engineering catalog](docs/software-engineering.md).

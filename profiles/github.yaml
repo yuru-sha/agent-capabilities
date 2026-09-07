@@ -1,11 +1,10 @@
 schema: 1
-id: workflows
+id: github
 kind: workflow
-description: Repository workflow skills for commits, GitHub issues, pull requests, releases, security alerts, and post-merge cleanup.
+description: GitHub-hosted pull request, issue, release, Copilot review, and security alert skills.
 
 skills:
   include:
-    - commit-push
     - create-pr
     - create-draft-pr
     - mark-pr-ready
