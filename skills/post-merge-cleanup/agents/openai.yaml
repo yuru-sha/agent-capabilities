@@ -1,0 +1,4 @@
+interface:
+  display_name: "Post-Merge Cleanup"
+  short_description: "Clean up branches and worktrees after PR merge"
+  default_prompt: "Use $post-merge-cleanup to safely clean up the merged PR's worktree and branches."
