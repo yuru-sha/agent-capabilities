@@ -5,7 +5,7 @@ description: Cross-cutting review, security, operations, compatibility, testing,
 
 skills:
   include:
-    - cross-cutting/**
+    - packs/software-engineering/skills/cross-cutting/**
 
 agents:
   include:

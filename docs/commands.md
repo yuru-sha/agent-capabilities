@@ -14,6 +14,15 @@ the selected Profiles and the target repository.
 | `rtk` | command output reduction and the configured shell wrapper | Optional; use when the environment provides it |
 | `python3` + `quick_validate.py` | validate Skill frontmatter and descriptions | Maintainer check; provided by the local Skill Creator installation |
 
+The project-local profile installer is invoked from a consumer project:
+
+```sh
+/path/to/agent-capabilities/scripts/install-profile rust sqlite workflows
+```
+
+It uses Python 3 and installs selected Skills under `.agents/skills/` and
+Agents under `.codex/agents/`. Use `--target` to select a different project.
+
 The workflow Skills contain the exact operation-specific forms, including
 `git status`, `git diff --check`, `git push`, `gh pr`, `gh issue`, `gh release`,
 `gh api`, and `gh auth status`. Follow the target repository's instructions

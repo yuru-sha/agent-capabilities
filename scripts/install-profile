@@ -1,0 +1,227 @@
+#!/usr/bin/env python3
+"""Install selected agent-capabilities profiles into a project."""
+
+from __future__ import annotations
+
+import argparse
+import re
+import shutil
+import sys
+from pathlib import Path
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+PROFILE_ROOT = REPO_ROOT / "profiles"
+SOURCE_ROOT = REPO_ROOT
+AGENT_ROOT = REPO_ROOT / "packs" / "software-engineering" / "agents"
+NAME_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
+
+
+def scalar(value: str) -> str:
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+        return value[1:-1]
+    return value
+
+
+def load_profile(profile_name: str) -> dict[str, list[str]]:
+    profile_id = profile_name.removesuffix(".yaml")
+    path = PROFILE_ROOT / f"{profile_id}.yaml"
+    if not path.is_file():
+        raise ValueError(f"unknown profile: {profile_name}")
+
+    values: dict[str, list[str]] = {
+        "skills": [],
+        "agents": [],
+        "external_skills": [],
+    }
+    declared_id = None
+    section = None
+    subsection = None
+
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        if not raw_line.strip() or raw_line.lstrip().startswith("#"):
+            continue
+        indent = len(raw_line) - len(raw_line.lstrip(" "))
+        line = raw_line.strip()
+
+        if indent == 0:
+            subsection = None
+            if line.endswith(":"):
+                section = line[:-1]
+            elif line.startswith("id:"):
+                declared_id = scalar(line.split(":", 1)[1])
+            continue
+
+        if indent == 2 and line.endswith(":"):
+            subsection = line[:-1]
+            continue
+
+        if not line.startswith("- "):
+            continue
+        value = scalar(line[2:])
+        if section == "skills" and subsection == "include":
+            values["skills"].append(value)
+        elif section == "agents" and subsection == "include":
+            values["agents"].append(value)
+        elif section == "external_skills" and indent == 2:
+            values["external_skills"].append(value)
+
+    if declared_id != profile_id:
+        raise ValueError(f"profile id mismatch in {path}: {declared_id!r}")
+    return values
+
+
+def skill_name(skill_dir: Path) -> str:
+    frontmatter = skill_dir / "SKILL.md"
+    lines = frontmatter.read_text(encoding="utf-8").splitlines()
+    if not lines or lines[0].strip() != "---":
+        raise ValueError(f"missing frontmatter: {frontmatter}")
+    for line in lines[1:]:
+        if line.strip() == "---":
+            break
+        if line.startswith("name:"):
+            name = scalar(line.split(":", 1)[1])
+            if NAME_PATTERN.fullmatch(name) is None:
+                raise ValueError(f"invalid Skill name {name!r}: {frontmatter}")
+            return name
+    raise ValueError(f"missing Skill name: {frontmatter}")
+
+
+def resolve_skills(patterns: list[str]) -> dict[str, Path]:
+    resolved: dict[str, Path] = {}
+    for pattern in patterns:
+        matches = sorted(
+            path
+            for path in SOURCE_ROOT.glob(pattern)
+            if path.is_dir() and (path / "SKILL.md").is_file()
+        )
+        if not matches:
+            raise ValueError(f"Skill selector matched nothing: {pattern}")
+        for path in matches:
+            name = skill_name(path)
+            previous = resolved.get(name)
+            if previous is not None and previous != path:
+                raise ValueError(f"duplicate Skill name {name!r}: {previous} and {path}")
+            resolved[name] = path
+    return dict(sorted(resolved.items()))
+
+
+def resolve_agents(agent_ids: list[str]) -> dict[str, Path]:
+    resolved = {}
+    for agent_id in sorted(set(agent_ids)):
+        if NAME_PATTERN.fullmatch(agent_id) is None:
+            raise ValueError(f"invalid Agent id: {agent_id!r}")
+        path = AGENT_ROOT / f"{agent_id}.md"
+        if not path.is_file():
+            raise ValueError(f"Agent not found: {path}")
+        resolved[agent_id] = path
+    return resolved
+
+
+def install(source: Path, destination: Path, *, link: bool, force: bool) -> str:
+    if destination.exists() or destination.is_symlink():
+        if not force:
+            return "skipped"
+        if destination.is_dir() and not destination.is_symlink():
+            shutil.rmtree(destination)
+        else:
+            destination.unlink()
+
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if link:
+        destination.symlink_to(source, target_is_directory=source.is_dir())
+    elif source.is_dir():
+        shutil.copytree(source, destination)
+    else:
+        shutil.copy2(source, destination)
+    return "installed"
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Install one or more agent-capabilities profiles into a project."
+    )
+    parser.add_argument("profiles", nargs="+", help="profile IDs, for example: rust sqlite")
+    parser.add_argument(
+        "--target",
+        default=".",
+        help="target project directory (default: current directory)",
+    )
+    parser.add_argument(
+        "--link",
+        action="store_true",
+        help="create links to this checkout instead of copying files",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="replace existing selected Skill and Agent entries",
+    )
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+    target = Path(args.target).expanduser().resolve()
+    if not target.is_dir():
+        print(f"target directory does not exist: {target}", file=sys.stderr)
+        return 2
+
+    try:
+        profiles = [load_profile(name) for name in args.profiles]
+        skills = resolve_skills(
+            [pattern for profile in profiles for pattern in profile["skills"]]
+        )
+        agents = resolve_agents(
+            [agent for profile in profiles for agent in profile["agents"]]
+        )
+        external_skills = sorted(
+            {
+                skill
+                for profile in profiles
+                for skill in profile["external_skills"]
+            }
+        )
+    except (OSError, ValueError) as error:
+        print(f"error: {error}", file=sys.stderr)
+        return 2
+
+    skill_destination = target / ".agents" / "skills"
+    agent_destination = target / ".codex" / "agents"
+    mode = "linked" if args.link else "copied"
+    installed = 0
+    skipped = 0
+
+    for name, source in skills.items():
+        result = install(
+            source,
+            skill_destination / name,
+            link=args.link,
+            force=args.force,
+        )
+        installed += result == "installed"
+        skipped += result == "skipped"
+
+    for name, source in agents.items():
+        result = install(
+            source,
+            agent_destination / f"{name}.md",
+            link=args.link,
+            force=args.force,
+        )
+        installed += result == "installed"
+        skipped += result == "skipped"
+
+    print(f"Profiles: {', '.join(args.profiles)}")
+    print(f"Target: {target}")
+    print(f"Installed {installed} entries ({mode}); skipped {skipped} existing entries.")
+    print(f"Skills: {skill_destination} ({len(skills)})")
+    print(f"Agents: {agent_destination} ({len(agents)})")
+    if external_skills:
+        print("External Skills required (not copied): " + ", ".join(f"${name}" for name in external_skills))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

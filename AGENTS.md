@@ -16,6 +16,9 @@ Profiles for software engineering and GitHub workflows.
 
 - Keep specialist Skills narrow and model-selectable; do not add language,
   database, OpenAPI, or GitHub umbrella `SKILL.md` files.
+- Keep engineering capabilities under `packs/software-engineering/` and GitHub
+  operation capabilities under `packs/operations/github/`. Add a Profile and
+  catalog entry when introducing a new pack.
 - Profiles select Skills and Agents. They are distribution metadata, not another
   instruction layer.
 - `$tdd`, `$code-review`, and `$gh-fix-ci` are external Skills. Do not copy or

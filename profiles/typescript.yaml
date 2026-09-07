@@ -5,7 +5,7 @@ description: TypeScript language skills and the agents used to plan, implement, 
 
 skills:
   include:
-    - languages/typescript/**
+    - packs/software-engineering/skills/languages/typescript/**
 
 agents:
   include:

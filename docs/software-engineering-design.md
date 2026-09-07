@@ -45,8 +45,10 @@ database, OpenAPI, and cross-cutting specialists.
 ## Profiles and composition
 
 Profiles are distribution metadata, not additional Skills. `profiles/go.yaml`
-selects `languages/go/**` and its Agent set; `profiles/sqlite.yaml` selects
-`databases/sqlite/**` and its database-review Agent set. A consumer composes
+selects `packs/software-engineering/skills/languages/go/**` and its Agent set;
+`profiles/sqlite.yaml` selects
+`packs/software-engineering/skills/databases/sqlite/**` and its database-review
+Agent set. A consumer composes
 them by ID:
 
 ```yaml
@@ -59,8 +61,9 @@ The resolver unions selected Skills and de-duplicates Agents by ID. A generated
 `go+sqlite` bundle is an output artifact, not a new aggregate Skill.
 
 Workflow consumers can select `workflows` for the complete local/GitHub
-lifecycle. Consumers that need only remote GitHub operations can select
-`github`, which declares `$gh-fix-ci` as an external Skill.
+lifecycle from `packs/operations/github`. Consumers that need GitHub operations
+without `commit-push` can select `github`, which declares `$gh-fix-ci` as an
+external Skill.
 
 ## Capability map
 
