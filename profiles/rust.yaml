@@ -5,7 +5,7 @@ description: Rust language skills and the agents used to plan, implement, review
 
 skills:
   include:
-    - languages/rust/**
+    - packs/software-engineering/skills/languages/rust/**
 
 agents:
   include:
