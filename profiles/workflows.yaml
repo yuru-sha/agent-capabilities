@@ -1,11 +1,16 @@
 schema: 1
 id: workflows
 kind: workflow
-description: Repository workflow skills for pull requests and post-merge cleanup.
+description: Repository workflow skills for commits, GitHub issues, pull requests, releases, and post-merge cleanup.
 
 skills:
   include:
+    - commit-push
     - create-pr
+    - create-draft-pr
+    - mark-pr-ready
+    - github-release
+    - create-issue
     - post-merge-cleanup
 
 agents:

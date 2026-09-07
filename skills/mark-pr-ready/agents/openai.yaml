@@ -1,0 +1,3 @@
+interface:
+  display_name: "Mark PR Ready"
+  short_description: "Convert an open draft PR to ready"

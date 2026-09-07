@@ -35,6 +35,12 @@ The three original cross-cutting adapter Skills retain their existing
 `agents/openai.yaml`; specialist UI metadata for the additional Skills is
 intentionally omitted until a concrete install/catalog surface needs it.
 
+The repository also ships seven workflow Skills: `commit-push`, `create-pr`,
+`create-draft-pr`, `mark-pr-ready`, `github-release`, `create-issue`, and
+`post-merge-cleanup`. They are selected through `profiles/workflows.yaml` and
+are separate from the 162 language, database, OpenAPI, and cross-cutting
+specialists.
+
 ## Profiles and composition
 
 Profiles are distribution metadata, not additional Skills. `profiles/go.yaml`
@@ -50,6 +56,9 @@ profiles:
 
 The resolver unions selected Skills and de-duplicates Agents by ID. A generated
 `go+sqlite` bundle is an output artifact, not a new aggregate Skill.
+
+Workflow consumers can select `workflows` separately when GitHub lifecycle
+operations are needed.
 
 ## Capability map
 
@@ -165,7 +174,8 @@ are needed before those inputs exist.
 
 ## Validation
 
-Run the bundled `quick_validate.py` once for every `SKILL.md`. Also check that
+Run the bundled `quick_validate.py` once for every `SKILL.md`, including the
+workflow Skills. Also check that
 specialist names are unique, descriptions contain the language/engine/contract
 boundary, data-race and goroutine-liveness checks state their evidence limits,
 Python typing instructions handle `Any` propagation, generated JSON-tag

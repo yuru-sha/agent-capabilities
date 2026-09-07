@@ -6,7 +6,8 @@ agents.
 ## Contents
 
 - 162 language, database, OpenAPI, and cross-cutting engineering Skills
-- 2 repository workflow Skills: `create-pr` and `post-merge-cleanup`
+- 7 repository workflow Skills: commit/push, pull requests, GitHub releases,
+  issues, and post-merge cleanup
 - 7 reusable Agents
 - composable Profiles such as `go.yaml` and `sqlite.yaml`
 

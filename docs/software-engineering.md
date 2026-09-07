@@ -17,8 +17,9 @@ READMEと設計書だけを人間向けのカタログにしています。
 | Cross-cutting | 基本3領域 + 追加6領域 | 9 |
 | **合計** | **専門Skill** | **162** |
 
-このPackとは別に、リポジトリには `create-pr` と `post-merge-cleanup` の
-Workflow Skillも含まれます。
+このPackとは別に、リポジトリには7個のWorkflow Skillも含まれます。
+`commit-push`、`create-pr`、`create-draft-pr`、`mark-pr-ready`、
+`github-release`、`create-issue`、`post-merge-cleanup`です。
 
 Agent定義は7個です。
 
@@ -35,7 +36,7 @@ Agent定義は7個です。
 agent-capabilities/
 ├── docs/software-engineering.md
 ├── docs/software-engineering-design.md
-├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi}.yaml
+├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,workflows}.yaml
 ├── skills/
 │   ├── languages/
 │   │   ├── go/{testing,...,data-race-check,idiomatic-code-check,struct-json-tags,
@@ -135,7 +136,7 @@ race detectorが検出する実行時の競合だけでなく、停止不能・�
 
 ## 優先順位
 
-- **P0**: 明示された162個の専門Skill、7 Agent、設計書、README、静的検証。
+- **P0**: 明示された162個の専門Skill、7個のWorkflow Skill、7 Agent、設計書、README、静的検証。
 - **P1**: 実リポジトリで使うgenerator/linter/driver固有のreferencesと補助script。
 - **P2**: 実プロジェクト由来のfixture、golden test、生成物の互換性テスト。
 
@@ -144,6 +145,6 @@ P1/P2は対象リポジトリとツールチェーンが決まらないまま作
 
 ## 検証
 
-162個の専門 `SKILL.md` と2個のWorkflow `SKILL.md`をCodex同梱の
+162個の専門 `SKILL.md` と7個のWorkflow `SKILL.md`をCodex同梱の
 `quick_validate.py` で検証します。
 この成果物は指示とメタデータなので、アプリケーションruntime fixtureは作りません。

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Create Draft PR"
+  short_description: "Open a scoped GitHub PR as a draft"
