@@ -1,0 +1,12 @@
+schema: 1
+id: workflows
+kind: workflow
+description: Repository workflow skills for pull requests and post-merge cleanup.
+
+skills:
+  include:
+    - create-pr
+    - post-merge-cleanup
+
+agents:
+  include: []
