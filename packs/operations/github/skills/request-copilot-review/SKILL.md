@@ -5,8 +5,11 @@ description: Request or re-request a GitHub Copilot code review for an existing 
 
 # Request a Copilot review
 
-Use this skill for the reviewer-request operation only. It changes the review
-requests on one existing PR and does not change commits or review content.
+Use this skill for the reviewer-request operation only. Start the request by
+assigning `@copilot` as a PR reviewer through GitHub's reviewer controls or the
+CLI below; a PR comment containing `@copilot review` is discussion, not a review
+request. This skill changes the review requests on one existing PR and does not
+change commits or review content.
 
 1. Resolve one exact PR from the supplied URL, number, or current branch. Use
    `gh pr view <pr> --json number,url,state,isDraft,headRefOid,reviewRequests`.
