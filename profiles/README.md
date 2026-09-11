@@ -27,6 +27,10 @@ The engineering Profiles select content from
 `packs/software-engineering/skills/` and their Agent IDs resolve from
 `packs/software-engineering/agents/`.
 
+The infrastructure Profile selects the Terraform and AWS infrastructure
+specialists and the read-only infrastructure-reviewer Agent. It is intended
+to compose with a language or database Profile rather than replacing one.
+
 `external_skills` names existing global Skills such as `$tdd` and
 `$code-review` and `$gh-fix-ci`; the profiles do not copy or redefine them.
 

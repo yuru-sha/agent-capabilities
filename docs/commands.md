@@ -56,6 +56,20 @@ The representative commands are examples, not additional requirements. A
 repository's `Makefile`, task runner, package scripts, CI configuration, and
 toolchain files remain the source of truth.
 
+## Infrastructure command families
+
+Infrastructure Skills use the consumer repository's configured versions and
+wrappers. Common command families include:
+
+| Profile | Representative commands | Typical concerns |
+|---|---|---|
+| infrastructure | terraform, tflint, the configured policy scanner, AWS CLI, npm, and zip | module validation, provider locks, plans, AWS topology, policy tests, Lambda packaging, and deployment review |
+
+These commands are review and verification inputs, not automatic permission to
+run Terraform apply/destroy or mutate an AWS, IAM, GitHub, or notification
+system. Record exact versions and repository-specific commands in the
+consumer repository when they affect evidence.
+
 ## Database command families
 
 Database Skills describe engine behavior and review evidence. They do not force
