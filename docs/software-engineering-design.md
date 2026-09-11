@@ -3,9 +3,9 @@
 ## Goal
 
 Provide installable, automatically selectable specialist Skills for Go,
-TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, and OpenAPI. The skill
-boundary
-is the smallest named engineering concern from the requested catalog.
+TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, and
+AWS infrastructure. The skill boundary is the smallest named engineering
+concern from the requested catalog.
 
 ## Non-duplication boundaries
 
@@ -16,10 +16,12 @@ is the smallest named engineering concern from the requested catalog.
 - Database specialists own one engine and one database concern.
 - OpenAPI specialists own one contract concern.
 - Cross-cutting specialists own security, operational quality, or review lenses.
+- Infrastructure specialists own one Terraform or AWS infrastructure concern.
 
-There are no language, database, or OpenAPI umbrella `SKILL.md` files. A broad
-router would compete with the specialist descriptions and duplicate their
-content. README and this document are the human-facing catalog instead.
+There are no language, database, OpenAPI, or infrastructure umbrella
+`SKILL.md` files. A broad router would compete with the specialist descriptions
+and duplicate their content. README and this document are the human-facing
+catalog instead.
 
 ## P0 package shape
 
@@ -29,7 +31,8 @@ content. README and this document are the human-facing catalog instead.
 | Database | 42 | `postgresql-roles-rls`, `mysql-online-ddl`, `sqlite-wal-checkpoint` |
 | OpenAPI | 13 | `openapi-lint`, `openapi-codegen`, `openapi-breaking-change-detection` |
 | Cross-cutting | 9 | `change-review`, `benchmark-regression`, `zero-downtime-migration` |
-| **Total** | **162** | specialist Skills |
+| Infrastructure | 7 | `terraform-infrastructure`, `aws-infrastructure`, `terraform-policy-testing` |
+| **Total** | **169** | specialist Skills |
 
 Each specialist has a required `SKILL.md` with a discriminating description.
 The three original cross-cutting adapter Skills retain their existing
@@ -39,8 +42,8 @@ intentionally omitted until a concrete install/catalog surface needs it.
 The repository also ships nine workflow Skills: `commit-push`, `create-pr`,
 `create-draft-pr`, `mark-pr-ready`, `request-copilot-review`, `github-release`,
 `create-issue`, `security-alerts`, and `post-merge-cleanup`. They are selected
-through `profiles/workflows.yaml` and are separate from the 162 language,
-database, OpenAPI, and cross-cutting specialists.
+through `profiles/workflows.yaml` and are separate from the 169 language,
+database, OpenAPI, cross-cutting, and infrastructure specialists.
 
 ## Profiles and composition
 
@@ -64,6 +67,10 @@ Workflow consumers can select `workflows` for the complete local/GitHub
 lifecycle from `packs/operations/github`. Consumers that need GitHub operations
 without `commit-push` can select `github`, which declares `$gh-fix-ci` as an
 external Skill.
+
+Infrastructure consumers can select `infrastructure` for the seven Terraform
+and AWS specialists plus the read-only infrastructure-reviewer Agent. The
+Profile is composable with language, database, and workflow Profiles.
 
 ## Capability map
 
@@ -123,6 +130,17 @@ integrity/recovery, vacuum/maintenance, version compatibility, and extensions.
 `documentation`, `versioning-migration`, `breaking-change-detection`,
 `contract-testing`.
 
+### Infrastructure: 7 concerns
+
+terraform-infrastructure, aws-infrastructure, aws-iam-oidc-security,
+github-actions-aws-deploy, cloudwatch-operations, nodejs-lambda, and
+terraform-policy-testing.
+
+The infrastructure set keeps Terraform module/state and policy testing
+separate from AWS topology, IAM/OIDC, deployment handoffs, operations, and
+Lambda packaging. github-actions-aws-deploy is a design/review Skill, not a
+GitHub mutation workflow.
+
 ### GitHub workflow boundaries
 
 `request-copilot-review` changes only the reviewer request on an existing PR.
@@ -146,6 +164,9 @@ $tdd
   + mysql-transactions + mysql-locking + mysql-online-ddl
   + openapi-contract-testing
   + security-review
+  + terraform-infrastructure + terraform-policy-testing
+  + aws-infrastructure + aws-iam-oidc-security
+  + github-actions-aws-deploy + cloudwatch-operations + nodejs-lambda
 ```
 
 Other common compositions include `python3-type-checking` for typed Python
@@ -171,6 +192,8 @@ separate.
 - `test-reviewer`: review tests at public seams without implementing fixes.
 - `repo-doctor`: inspect instructions, toolchain, dependencies, CI, and
   reproducibility without changing the repository.
+- infrastructure-reviewer: review Terraform/AWS trust, deployment, packaging,
+  and operational boundaries without changing repository or cloud state.
 
 Agents do not own a second catalog. `planner` selects specialists by trigger,
 `tdd-implementer` combines `$tdd` with implementation concerns, and review
@@ -192,4 +215,6 @@ specialist names are unique, descriptions contain the language/engine/contract
 boundary, data-race and goroutine-liveness checks state their evidence limits,
 Python typing instructions handle `Any` propagation, generated JSON-tag
 instructions handle nullability/collisions, and no Agent references a removed
-umbrella Skill.
+umbrella Skill. Infrastructure instructions keep environment separation, state
+safety, IAM trust, deployment ownership, packaging, and monitoring failure
+paths explicit.

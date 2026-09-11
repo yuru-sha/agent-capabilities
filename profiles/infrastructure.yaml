@@ -1,0 +1,21 @@
+schema: 1
+id: infrastructure
+kind: infrastructure
+description: Terraform and AWS infrastructure Skills and the agents used to plan, implement, review, and verify infrastructure work.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/**
+
+agents:
+  include:
+    - planner
+    - tdd-implementer
+    - reviewer
+    - test-reviewer
+    - repo-doctor
+    - infrastructure-reviewer
+
+external_skills:
+  - tdd
+  - code-review
