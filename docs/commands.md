@@ -63,7 +63,7 @@ wrappers. Common command families include:
 
 | Profile | Representative commands | Typical concerns |
 |---|---|---|
-| infrastructure | terraform, tflint, the configured policy scanner, AWS CLI, npm, and zip | module validation, provider locks, plans, AWS topology, policy tests, Lambda packaging, and deployment review |
+| infrastructure | terraform, tflint, tfsec, Trivy, Checkov, AWS CLI, ecspresso, npm, and zip | module validation, provider locks, plans, AWS topology, policy tests, Lambda packaging, and deployment review |
 
 These commands are review and verification inputs, not automatic permission to
 run Terraform apply/destroy or mutate an AWS, IAM, GitHub, or notification
