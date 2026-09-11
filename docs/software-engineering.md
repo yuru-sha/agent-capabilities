@@ -8,6 +8,7 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPIを対�
 
 集約Skillは作っていません。専門Skillのdescriptionを自動選択の境界にし、
 READMEと設計書だけを人間向けのカタログにしています。
+TerraformとAWSのインフラ領域も、同じ専門Skillの境界で提供します。
 
 | 分類 | 内訳 | 数 |
 |---|---|---:|
@@ -15,14 +16,15 @@ READMEと設計書だけを人間向けのカタログにしています。
 | Database | PostgreSQL/MySQL/SQLite × 基本8領域 + 固有6領域 | 42 |
 | OpenAPI | 13領域 | 13 |
 | Cross-cutting | 基本3領域 + 追加6領域 | 9 |
-| **合計** | **専門Skill** | **162** |
+| Infrastructure | Terraform/AWSの7領域 | 7 |
+| **合計** | **専門Skill** | **169** |
 
 このPackとは別に、リポジトリには9個のWorkflow Skillも含まれます。
 `commit-push`、`create-pr`、`create-draft-pr`、`mark-pr-ready`、
 `request-copilot-review`、`github-release`、`create-issue`、
 `security-alerts`、`post-merge-cleanup`です。
 
-Agent定義は7個です。
+Agent定義は8個です。
 
 ## 既存Skillとの境界
 
@@ -38,15 +40,16 @@ Agent定義は7個です。
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,databases,openapi,cross-cutting}/...
+│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure}/...
 │   │   └── agents/{planner,tdd-implementer,reviewer,database-reviewer,
-│   │              security-reviewer,test-reviewer,repo-doctor}.md
+│   │              security-reviewer,test-reviewer,repo-doctor,
+│   │              infrastructure-reviewer}.md
 │   └── operations/github/
 │       └── skills/{commit-push,create-pr,create-draft-pr,mark-pr-ready,
 │                   request-copilot-review,github-release,create-issue,
 │                   security-alerts,post-merge-cleanup}/SKILL.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,workflows,github}.yaml
+│             cross-cutting,infrastructure,workflows,github}.yaml
 ├── shared/
 ├── scripts/install-profile
 └── docs/
@@ -66,6 +69,9 @@ $tdd
   + mysql-transactions + mysql-locking + mysql-online-ddl
   + openapi-contract-testing (API契約が対象なら)
   + security-review (セキュリティリスクがあるなら)
+  + terraform-infrastructure + terraform-policy-testing
+  + aws-infrastructure + aws-iam-oidc-security
+  + github-actions-aws-deploy + cloudwatch-operations + nodejs-lambda
 ```
 
 専門Skillはmodel-invokedです。`go-concurrency` のdescriptionはGoの並行処理に、
@@ -96,6 +102,9 @@ $tdd
 - 横断: `fuzzing-property-testing`, `benchmark-regression`,
   `package-release-compatibility`, `sbom-license-review`,
   `test-fixture-design`, `zero-downtime-migration`
+- Infrastructure: terraform-infrastructure, aws-infrastructure,
+  aws-iam-oidc-security, github-actions-aws-deploy, cloudwatch-operations,
+  nodejs-lambda, terraform-policy-testing
 
 特に `go-goroutine-leak-deadlock-check` は `go-data-race-check` と別物です。
 race detectorが検出する実行時の競合だけでなく、停止不能・待ち合わせ不能・
@@ -113,10 +122,11 @@ race detectorが検出する実行時の競合だけでなく、停止不能・�
 | `security-reviewer` | trust boundaryと攻撃面の所見 | なし |
 | `test-reviewer` | 公開seam上のテスト品質の所見 | なし |
 | `repo-doctor` | instructions・toolchain・依存・CIの健康診断 | なし |
+| infrastructure-reviewer | Terraform/AWSのtrust、配布、運用境界の所見 | なし |
 
 ## 優先順位
 
-- **P0**: 明示された162個の専門Skill、9個のWorkflow Skill、7 Agent、設計書、README、静的検証。
+- **P0**: 明示された169個の専門Skill、9個のWorkflow Skill、8 Agent、設計書、README、静的検証。
 - **P1**: 実リポジトリで使うgenerator/linter/driver固有のreferencesと補助script。
 - **P2**: 実プロジェクト由来のfixture、golden test、生成物の互換性テスト。
 
@@ -125,6 +135,6 @@ P1/P2は対象リポジトリとツールチェーンが決まらないまま作
 
 ## 検証
 
-162個の専門 `SKILL.md` と9個のWorkflow `SKILL.md`をCodex同梱の
+169個の専門 `SKILL.md` と9個のWorkflow `SKILL.md`をCodex同梱の
 `quick_validate.py` で検証します。
 この成果物は指示とメタデータなので、アプリケーションruntime fixtureは作りません。

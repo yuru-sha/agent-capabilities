@@ -5,11 +5,11 @@ agents.
 
 ## Contents
 
-- 162 language, database, OpenAPI, and cross-cutting engineering Skills
+- 169 language, database, OpenAPI, cross-cutting, and infrastructure engineering Skills
 - 9 repository workflow Skills: commit/push, pull requests, Copilot review,
   GitHub releases, security alerts, issues, and post-merge cleanup
-- 7 reusable Agents
-- 11 composable Profiles, including `go.yaml`, `sqlite.yaml`, and `github.yaml`
+- 8 reusable Agents
+- 12 composable Profiles, including `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, and `github.yaml`
 
 The capabilities are physically grouped into the
 [`software-engineering` pack](packs/README.md) and the
@@ -43,6 +43,11 @@ See [Profiles](profiles/README.md) and the
 [software-engineering catalog](docs/software-engineering.md). The command
 families and external CLIs used by the Skills are listed in the
 [command reference](docs/commands.md).
+
+For Terraform and AWS infrastructure work, select the infrastructure Profile.
+It provides seven narrow Skills and the read-only infrastructure-reviewer
+Agent; compose it with a language or database Profile when the consumer
+repository needs those concerns too.
 
 ## Install profiles into a project
 
