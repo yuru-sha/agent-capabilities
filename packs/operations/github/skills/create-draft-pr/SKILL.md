@@ -20,13 +20,15 @@ files.
 3. Stage only intended files, inspect the staged diff, and create one concise
    commit when local changes need committing. Never reset, checkout, amend, or
    force-push unless explicitly requested.
-4. Push the branch with upstream tracking, then use `gh pr create --draft`
-   (or the repository's existing GitHub tooling). Include the requested issue
-   link such as `Closes #N` when applicable. Keep title, body, and logs free of
-   secrets and private session data.
-5. Re-fetch the PR URL, head/base, commit, changed files, `isDraft`, CI/check
-   state, and mergeability. Confirm that the PR remains a draft. Do not mark it
-   ready or merge it.
+4. Prefix the requested title with `Draft: ` unless it already begins with
+   that prefix. Push the branch with upstream tracking, then use
+   `gh pr create --draft --title "<prefixed title>"` (or the repository's
+   existing GitHub tooling). Include the requested issue link such as
+   `Closes #N` when applicable. Keep title, body, and logs free of secrets and
+   private session data.
+5. Re-fetch the PR URL, title, head/base, commit, changed files, `isDraft`,
+   CI/check state, and mergeability. Confirm that the PR remains a draft and
+   its title begins with `Draft: `. Do not mark it ready or merge it.
 
 If authentication, the remote, the target issue, or the intended scope is
 unclear, report the exact blocker and leave local changes untouched.
