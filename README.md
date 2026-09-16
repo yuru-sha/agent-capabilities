@@ -1,5 +1,7 @@
 # agent-capabilities
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/yuru-sha/agent-capabilities)
+
 Reusable Skills, Agents, Profiles, and workflow capabilities for AI coding
 agents.
 
