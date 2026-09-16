@@ -6,7 +6,8 @@ agents.
 ## Contents
 
 - 169 language, database, OpenAPI, cross-cutting, and infrastructure engineering Skills
-- 9 repository workflow Skills: commit/push, pull requests, Copilot review,
+- 10 repository workflow Skills: commit/push, pull requests, Copilot review,
+  review-thread replies,
   GitHub releases, security alerts, issues, and post-merge cleanup
 - 8 reusable Agents
 - 12 composable Profiles, including `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, and `github.yaml`
