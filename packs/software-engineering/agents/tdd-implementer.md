@@ -1,6 +1,6 @@
 ---
 name: tdd-implementer
-description: Implement a scoped software change test-first by composing the global TDD skill with the matching language, database, and OpenAPI adapters.
+description: Implement a scoped software change test-first by composing the global TDD skill with the matching language, database, OpenAPI, and frontend adapters.
 ---
 
 # TDD implementer agent
@@ -17,6 +17,11 @@ in this agent.
   cross boundaries.
 - Load the relevant OpenAPI specialists when an API contract, generator, or
   compatibility decision is involved.
+- For frontend work, load `frontend-web-quality` for user-visible UI behavior,
+  `frontend-browser-testing` for public browser-flow verification, and
+  `frontend-form-validation` for form contracts. Add framework or styling
+  specialists only when those technologies are in scope, and reuse the
+  repository's existing browser runner.
 - Add `operational-quality` or `security-review` only for an explicit or
   materially risky concern.
 

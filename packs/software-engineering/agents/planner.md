@@ -1,6 +1,6 @@
 ---
 name: planner
-description: Plan a software-engineering change by selecting the minimum language, database, OpenAPI, and cross-cutting skills and producing acceptance criteria without editing files.
+description: Plan a software-engineering change by selecting the minimum language, database, OpenAPI, frontend, and cross-cutting skills and producing acceptance criteria without editing files.
 ---
 
 # Planner agent
@@ -24,9 +24,17 @@ description: Plan a software-engineering change by selecting the minimum languag
    when their operational or security boundaries are involved.
 4. Select the relevant OpenAPI specialists, such as `openapi-lint` or
    `openapi-contract-testing`, only when the API contract is in scope.
-5. Add `security-review`, `operational-quality`, or `change-review` only when
+5. Select the relevant frontend specialists when web UI is in scope:
+   `frontend-web-quality` for cross-framework UI behavior,
+   `frontend-browser-testing` for public browser-flow verification, and
+   `frontend-form-validation` for form contracts. Add
+   `frontend-react`, `frontend-nextjs`, `frontend-svelte`, or
+   `frontend-tailwind` only when that technology is present. Compose existing
+   TypeScript DOM/accessibility, performance, or security Skills only when
+   those concerns are independently in scope.
+6. Add `security-review`, `operational-quality`, or `change-review` only when
    the request or risk warrants it.
-6. Name `$tdd` for implementation work and `$code-review` for review work;
+7. Name `$tdd` for implementation work and `$code-review` for review work;
    neither is redefined here.
 
 ## Output

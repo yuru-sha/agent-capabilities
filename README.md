@@ -5,7 +5,7 @@ agents.
 
 ## Contents
 
-- 174 language, database, OpenAPI, cross-cutting, infrastructure, and frontend engineering Skills
+- 176 language, database, OpenAPI, cross-cutting, infrastructure, and frontend engineering Skills
 - 10 repository workflow Skills: commit/push, pull requests, Copilot review,
   review-thread replies,
   GitHub releases, security alerts, issues, and post-merge cleanup
@@ -51,8 +51,8 @@ Agent; compose it with a language or database Profile when the consumer
 repository needs those concerns too.
 
 For frontend work, select the `frontend` Profile. It provides the
-framework-agnostic web-quality Skill plus React 19, Next.js, Svelte 5, and
-Tailwind CSS v4+ specialists.
+framework-agnostic web-quality, browser-testing, and form-validation Skills
+plus React 19, Next.js, Svelte 5, and Tailwind CSS v4+ specialists.
 
 ## Install profiles into a project
 

@@ -4,8 +4,8 @@
 
 Provide installable, automatically selectable specialist Skills for Go,
 TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS
-infrastructure, and framework-agnostic frontend web UI. The skill boundary is the smallest named engineering
-concern from the requested catalog.
+infrastructure, and framework-agnostic frontend web UI. The skill boundary is
+the smallest named engineering concern from the requested catalog.
 
 ## Non-duplication boundaries
 
@@ -34,8 +34,8 @@ catalog instead.
 | OpenAPI | 13 | `openapi-lint`, `openapi-codegen`, `openapi-breaking-change-detection` |
 | Cross-cutting | 9 | `change-review`, `benchmark-regression`, `zero-downtime-migration` |
 | Infrastructure | 7 | `terraform-infrastructure`, `aws-infrastructure`, `terraform-policy-testing` |
-| Frontend | 5 | `frontend-web-quality`, `frontend-react`, `frontend-nextjs`, `frontend-svelte`, `frontend-tailwind` |
-| **Total** | **174** | specialist Skills |
+| Frontend | 7 | `frontend-web-quality`, `frontend-browser-testing`, `frontend-form-validation`, `frontend-react`, `frontend-nextjs`, `frontend-svelte`, `frontend-tailwind` |
+| **Total** | **176** | specialist Skills |
 
 Each specialist has a required `SKILL.md` with a discriminating description.
 The three original cross-cutting adapter Skills retain their existing
@@ -46,7 +46,7 @@ The repository also ships ten workflow Skills: `commit-push`, `create-pr`,
 `create-draft-pr`, `mark-pr-ready`, `request-copilot-review`,
 `reply-to-review-thread`, `github-release`, `create-issue`, `security-alerts`,
 and `post-merge-cleanup`. They are selected
-through `profiles/workflows.yaml` and are separate from the 174 language,
+through `profiles/workflows.yaml` and are separate from the 176 language,
 database, OpenAPI, cross-cutting, infrastructure, and frontend specialists.
 
 ## Profiles and composition
@@ -76,10 +76,10 @@ Infrastructure consumers can select `infrastructure` for the seven Terraform
 and AWS specialists plus the read-only infrastructure-reviewer Agent. The
 Profile is composable with language, database, and workflow Profiles.
 
-Frontend consumers can select `frontend` for the framework-agnostic web-quality
-Skill plus the React 19, Next.js, Svelte 5, and Tailwind CSS v4+ specialists.
-The Profile composes with a language Profile and the TypeScript DOM,
-performance, or security specialists where those concerns apply.
+Frontend consumers can select `frontend` for the seven framework-agnostic,
+browser-testing, form-validation, framework, and styling specialists. The
+Profile composes with a language Profile and the TypeScript DOM, performance,
+or security specialists where those concerns apply.
 
 ## Capability map
 
@@ -150,13 +150,18 @@ separate from AWS topology, IAM/OIDC, deployment handoffs, operations, and
 Lambda packaging. github-actions-aws-deploy is a design/review Skill, not a
 GitHub mutation workflow.
 
-### Frontend: framework-agnostic web quality
+### Frontend: framework-agnostic web quality and delivery
 
 `frontend-web-quality` covers platform-first HTML/CSS/JS, responsive behavior,
 explicit UI states, URL state, progressive enhancement, Core Web Vitals,
-Baseline compatibility, and user-flow verification. `frontend-react`,
-`frontend-nextjs`, `frontend-svelte`, and `frontend-tailwind` own the named
-framework and styling mechanics. None replaces TypeScript mechanics,
+Baseline compatibility, and user-flow verification.
+`frontend-browser-testing` covers public browser flows across engines,
+viewports, input modalities, SSR/hydration, navigation, failure paths, and
+visual interaction behavior. `frontend-form-validation` covers semantic/native
+forms, input purpose, client/server validation, submission lifecycle, errors,
+focus, and progressive enhancement. `frontend-react`, `frontend-nextjs`,
+`frontend-svelte`, and `frontend-tailwind` own the named framework and
+styling mechanics. None replaces TypeScript mechanics,
 `typescript-dom-accessibility`, `typescript-performance`,
 `typescript-security`, `$tdd`, or `$code-review`.
 
@@ -190,6 +195,7 @@ $tdd
   + aws-infrastructure + aws-iam-oidc-security
   + github-actions-aws-deploy + cloudwatch-operations + nodejs-lambda
   + frontend-web-quality
+  + frontend-browser-testing + frontend-form-validation
   + frontend-react + frontend-nextjs + frontend-svelte + frontend-tailwind
 ```
 
@@ -221,8 +227,12 @@ separate.
 
 Agents do not own a second catalog. `planner` selects specialists by trigger,
 `tdd-implementer` combines `$tdd` with implementation concerns, and review
-agents add liveness, compatibility, security, database, or test specialists
-only when the change crosses those boundaries.
+agents add liveness, compatibility, security, database, test, or frontend
+specialists only when the change crosses those boundaries. For frontend work,
+the five general Agents select only the relevant `frontend-*` Skills:
+`frontend-web-quality` for UI, `frontend-browser-testing` for public browser
+flows, `frontend-form-validation` for forms, and framework or styling Skills
+when those technologies are present.
 
 ## Priority after P0
 
@@ -234,9 +244,10 @@ are needed before those inputs exist.
 ## Validation
 
 Run the bundled `quick_validate.py` once for every `SKILL.md`, including the
-workflow Skills. Also check that
-specialist names are unique, descriptions contain the language/engine/contract/
-frontend boundary, framework-specific descriptions, data-race and goroutine-liveness checks state their evidence limits,
+workflow Skills. Also check that specialist names are unique, descriptions
+contain the language/engine/contract/frontend boundary, framework-specific
+descriptions, browser/form verification guidance, data-race and
+goroutine-liveness checks state their evidence limits,
 Python typing instructions handle `Any` propagation, generated JSON-tag
 instructions handle nullability/collisions, and no Agent references a removed
 umbrella Skill. Infrastructure instructions keep environment separation, state
