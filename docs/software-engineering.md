@@ -17,8 +17,8 @@ TerraformとAWSのインフラ領域も、同じ専門Skillの境界で提供し
 | OpenAPI | 13領域 | 13 |
 | Cross-cutting | 基本3領域 + 追加6領域 | 9 |
 | Infrastructure | Terraform/AWSの7領域 | 7 |
-| Frontend | Web UI品質、React 19/Next.js/Svelte 5/Tailwind v4+ | 5 |
-| **合計** | **専門Skill** | **174** |
+| Frontend | Web UI品質、browser testing、form validation、React 19/Next.js/Svelte 5/Tailwind v4+ | 7 |
+| **合計** | **専門Skill** | **176** |
 
 このPackとは別に、リポジトリには10個のWorkflow Skillも含まれます。
 `commit-push`、`create-pr`、`create-draft-pr`、`mark-pr-ready`、
@@ -75,6 +75,7 @@ $tdd
   + aws-infrastructure + aws-iam-oidc-security
   + github-actions-aws-deploy + cloudwatch-operations + nodejs-lambda
   + frontend-web-quality (user-facing web UI)
+  + frontend-browser-testing + frontend-form-validation (browser flows and forms)
   + frontend-react + frontend-nextjs + frontend-svelte (framework-specific)
   + frontend-tailwind (styling)
 ```
@@ -112,8 +113,10 @@ $tdd
   nodejs-lambda, terraform-policy-testing
 - Frontend: `frontend-web-quality` for framework-agnostic semantic HTML, responsive
   behavior, UI state, browser support, performance, and user-flow verification;
-  `frontend-react`, `frontend-nextjs`, `frontend-svelte`, and `frontend-tailwind`
-  for the named framework and styling boundaries.
+  `frontend-browser-testing` for public browser flows and
+  `frontend-form-validation` for cross-framework form contracts; and
+  `frontend-react`, `frontend-nextjs`, `frontend-svelte`, and
+  `frontend-tailwind` for the named framework and styling boundaries.
 
 特に `go-goroutine-leak-deadlock-check` は `go-data-race-check` と別物です。
 race detectorが検出する実行時の競合だけでなく、停止不能・待ち合わせ不能・
@@ -135,7 +138,7 @@ race detectorが検出する実行時の競合だけでなく、停止不能・�
 
 ## 優先順位
 
-- **P0**: 明示された174個の専門Skill、10個のWorkflow Skill、8 Agent、設計書、README、静的検証。
+- **P0**: 明示された176個の専門Skill、10個のWorkflow Skill、8 Agent、設計書、README、静的検証。
 - **P1**: 実リポジトリで使うgenerator/linter/driver固有のreferencesと補助script。
 - **P2**: 実プロジェクト由来のfixture、golden test、生成物の互換性テスト。
 
@@ -144,6 +147,6 @@ P1/P2は対象リポジトリとツールチェーンが決まらないまま作
 
 ## 検証
 
-174個の専門 `SKILL.md` と10個のWorkflow `SKILL.md`をCodex同梱の
+176個の専門 `SKILL.md` と10個のWorkflow `SKILL.md`をCodex同梱の
 `quick_validate.py` で検証します。
 この成果物は指示とメタデータなので、アプリケーションruntime fixtureは作りません。
