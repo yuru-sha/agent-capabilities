@@ -1,0 +1,20 @@
+schema: 1
+id: frontend
+kind: frontend
+description: Framework-agnostic frontend quality plus React 19, Next.js, Svelte 5, and Tailwind CSS v4+ Skills and the agents used to plan, implement, review, and verify web UI work.
+
+skills:
+  include:
+    - packs/software-engineering/skills/frontend/**
+
+agents:
+  include:
+    - planner
+    - tdd-implementer
+    - reviewer
+    - test-reviewer
+    - repo-doctor
+
+external_skills:
+  - tdd
+  - code-review
