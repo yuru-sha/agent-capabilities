@@ -3,8 +3,8 @@
 ## Goal
 
 Provide installable, automatically selectable specialist Skills for Go,
-TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, and
-AWS infrastructure. The skill boundary is the smallest named engineering
+TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS
+infrastructure, and framework-agnostic frontend web UI. The skill boundary is the smallest named engineering
 concern from the requested catalog.
 
 ## Non-duplication boundaries
@@ -17,6 +17,8 @@ concern from the requested catalog.
 - OpenAPI specialists own one contract concern.
 - Cross-cutting specialists own security, operational quality, or review lenses.
 - Infrastructure specialists own one Terraform or AWS infrastructure concern.
+- Frontend specialists own cross-framework web UI quality and browser-facing
+  delivery decisions.
 
 There are no language, database, OpenAPI, or infrastructure umbrella
 `SKILL.md` files. A broad router would compete with the specialist descriptions
@@ -32,7 +34,8 @@ catalog instead.
 | OpenAPI | 13 | `openapi-lint`, `openapi-codegen`, `openapi-breaking-change-detection` |
 | Cross-cutting | 9 | `change-review`, `benchmark-regression`, `zero-downtime-migration` |
 | Infrastructure | 7 | `terraform-infrastructure`, `aws-infrastructure`, `terraform-policy-testing` |
-| **Total** | **169** | specialist Skills |
+| Frontend | 5 | `frontend-web-quality`, `frontend-react`, `frontend-nextjs`, `frontend-svelte`, `frontend-tailwind` |
+| **Total** | **174** | specialist Skills |
 
 Each specialist has a required `SKILL.md` with a discriminating description.
 The three original cross-cutting adapter Skills retain their existing
@@ -43,8 +46,8 @@ The repository also ships ten workflow Skills: `commit-push`, `create-pr`,
 `create-draft-pr`, `mark-pr-ready`, `request-copilot-review`,
 `reply-to-review-thread`, `github-release`, `create-issue`, `security-alerts`,
 and `post-merge-cleanup`. They are selected
-through `profiles/workflows.yaml` and are separate from the 169 language,
-database, OpenAPI, cross-cutting, and infrastructure specialists.
+through `profiles/workflows.yaml` and are separate from the 174 language,
+database, OpenAPI, cross-cutting, infrastructure, and frontend specialists.
 
 ## Profiles and composition
 
@@ -72,6 +75,11 @@ external Skill.
 Infrastructure consumers can select `infrastructure` for the seven Terraform
 and AWS specialists plus the read-only infrastructure-reviewer Agent. The
 Profile is composable with language, database, and workflow Profiles.
+
+Frontend consumers can select `frontend` for the framework-agnostic web-quality
+Skill plus the React 19, Next.js, Svelte 5, and Tailwind CSS v4+ specialists.
+The Profile composes with a language Profile and the TypeScript DOM,
+performance, or security specialists where those concerns apply.
 
 ## Capability map
 
@@ -142,6 +150,16 @@ separate from AWS topology, IAM/OIDC, deployment handoffs, operations, and
 Lambda packaging. github-actions-aws-deploy is a design/review Skill, not a
 GitHub mutation workflow.
 
+### Frontend: framework-agnostic web quality
+
+`frontend-web-quality` covers platform-first HTML/CSS/JS, responsive behavior,
+explicit UI states, URL state, progressive enhancement, Core Web Vitals,
+Baseline compatibility, and user-flow verification. `frontend-react`,
+`frontend-nextjs`, `frontend-svelte`, and `frontend-tailwind` own the named
+framework and styling mechanics. None replaces TypeScript mechanics,
+`typescript-dom-accessibility`, `typescript-performance`,
+`typescript-security`, `$tdd`, or `$code-review`.
+
 ### GitHub workflow boundaries
 
 `request-copilot-review` changes only the reviewer request on an existing PR.
@@ -171,6 +189,8 @@ $tdd
   + terraform-infrastructure + terraform-policy-testing
   + aws-infrastructure + aws-iam-oidc-security
   + github-actions-aws-deploy + cloudwatch-operations + nodejs-lambda
+  + frontend-web-quality
+  + frontend-react + frontend-nextjs + frontend-svelte + frontend-tailwind
 ```
 
 Other common compositions include `python3-type-checking` for typed Python
@@ -215,8 +235,8 @@ are needed before those inputs exist.
 
 Run the bundled `quick_validate.py` once for every `SKILL.md`, including the
 workflow Skills. Also check that
-specialist names are unique, descriptions contain the language/engine/contract
-boundary, data-race and goroutine-liveness checks state their evidence limits,
+specialist names are unique, descriptions contain the language/engine/contract/
+frontend boundary, framework-specific descriptions, data-race and goroutine-liveness checks state their evidence limits,
 Python typing instructions handle `Any` propagation, generated JSON-tag
 instructions handle nullability/collisions, and no Agent references a removed
 umbrella Skill. Infrastructure instructions keep environment separation, state
