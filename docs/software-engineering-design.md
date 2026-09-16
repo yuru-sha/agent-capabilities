@@ -39,9 +39,10 @@ The three original cross-cutting adapter Skills retain their existing
 `agents/openai.yaml`; specialist UI metadata for the additional Skills is
 intentionally omitted until a concrete install/catalog surface needs it.
 
-The repository also ships nine workflow Skills: `commit-push`, `create-pr`,
-`create-draft-pr`, `mark-pr-ready`, `request-copilot-review`, `github-release`,
-`create-issue`, `security-alerts`, and `post-merge-cleanup`. They are selected
+The repository also ships ten workflow Skills: `commit-push`, `create-pr`,
+`create-draft-pr`, `mark-pr-ready`, `request-copilot-review`,
+`reply-to-review-thread`, `github-release`, `create-issue`, `security-alerts`,
+and `post-merge-cleanup`. They are selected
 through `profiles/workflows.yaml` and are separate from the 169 language,
 database, OpenAPI, cross-cutting, and infrastructure specialists.
 
@@ -144,6 +145,9 @@ GitHub mutation workflow.
 ### GitHub workflow boundaries
 
 `request-copilot-review` changes only the reviewer request on an existing PR.
+`reply-to-review-thread` replies only through the GraphQL review-thread
+mutation after resolving a unique `PRRT_...` thread ID; it verifies the stored
+reply and does not silently fall back to a REST or top-level comment API.
 `security-alerts` inventories Dependabot, code scanning, and secret scanning in
 read-only mode. `security-review` remains the code and trust-boundary review;
 alert remediation is intentionally outside both Skills.

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Reply to Review Thread"
+  short_description: "Reply safely to a GitHub PR review thread"

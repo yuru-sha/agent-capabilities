@@ -9,6 +9,7 @@ skills:
     - packs/operations/github/skills/create-draft-pr/**
     - packs/operations/github/skills/mark-pr-ready/**
     - packs/operations/github/skills/request-copilot-review/**
+    - packs/operations/github/skills/reply-to-review-thread/**
     - packs/operations/github/skills/github-release/**
     - packs/operations/github/skills/create-issue/**
     - packs/operations/github/skills/security-alerts/**

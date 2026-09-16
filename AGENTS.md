@@ -29,6 +29,9 @@ Profiles for software engineering and GitHub workflows.
   future CI-status Skill must remain read-only and must not duplicate that flow.
 - `request-copilot-review` only requests or re-requests a Copilot review. It does
   not review findings, reply to threads, or merge a PR.
+- `reply-to-review-thread` only replies to an existing PR review thread after
+  resolving its GraphQL thread ID and verifying the stored reply. It does not
+  create new review comments or resolve threads unless explicitly requested.
 
 ## Editing Skills and Profiles
 

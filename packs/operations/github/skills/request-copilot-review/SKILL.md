@@ -23,5 +23,9 @@ change commits or review content.
    review request is not evidence that the review has completed; report the
    pending state and any permission or platform limitation separately.
 
+Use `reply-to-review-thread` for a separate response to a Copilot inline
+comment. That operation must resolve the GraphQL review-thread ID before
+posting; do not improvise a reply endpoint here.
+
 Do not approve, request changes, reply to review comments, resolve threads,
 modify files, mark the PR ready, or merge it as part of this skill.
