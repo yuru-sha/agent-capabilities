@@ -1,7 +1,7 @@
 # Software Engineering Capability Pack
 
-Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPIを対象にした、
-専門領域単位のCodex Skill/Agentセットです。全体リポジトリは
+Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、
+フレームワーク横断のFrontendを対象にした、専門領域単位のCodex Skill/Agentセットです。全体リポジトリは
 `agent-capabilities` で、Profilesは `profiles/` にあります。
 
 ## 現在の構成
@@ -17,7 +17,8 @@ TerraformとAWSのインフラ領域も、同じ専門Skillの境界で提供し
 | OpenAPI | 13領域 | 13 |
 | Cross-cutting | 基本3領域 + 追加6領域 | 9 |
 | Infrastructure | Terraform/AWSの7領域 | 7 |
-| **合計** | **専門Skill** | **169** |
+| Frontend | Web UI品質、React 19/Next.js/Svelte 5/Tailwind v4+ | 5 |
+| **合計** | **専門Skill** | **174** |
 
 このPackとは別に、リポジトリには10個のWorkflow Skillも含まれます。
 `commit-push`、`create-pr`、`create-draft-pr`、`mark-pr-ready`、
@@ -40,7 +41,7 @@ Agent定義は8個です。
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure}/...
+│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,frontend}/...
 │   │   └── agents/{planner,tdd-implementer,reviewer,database-reviewer,
 │   │              security-reviewer,test-reviewer,repo-doctor,
 │   │              infrastructure-reviewer}.md
@@ -50,7 +51,7 @@ agent-capabilities/
 │                   github-release,create-issue,
 │                   security-alerts,post-merge-cleanup}/SKILL.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,infrastructure,workflows,github}.yaml
+│             cross-cutting,infrastructure,frontend,workflows,github}.yaml
 ├── shared/
 ├── scripts/install-profile
 └── docs/
@@ -73,6 +74,9 @@ $tdd
   + terraform-infrastructure + terraform-policy-testing
   + aws-infrastructure + aws-iam-oidc-security
   + github-actions-aws-deploy + cloudwatch-operations + nodejs-lambda
+  + frontend-web-quality (user-facing web UI)
+  + frontend-react + frontend-nextjs + frontend-svelte (framework-specific)
+  + frontend-tailwind (styling)
 ```
 
 専門Skillはmodel-invokedです。`go-concurrency` のdescriptionはGoの並行処理に、
@@ -106,6 +110,10 @@ $tdd
 - Infrastructure: terraform-infrastructure, aws-infrastructure,
   aws-iam-oidc-security, github-actions-aws-deploy, cloudwatch-operations,
   nodejs-lambda, terraform-policy-testing
+- Frontend: `frontend-web-quality` for framework-agnostic semantic HTML, responsive
+  behavior, UI state, browser support, performance, and user-flow verification;
+  `frontend-react`, `frontend-nextjs`, `frontend-svelte`, and `frontend-tailwind`
+  for the named framework and styling boundaries.
 
 特に `go-goroutine-leak-deadlock-check` は `go-data-race-check` と別物です。
 race detectorが検出する実行時の競合だけでなく、停止不能・待ち合わせ不能・
@@ -127,7 +135,7 @@ race detectorが検出する実行時の競合だけでなく、停止不能・�
 
 ## 優先順位
 
-- **P0**: 明示された169個の専門Skill、10個のWorkflow Skill、8 Agent、設計書、README、静的検証。
+- **P0**: 明示された174個の専門Skill、10個のWorkflow Skill、8 Agent、設計書、README、静的検証。
 - **P1**: 実リポジトリで使うgenerator/linter/driver固有のreferencesと補助script。
 - **P2**: 実プロジェクト由来のfixture、golden test、生成物の互換性テスト。
 
@@ -136,6 +144,6 @@ P1/P2は対象リポジトリとツールチェーンが決まらないまま作
 
 ## 検証
 
-169個の専門 `SKILL.md` と10個のWorkflow `SKILL.md`をCodex同梱の
+174個の専門 `SKILL.md` と10個のWorkflow `SKILL.md`をCodex同梱の
 `quick_validate.py` で検証します。
 この成果物は指示とメタデータなので、アプリケーションruntime fixtureは作りません。
