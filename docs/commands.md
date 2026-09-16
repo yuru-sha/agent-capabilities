@@ -10,7 +10,7 @@ the selected Profiles and the target repository.
 | Command | Used for | Availability |
 |---|---|---|
 | `git` | inspect, commit, push, branch, worktree, and remote-state operations | Required for repository workflows |
-| `gh` | pull requests, issues, releases, Copilot review requests, and GitHub security APIs | Required for GitHub workflows |
+| `gh` | pull requests, review-thread GraphQL replies, issues, releases, Copilot review requests, and GitHub security APIs | Required for GitHub workflows |
 | `rtk` | command output reduction and the configured shell wrapper | Optional; use when the environment provides it |
 | `python3` + `quick_validate.py` | validate Skill frontmatter and descriptions | Maintainer check; provided by the local Skill Creator installation |
 

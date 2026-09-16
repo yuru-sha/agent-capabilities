@@ -19,10 +19,10 @@ TerraformとAWSのインフラ領域も、同じ専門Skillの境界で提供し
 | Infrastructure | Terraform/AWSの7領域 | 7 |
 | **合計** | **専門Skill** | **169** |
 
-このPackとは別に、リポジトリには9個のWorkflow Skillも含まれます。
+このPackとは別に、リポジトリには10個のWorkflow Skillも含まれます。
 `commit-push`、`create-pr`、`create-draft-pr`、`mark-pr-ready`、
-`request-copilot-review`、`github-release`、`create-issue`、
-`security-alerts`、`post-merge-cleanup`です。
+`request-copilot-review`、`reply-to-review-thread`、`github-release`、
+`create-issue`、`security-alerts`、`post-merge-cleanup`です。
 
 Agent定義は8個です。
 
@@ -46,7 +46,8 @@ agent-capabilities/
 │   │              infrastructure-reviewer}.md
 │   └── operations/github/
 │       └── skills/{commit-push,create-pr,create-draft-pr,mark-pr-ready,
-│                   request-copilot-review,github-release,create-issue,
+│                   request-copilot-review,reply-to-review-thread,
+│                   github-release,create-issue,
 │                   security-alerts,post-merge-cleanup}/SKILL.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
 │             cross-cutting,infrastructure,workflows,github}.yaml
@@ -126,7 +127,7 @@ race detectorが検出する実行時の競合だけでなく、停止不能・�
 
 ## 優先順位
 
-- **P0**: 明示された169個の専門Skill、9個のWorkflow Skill、8 Agent、設計書、README、静的検証。
+- **P0**: 明示された169個の専門Skill、10個のWorkflow Skill、8 Agent、設計書、README、静的検証。
 - **P1**: 実リポジトリで使うgenerator/linter/driver固有のreferencesと補助script。
 - **P2**: 実プロジェクト由来のfixture、golden test、生成物の互換性テスト。
 
@@ -135,6 +136,6 @@ P1/P2は対象リポジトリとツールチェーンが決まらないまま作
 
 ## 検証
 
-169個の専門 `SKILL.md` と9個のWorkflow `SKILL.md`をCodex同梱の
+169個の専門 `SKILL.md` と10個のWorkflow `SKILL.md`をCodex同梱の
 `quick_validate.py` で検証します。
 この成果物は指示とメタデータなので、アプリケーションruntime fixtureは作りません。
