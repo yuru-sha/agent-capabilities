@@ -31,6 +31,12 @@ The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only infrastructure-reviewer Agent. It is intended
 to compose with a language or database Profile rather than replacing one.
 
+The frontend Profile selects seven frontend Skills spanning framework-agnostic
+web quality, browser testing, form validation, and framework/styling mechanics,
+plus the five general software-engineering Agents. It composes with a language
+Profile and the TypeScript DOM, performance, or security specialists where
+those concerns apply.
+
 `external_skills` names existing global Skills such as `$tdd` and
 `$code-review` and `$gh-fix-ci`; the profiles do not copy or redefine them.
 

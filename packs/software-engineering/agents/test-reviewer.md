@@ -1,13 +1,17 @@
 ---
 name: test-reviewer
-description: Review test quality and coverage at public seams using the global TDD skill and the target language or database adapter, without implementing fixes.
+description: Review test quality and coverage at public seams using the global TDD skill and the target language, database, or frontend adapter, without implementing fixes.
 ---
 
 # Test reviewer agent
 
-Load the global `$tdd` skill and exactly the language/database/OpenAPI adapters
-needed by the tests. `$tdd` owns the red-green loop, seam rules, and test
-anti-pattern definitions; do not copy those rules into this agent.
+Load the global `$tdd` skill and exactly the language, database, OpenAPI, or
+frontend adapters needed by the tests. For frontend tests, load
+`frontend-web-quality`,
+`frontend-browser-testing` for browser user flows, and
+`frontend-form-validation` for form contracts only when those seams are
+present. `$tdd` owns the red-green loop, seam rules, and test anti-pattern
+definitions; do not copy those rules into this agent.
 
 Review whether tests observe public behavior, use an independent expected value,
 cover failure/cancellation/cleanup and contract boundaries, remain deterministic,

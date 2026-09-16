@@ -1,7 +1,7 @@
 schema: 1
 id: frontend
 kind: frontend
-description: Framework-agnostic frontend quality plus React 19, Next.js, Svelte 5, and Tailwind CSS v4+ Skills and the agents used to plan, implement, review, and verify web UI work.
+description: Framework-agnostic frontend quality, browser testing, form validation, and React 19, Next.js, Svelte 5, and Tailwind CSS v4+ Skills and the agents used to plan, implement, review, and verify web UI work.
 
 skills:
   include:

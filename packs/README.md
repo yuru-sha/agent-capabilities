@@ -6,7 +6,8 @@ installation into a consumer project.
 ## Current packs
 
 - `software-engineering`: language, database, OpenAPI, cross-cutting,
-  infrastructure, and frontend Skills, plus reusable engineering Agents.
+  infrastructure, frontend web-quality, browser-testing, form-validation, and
+  framework/styling Skills, plus reusable engineering Agents.
 - `operations/github`: commit/push, pull request, release, issue, Copilot
   review, security alert, and post-merge Skills.
 
