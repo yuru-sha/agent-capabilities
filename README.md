@@ -86,3 +86,7 @@ the default. External Skills such as `$tdd` and `$code-review` are reported
 but not copied. Legacy link-only installs without a manifest are also removed
 when their links still point to this checkout; untracked copies are left in
 place.
+
+## GitHub Release
+
+See [docs/agents/release.md](docs/agents/release.md) for the release note format and creation procedure. The shared body template is [.github/release-notes-template.md](.github/release-notes-template.md), and the generated-note categories are managed in [.github/release.yml](.github/release.yml).
