@@ -55,6 +55,11 @@ Profiles for software engineering and GitHub workflows.
 - Run `git diff --check` before committing.
 - Do not claim checks passed unless they were actually run.
 
+## Commit Messages
+
+- Follow the commit-message policy in [`CONTRIBUTING.md`](CONTRIBUTING.md#commit-messages).
+- Do not create commits unless the user explicitly requests it.
+
 ## Git and GitHub
 
 - Preserve unrelated work and stage only files in the requested change.
