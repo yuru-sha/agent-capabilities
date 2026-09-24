@@ -12,6 +12,12 @@ Profiles for software engineering and GitHub workflows.
   intended maintainer.
 - Preserve code identifiers, Skill IDs, command names, and API names exactly.
 
+## Agent behavior
+
+- Infer routine choices from the request and repository context; ask only when an unresolved choice could materially change the result, scope, or authority.
+- Follow explicit user instructions over general Skill guidance, and report verification limits plainly.
+- Keep responses concise, direct, and focused on the result.
+
 ## Capability boundaries
 
 - Keep specialist Skills narrow and model-selectable; do not add language,
