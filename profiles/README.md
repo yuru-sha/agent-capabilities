@@ -16,8 +16,14 @@ Agents by ID. `go+sqlite` is a generated bundle name, not a source Profile.
 
 The `workflows` Profile contains every Skill in the
 `packs/operations/github` pack: commit/push, ready and draft pull requests,
-Copilot review requests, releases, security alerts, issue creation, and
-post-merge cleanup.
+Copilot review requests, releases, security alerts, issue creation, clarification,
+decomposition and implementation, and post-merge cleanup.
+
+The `github` and `workflows` Profiles install the `clarify-issue`,
+`decompose-issue`, and `implement-issue` Skills. The separate Orca Automation
+prompt at `packs/operations/github/automations/issue-development-pipeline.md`
+is not selected by a Profile; configure it as an Orca Automation for a specific
+repo, provider, and schedule.
 
 The narrower `github` Profile selects the same pack except `commit-push`. It
 declares the official global `$gh-fix-ci` Skill as an external dependency and
