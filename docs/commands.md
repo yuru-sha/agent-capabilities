@@ -11,6 +11,7 @@ the selected Profiles and the target repository.
 |---|---|---|
 | `git` | inspect, commit, push, branch, worktree, and remote-state operations | Required for repository workflows |
 | `gh` | pull requests, review-thread GraphQL replies, issues, releases, Copilot review requests, and GitHub security APIs | Required for GitHub workflows |
+| `orca` | Orca-managed worktrees and scheduled Automations | Required only when using the Issue-development Automation pipeline |
 | `rtk` | command output reduction and the configured shell wrapper | Optional; use when the environment provides it |
 | `python3` + `quick_validate.py` | validate Skill frontmatter and descriptions | Maintainer check; provided by the local Skill Creator installation |
 

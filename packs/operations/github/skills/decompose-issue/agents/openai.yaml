@@ -1,0 +1,3 @@
+interface:
+  display_name: "Decompose Issue"
+  short_description: "Split an issue into linked work items"

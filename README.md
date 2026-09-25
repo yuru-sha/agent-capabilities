@@ -10,9 +10,8 @@ agents.
 ## Contents
 
 - 176 language, database, OpenAPI, cross-cutting, infrastructure, and frontend engineering Skills
-- 10 repository workflow Skills: commit/push, pull requests, Copilot review,
-  review-thread replies,
-  GitHub releases, security alerts, issues, and post-merge cleanup
+- 13 repository workflow Skills: commit/push, pull requests, issue clarification, decomposition and implementation, issue creation, Copilot review, review-thread replies, GitHub releases, security alerts, and post-merge cleanup
+- 1 reusable Orca Automation pipeline prompt for Issue-tree development
 - 8 reusable Agents
 - 13 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, and `github.yaml`
 
