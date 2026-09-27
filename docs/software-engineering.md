@@ -20,10 +20,14 @@ TerraformとAWSのインフラ領域も、同じ専門Skillの境界で提供し
 | Frontend | Web UI品質、browser testing、form validation、React 19/Next.js/Svelte 5/Tailwind v4+ | 7 |
 | **合計** | **専門Skill** | **176** |
 
-このPackとは別に、リポジトリには10個のWorkflow Skillも含まれます。
+このPackとは別に、リポジトリには13個のWorkflow Skillも含まれます。
 `commit-push`、`create-pr`、`create-draft-pr`、`mark-pr-ready`、
 `request-copilot-review`、`reply-to-review-thread`、`github-release`、
-`create-issue`、`security-alerts`、`post-merge-cleanup`です。
+`create-issue`、`clarify-issue`、`decompose-issue`、`implement-issue`、
+`security-alerts`、`post-merge-cleanup`です。
+
+Issue Treeを自動選択・Claimし、専用Worktree、Recovery、Review、Draft PR、CIまで管理するOrca Automation Promptは
+`packs/operations/github/automations/issue-development-pipeline.md`です。
 
 Agent定義は8個です。
 
@@ -46,10 +50,11 @@ agent-capabilities/
 │   │              security-reviewer,test-reviewer,repo-doctor,
 │   │              infrastructure-reviewer}.md
 │   └── operations/github/
-│       └── skills/{commit-push,create-pr,create-draft-pr,mark-pr-ready,
-│                   request-copilot-review,reply-to-review-thread,
-│                   github-release,create-issue,
-│                   security-alerts,post-merge-cleanup}/SKILL.md
+│       ├── skills/{commit-push,create-pr,create-draft-pr,mark-pr-ready,
+│       │           request-copilot-review,reply-to-review-thread,
+│       │           github-release,create-issue,clarify-issue,decompose-issue,
+│       │           implement-issue,security-alerts,post-merge-cleanup}/SKILL.md
+│       └── automations/issue-development-pipeline.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
 │             cross-cutting,infrastructure,frontend,workflows,github}.yaml
 ├── shared/
@@ -138,7 +143,7 @@ race detectorが検出する実行時の競合だけでなく、停止不能・�
 
 ## 優先順位
 
-- **P0**: 明示された176個の専門Skill、10個のWorkflow Skill、8 Agent、設計書、README、静的検証。
+- **P0**: 明示された176個の専門Skill、13個のWorkflow Skill、Issue開発Orca Automation Prompt 1個、8 Agent、設計書、README、静的検証。
 - **P1**: 実リポジトリで使うgenerator/linter/driver固有のreferencesと補助script。
 - **P2**: 実プロジェクト由来のfixture、golden test、生成物の互換性テスト。
 
@@ -147,6 +152,6 @@ P1/P2は対象リポジトリとツールチェーンが決まらないまま作
 
 ## 検証
 
-176個の専門 `SKILL.md` と10個のWorkflow `SKILL.md`をCodex同梱の
+176個の専門 `SKILL.md` と13個のWorkflow `SKILL.md`をCodex同梱の
 `quick_validate.py` で検証します。
 この成果物は指示とメタデータなので、アプリケーションruntime fixtureは作りません。

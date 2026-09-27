@@ -9,7 +9,8 @@ AI コーディングエージェント向けに、再利用可能な Skills、A
 ## 内容
 
 - 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド向けのエンジニアリング Skills 176 個
-- コミットと push、Pull Request、Copilot review、レビュー スレッドへの返信、GitHub release、security alert、Issue、マージ後の cleanup を扱うリポジトリ運用 Skills 10 個
+- コミットと push、Pull Request、Issue の要件整理・分割・実装・作成、Copilot review、レビュー スレッドへの返信、GitHub release、security alert、マージ後の cleanup を扱うリポジトリ運用 Skills 13 個
+- Issue Tree開発向けの再利用可能なOrca AutomationパイプラインPrompt 1 個
 - 再利用可能な Agents 8 個
 - `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`infrastructure.yaml`、`github.yaml` など、組み合わせ可能な Profiles 13 個
 

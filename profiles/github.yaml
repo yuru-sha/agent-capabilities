@@ -12,6 +12,9 @@ skills:
     - packs/operations/github/skills/reply-to-review-thread/**
     - packs/operations/github/skills/github-release/**
     - packs/operations/github/skills/create-issue/**
+    - packs/operations/github/skills/clarify-issue/**
+    - packs/operations/github/skills/decompose-issue/**
+    - packs/operations/github/skills/implement-issue/**
     - packs/operations/github/skills/security-alerts/**
     - packs/operations/github/skills/post-merge-cleanup/**
 
