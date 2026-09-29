@@ -5,7 +5,7 @@ description: "Use when generating or reviewing Go structs and json tags from JSO
 
 # Go struct and JSON-tag generation
 
-Use this specialist with the global `$tdd` skill for implementation work and `$code-review` for review work. It owns only this language-specific concern.
+Use this specialist with oh-my-pstack's TDD workflow for implementation work and oh-my-pstack's review workflow for review work. It owns only this language-specific concern.
 
 ## Rules
 

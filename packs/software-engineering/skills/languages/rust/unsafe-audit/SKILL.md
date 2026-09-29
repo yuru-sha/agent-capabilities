@@ -5,7 +5,7 @@ description: "Use when Rust changes unsafe blocks, raw pointers, FFI wrappers, t
 
 # Rust Unsafe Audit
 
-Use with `rust-ffi-abi`, `$code-review`, and the repository's sanitizer or Miri
+Use with `rust-ffi-abi`, oh-my-pstack's review workflow, and the repository's sanitizer or Miri
 workflow when available.
 
 ## Check

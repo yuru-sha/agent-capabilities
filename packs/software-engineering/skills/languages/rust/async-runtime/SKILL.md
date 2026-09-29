@@ -5,8 +5,7 @@ description: "Use when Rust async tasks, executors, cancellation, JoinHandles, b
 
 # Rust Async Runtime
 
-Use with `$tdd`, `rust-concurrency`, `rust-resource-management`, and the
-repository's selected async runtime.
+Use oh-my-pstack's TDD workflow alongside `rust-concurrency`, `rust-resource-management`, and the repository's selected async runtime.
 
 ## Check
 

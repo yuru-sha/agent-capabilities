@@ -379,7 +379,6 @@ def install_profiles(target: Path, profiles: list[dict], *, link: bool, force: b
     for profile in profiles:
         for entry in profile["entries"]:
             merge_entry(desired, entry)
-
     for relative_path, entry in desired.items():
         previous = manifest["entries"].get(relative_path)
         if previous is not None and Path(previous["source"]).resolve() != entry["source"]:
@@ -387,6 +386,38 @@ def install_profiles(target: Path, profiles: list[dict], *, link: bool, force: b
                 f"manifest source conflict for {relative_path}: "
                 f"{previous['source']} and {entry['source']}"
             )
+
+    selected_ids = {profile["id"] for profile in profiles}
+    desired_paths = set(desired)
+    other_owned_paths = {
+        relative_path
+        for profile_id_value, paths in manifest["profiles"].items()
+        if profile_id_value not in selected_ids
+        for relative_path in paths
+    }
+    obsolete_by_path = {}
+    for profile_id_value in selected_ids:
+        for relative_path in manifest["profiles"].get(profile_id_value, []):
+            if relative_path not in desired_paths and relative_path not in other_owned_paths:
+                obsolete_by_path.setdefault(relative_path, set()).add(profile_id_value)
+
+    retained_obsolete = {profile_id_value: set() for profile_id_value in selected_ids}
+    for relative_path, owners in obsolete_by_path.items():
+        removed = safe_remove(
+            target / Path(relative_path),
+            manifest["entries"].get(relative_path),
+            None,
+            force=force,
+        )
+        if removed:
+            manifest["entries"].pop(relative_path, None)
+            for profile_id_value, paths in list(manifest["profiles"].items()):
+                manifest["profiles"][profile_id_value] = [
+                    item for item in paths if item != relative_path
+                ]
+        else:
+            for profile_id_value in owners:
+                retained_obsolete[profile_id_value].add(relative_path)
 
     installed = 0
     skipped = 0
@@ -413,12 +444,15 @@ def install_profiles(target: Path, profiles: list[dict], *, link: bool, force: b
                 "kind": entry["kind"],
             }
 
-    selected_ids = {profile["id"] for profile in profiles}
     for profile in profiles:
-        manifest["profiles"][profile["id"]] = sorted(
-            relative_path
-            for relative_path in (entry["path"] for entry in profile["entries"])
-            if relative_path in recognized
+        profile_id_value = profile["id"]
+        manifest["profiles"][profile_id_value] = sorted(
+            {
+                relative_path
+                for relative_path in (entry["path"] for entry in profile["entries"])
+                if relative_path in recognized
+            }
+            | retained_obsolete[profile_id_value]
         )
     for profile_id_value in selected_ids:
         if profile_id_value not in manifest["profiles"]:

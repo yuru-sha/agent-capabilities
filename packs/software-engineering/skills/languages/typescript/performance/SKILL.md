@@ -5,7 +5,7 @@ description: "Use when TypeScript or Node/browser code involves profiling, event
 
 # TypeScript Performance
 
-Use this specialist with the global `$tdd` skill for implementation and `$code-review` for review. It owns only TypeScript-specific decisions for this concern.
+Use this specialist with oh-my-pstack's TDD workflow for implementation and oh-my-pstack's review workflow for review. It owns only TypeScript-specific decisions for this concern.
 
 ## Rules
 

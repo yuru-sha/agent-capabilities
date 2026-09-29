@@ -5,7 +5,7 @@ description: "Use when Python 3 packaging, pyproject metadata, wheels, sdists, e
 
 # Python 3 Packaging
 
-Use with `package-release-compatibility` and the repository's chosen build and
+Use with generic application-release compatibility checks and the repository's chosen build and
 environment tools.
 
 ## Check

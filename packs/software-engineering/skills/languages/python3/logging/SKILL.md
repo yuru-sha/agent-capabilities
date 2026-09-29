@@ -5,7 +5,7 @@ description: "Use when Python 3 code involves logging configuration, fields, exc
 
 # Python 3 Logging
 
-Use this specialist with the global `$tdd` skill for implementation and `$code-review` for review. It owns only Python 3-specific decisions for this concern.
+Use oh-my-pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
 
 ## Rules
 

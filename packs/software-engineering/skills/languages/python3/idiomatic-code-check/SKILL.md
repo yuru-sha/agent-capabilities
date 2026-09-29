@@ -5,7 +5,7 @@ description: "Use when checking whether Python 3 code follows repository idioms 
 
 # Python 3 idiomatic-code check
 
-Use this specialist with the global `$tdd` skill for implementation work and `$code-review` for review work. It owns only this language-specific concern.
+Use oh-my-pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only this language-specific concern.
 
 ## Rules
 

@@ -2,61 +2,44 @@
 
 ## Goal
 
-Provide installable, automatically selectable specialist Skills for Go,
-TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS
-infrastructure, and framework-agnostic frontend web UI. The skill boundary is
-the smallest named engineering concern from the requested catalog.
+Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS infrastructure, and frontend work. Each Skill owns one concrete domain concern. OMP and oh-my-pstack own the generic runtime and development workflow.
 
-## Non-duplication boundaries
+## Ownership boundaries
 
-- `$tdd` owns red-green-refactor, seam selection, and test anti-patterns.
-- `$code-review` owns fixed-point diff review and the Standards/Spec split.
-- `$gh-fix-ci` owns GitHub Actions failure diagnosis and approved remediation.
-- Language specialists own language mechanics for one concern.
-- Database specialists own one engine and one database concern.
-- OpenAPI specialists own one contract concern.
-- Cross-cutting specialists own security, operational quality, or review lenses.
-- Infrastructure specialists own one Terraform or AWS infrastructure concern.
-- Frontend specialists own cross-framework web UI quality and browser-facing
-  delivery decisions.
+- OMP owns task execution, model routing, session persistence, and runtime lifecycle.
+- oh-my-pstack owns generic development workflow, including planning, architecture workflow, TDD, review, orchestration, and recovery.
+- Language Skills own language-specific mechanics for one concern.
+- Database Skills own one engine and one database concern.
+- OpenAPI Skills own one contract concern.
+- Infrastructure Skills own one Terraform or AWS concern.
+- Frontend Skills own cross-framework web quality, browser testing, forms, and framework mechanics.
+- `database-reviewer` and `infrastructure-reviewer` select specialist Skills. They do not own review workflow.
+- `security-review` adds cross-cutting trust-boundary checks not already owned by engine-specific security Skills.
+- oh-my-pstack owns fixed-point diff review and the Standards/Spec split.
+  `$gh-fix-ci` owns approved GitHub Actions remediation and remains external.
+- oh-my-pstack owns TDD. This repository does not define a second TDD workflow.
 
-There are no language, database, OpenAPI, or infrastructure umbrella
-`SKILL.md` files. A broad router would compete with the specialist descriptions
-and duplicate their content. README and this document are the human-facing
-catalog instead.
+There are no language, database, OpenAPI, or infrastructure umbrella `SKILL.md` files. Skill descriptions provide the selection boundary. README and this design document are the human-facing catalog.
 
-## P0 package shape
+## Package shape
 
 | Area | Count | Examples |
 |---|---:|---|
 | Language | 98 | `go-testing`, `go-goroutine-leak-deadlock-check`, `python3-type-checking`, `rust-unsafe-audit` |
 | Database | 42 | `postgresql-roles-rls`, `mysql-online-ddl`, `sqlite-wal-checkpoint` |
 | OpenAPI | 13 | `openapi-lint`, `openapi-codegen`, `openapi-breaking-change-detection` |
-| Cross-cutting | 9 | `change-review`, `benchmark-regression`, `zero-downtime-migration` |
+| Cross-cutting | 3 | `security-review`, `operational-quality`, `zero-downtime-migration` |
 | Infrastructure | 7 | `terraform-infrastructure`, `aws-infrastructure`, `terraform-policy-testing` |
-| Frontend | 7 | `frontend-web-quality`, `frontend-browser-testing`, `frontend-form-validation`, `frontend-react`, `frontend-nextjs`, `frontend-svelte`, `frontend-tailwind` |
-| **Total** | **176** | specialist Skills |
+| Frontend | 7 | `frontend-web-quality`, `frontend-browser-testing`, `frontend-form-validation`, framework and styling Skills |
+| **Total** | **170** | specialist Skills |
 
-Each specialist has a required `SKILL.md` with a discriminating description.
-The three original cross-cutting adapter Skills retain their existing
-`agents/openai.yaml`; specialist UI metadata for the additional Skills is
-intentionally omitted until a concrete install/catalog surface needs it.
+The repository also ships 12 GitHub workflow Skills: `create-pr`, `create-draft-pr`, `mark-pr-ready`, `request-copilot-review`, `reply-to-review-thread`, `github-release`, `create-issue`, `clarify-issue`, `decompose-issue`, `implement-issue`, `security-alerts`, and `post-merge-cleanup`. The `commit-push` Skill was removed as generic Git workflow.
 
-The repository also ships ten workflow Skills: `commit-push`, `create-pr`,
-`create-draft-pr`, `mark-pr-ready`, `request-copilot-review`,
-`reply-to-review-thread`, `github-release`, `create-issue`, `security-alerts`,
-and `post-merge-cleanup`. They are selected
-through `profiles/workflows.yaml` and are separate from the 176 language,
-database, OpenAPI, cross-cutting, infrastructure, and frontend specialists.
+Each specialist has a `SKILL.md` with a discriminating description. Profiles compose Skill sets; they are distribution metadata, not another instruction layer.
 
 ## Profiles and composition
 
-Profiles are distribution metadata, not additional Skills. `profiles/go.yaml`
-selects `packs/software-engineering/skills/languages/go/**` and its Agent set;
-`profiles/sqlite.yaml` selects
-`packs/software-engineering/skills/databases/sqlite/**` and its database-review
-Agent set. A consumer composes
-them by ID:
+Profiles select Skill paths and only the specialist selectors needed for their domain. A consumer composes profiles by ID:
 
 ```yaml
 profiles:
@@ -64,192 +47,51 @@ profiles:
   - sqlite
 ```
 
-The resolver unions selected Skills and de-duplicates Agents by ID. A generated
-`go+sqlite` bundle is an output artifact, not a new aggregate Skill.
+The installer unions selected Skills and de-duplicates selected agents by ID. A generated `go+sqlite` bundle is an output artifact, not a source Profile.
 
-Workflow consumers can select `workflows` for the complete local/GitHub
-lifecycle from `packs/operations/github`. Consumers that need GitHub operations
-without `commit-push` can select `github`, which declares `$gh-fix-ci` as an
-external Skill.
+The `github` profile selects GitHub operations and declares `$gh-fix-ci` as an external Skill. `workflows` selects the complete GitHub operations pack. The separate Orca Automation prompt at `packs/operations/github/automations/issue-development-pipeline.md` is configured by Orca, not installed as a Profile skill.
 
-Infrastructure consumers can select `infrastructure` for the seven Terraform
-and AWS specialists plus the read-only infrastructure-reviewer Agent. The
-Profile is composable with language, database, and workflow Profiles.
-
-Frontend consumers can select `frontend` for the seven framework-agnostic,
-browser-testing, form-validation, framework, and styling specialists. The
-Profile composes with a language Profile and the TypeScript DOM, performance,
-or security specialists where those concerns apply.
+The infrastructure profile selects seven Terraform and AWS specialists plus the `infrastructure-reviewer` selector. Database profiles select the matching engine skills and the `database-reviewer` selector. Cross-cutting and OpenAPI profiles select `security-reviewer` only where the profile uses that specialist selector.
 
 ## Capability map
 
-### Language: 19 common concerns × 4 languages, plus 22 language-specific skills
+### Languages
 
-`testing`, `error-handling`, `concurrency`, `performance`, `api-client`,
-`dependencies`, `security`, `refactoring`, `logging`, `observability`,
-`database-review`, `cli`, `documentation`, `configuration`,
-`resource-management`, `serialization`, `networking`, `data-race-check`,
-`idiomatic-code-check`.
+Common concerns include testing, error handling, concurrency, performance, API clients, dependencies, security, refactoring, logging, observability, database access, CLI design, documentation, configuration, resource management, serialization, networking, data races, and idiomatic code.
 
-Each language keeps its own rules. Examples include Go table-driven tests and
-`t.Run`, Go race-enabled commands and JSON tag generation, TypeScript `unknown`
-catches and `AbortSignal`, Python context managers and asyncio, and Rust
-`Result`, ownership, `Send`/`Sync`, and RAII.
+Each language keeps its own rules. Examples include Go table-driven tests and `t.Run`, race-enabled commands and JSON tag generation; TypeScript `unknown` catches and `AbortSignal`; Python context managers, `Any` boundaries, and asyncio; Rust `Result`, ownership, `Send`/`Sync`, and RAII.
 
-Go additionally has `go-struct-json-tags` for deterministic Go struct and
-`json`-tag generation from JSON examples, JSON Schema, or API payloads.
+Language-specific additions cover Go goroutine liveness, fuzzing, HTTP servers, code generation, and API compatibility; TypeScript type design, module builds, runtime validation, package publishing, and DOM accessibility; Python typing, packaging, subprocesses, data modeling, and web servers; Rust unsafe code, FFI, MSRV, workspaces, and async runtimes.
 
-Language-specific additions are intentionally separate review triggers:
+### Databases
 
-- Go: `go-goroutine-leak-deadlock-check`, `go-fuzzing`, `go-http-server`,
-  `go-code-generation`, `go-api-compatibility`, and `go-struct-json-tags`.
-  The leak/deadlock skill covers liveness, ownership, shutdown, channel
-  progress, `WaitGroup`, and lock ordering; it is not a second race detector.
-- TypeScript: `typescript-type-design`, `typescript-module-build`,
-  `typescript-runtime-validation`, `typescript-package-publishing`, and
-  `typescript-dom-accessibility`.
-- Python 3: `python3-type-checking`, `python3-packaging`,
-  `python3-subprocess`, `python3-data-modeling`, and `python3-web-server`.
-  Type checking explicitly reviews `Any` contagion, boundary typing,
-  `cast`/ignore use, and the separation between static and runtime checks.
-- Rust: `rust-unsafe-audit`, `rust-ffi-abi`, `rust-api-compatibility`,
-  `rust-msrv`, `rust-features-workspaces`, and `rust-async-runtime`.
+PostgreSQL, MySQL, and SQLite each have skills for design, SQL, indexes, transactions, locking, migrations, performance, and review. Engine-specific skills cover access control, backup/restore, maintenance, partitioning, replication, online DDL, query-plan regression, WAL, integrity recovery, version compatibility, and extensions.
 
-### Database: 8 common concerns × 3 engines, plus 6 engine-specific concerns each
+### OpenAPI
 
-`design`, `sql`, `indexes`, `transactions`, `locking`, `migrations`,
-`performance`, `review`.
+Thirteen concerns cover design, schema governance, review, lint, spec generation, code generation, mocks and samples, authentication/security, documentation, versioning, breaking-change detection, and contract testing.
 
-PostgreSQL covers isolation, lock types, query plans, grants, and expand/contract
-migrations. Its additional specialists cover roles/RLS, backup/restore,
-vacuum/maintenance, partitioning, replication/HA, and query-plan regression.
-MySQL covers InnoDB transaction and locking behavior, SQL modes, charset and
-collation, optimizer behavior, and connector semantics. Its additional
-specialists cover roles/privileges, backup/restore, replication/HA, online DDL,
-partitioning, and compatibility/upgrade work.
-SQLite covers type affinity, foreign-key enforcement, the single-writer model,
-journal/WAL behavior, busy handling, table rebuilds, and file/workload-specific
-plans. Its additional specialists cover backup/restore, WAL checkpointing,
-integrity/recovery, vacuum/maintenance, version compatibility, and extensions.
+### Infrastructure
 
-### OpenAPI: 13 concerns
+Seven Skills keep Terraform state and policy testing separate from AWS topology, IAM/OIDC, deployment handoffs, operations, and Lambda packaging. `github-actions-aws-deploy` is a review/design Skill, not a GitHub mutation workflow.
 
-`design`, `schema-governance`, `review`, `lint`, `generate-spec`, `codegen`,
-`mock-generation`, `sample-generation`, `auth-security-review`,
-`documentation`, `versioning-migration`, `breaking-change-detection`,
-`contract-testing`.
+### Frontend
 
-### Infrastructure: 7 concerns
+`frontend-web-quality` covers platform-first HTML/CSS/JS, responsive behavior, explicit UI states, URL state, progressive enhancement, Core Web Vitals, compatibility, and user flows. `frontend-browser-testing` covers public browser flows. `frontend-form-validation` covers form contracts. `frontend-react`, `frontend-nextjs`, `frontend-svelte`, and `frontend-tailwind` own their framework and styling mechanics. These do not replace TypeScript mechanics or oh-my-pstack workflow.
 
-terraform-infrastructure, aws-infrastructure, aws-iam-oidc-security,
-github-actions-aws-deploy, cloudwatch-operations, nodejs-lambda, and
-terraform-policy-testing.
+### Cross-cutting and GitHub operations
 
-The infrastructure set keeps Terraform module/state and policy testing
-separate from AWS topology, IAM/OIDC, deployment handoffs, operations, and
-Lambda packaging. github-actions-aws-deploy is a design/review Skill, not a
-GitHub mutation workflow.
+`security-review` covers only trust-boundary checks not already handled by language, database, OpenAPI, or infrastructure specialists. `operational-quality` covers runtime operation and reproducibility. `zero-downtime-migration` composes database migration, locking, compatibility, and API-versioning knowledge.
 
-### Frontend: framework-agnostic web quality and delivery
+GitHub operation Skills each own a narrow operation. `request-copilot-review` changes only the reviewer request on an existing PR. `reply-to-review-thread` resolves a unique GraphQL thread ID, replies, and verifies the stored reply. `security-alerts` inventories alerts in read-only mode. Alert remediation remains separate.
 
-`frontend-web-quality` covers platform-first HTML/CSS/JS, responsive behavior,
-explicit UI states, URL state, progressive enhancement, Core Web Vitals,
-Baseline compatibility, and user-flow verification.
-`frontend-browser-testing` covers public browser flows across engines,
-viewports, input modalities, SSR/hydration, navigation, failure paths, and
-visual interaction behavior. `frontend-form-validation` covers semantic/native
-forms, input purpose, client/server validation, submission lifecycle, errors,
-focus, and progressive enhancement. `frontend-react`, `frontend-nextjs`,
-`frontend-svelte`, and `frontend-tailwind` own the named framework and
-styling mechanics. None replaces TypeScript mechanics,
-`typescript-dom-accessibility`, `typescript-performance`,
-`typescript-security`, `$tdd`, or `$code-review`.
+## Specialist selectors
 
-### GitHub workflow boundaries
+- `database-reviewer`: identify the engine, select relevant engine and primary-language Skills, and hand them to the pstack review workflow.
+- `infrastructure-reviewer`: select Terraform/AWS Skills for the changed surface and hand them to the pstack review workflow.
 
-`request-copilot-review` changes only the reviewer request on an existing PR.
-`reply-to-review-thread` replies only through the GraphQL review-thread
-mutation after resolving a unique `PRRT_...` thread ID; it verifies the stored
-reply and does not silently fall back to a REST or top-level comment API.
-`security-alerts` inventories Dependabot, code scanning, and secret scanning in
-read-only mode. `security-review` remains the code and trust-boundary review;
-alert remediation is intentionally outside both Skills.
-
-## Composition
-
-Agents select the smallest set of specialists that covers the change. Several
-specialists in one domain are expected when the task crosses concerns:
-
-```text
-$tdd
-  + go-concurrency + go-resource-management
-  + go-data-race-check + go-idiomatic-code-check
-  + go-goroutine-leak-deadlock-check
-  + go-struct-json-tags
-  + postgresql-transactions + postgresql-locking
-  + postgresql-roles-rls
-  + mysql-transactions + mysql-locking + mysql-online-ddl
-  + openapi-contract-testing
-  + security-review
-  + terraform-infrastructure + terraform-policy-testing
-  + aws-infrastructure + aws-iam-oidc-security
-  + github-actions-aws-deploy + cloudwatch-operations + nodejs-lambda
-  + frontend-web-quality
-  + frontend-browser-testing + frontend-form-validation
-  + frontend-react + frontend-nextjs + frontend-svelte + frontend-tailwind
-```
-
-Other common compositions include `python3-type-checking` for typed Python
-boundaries, `rust-unsafe-audit` + `rust-ffi-abi` for native interfaces,
-`sqlite-backup-restore` + `sqlite-wal-checkpoint` for file recovery,
-`mysql-roles-privileges` + `mysql-compatibility-upgrade` for access or upgrade
-work, and `fuzzing-property-testing` + `benchmark-regression` for parser or
-performance work. `zero-downtime-migration` composes the database migration, locking,
-compatibility, and OpenAPI versioning specialists; it does not replace them.
-
-The `tdd-implementer` agent composes `$tdd` with these specialists and does not
-restate TDD. The `reviewer` agent composes `$code-review` with the relevant
-specialists and keeps Standards, Spec, security, database, and test findings
-separate.
-
-## Agents
-
-- `planner`: select specialists, scope, seams, acceptance criteria, and checks.
-- `tdd-implementer`: implement vertical slices using `$tdd` plus specialists.
-- `reviewer`: review standards/spec plus relevant specialist contracts.
-- `database-reviewer`: review engine-specific correctness and migration risk.
-- `security-reviewer`: review trust boundaries and security evidence.
-- `test-reviewer`: review tests at public seams without implementing fixes.
-- `repo-doctor`: inspect instructions, toolchain, dependencies, CI, and
-  reproducibility without changing the repository.
-- infrastructure-reviewer: review Terraform/AWS trust, deployment, packaging,
-  and operational boundaries without changing repository or cloud state.
-
-Agents do not own a second catalog. `planner` selects specialists by trigger,
-`tdd-implementer` combines `$tdd` with implementation concerns, and review
-agents add liveness, compatibility, security, database, test, or frontend
-specialists only when the change crosses those boundaries. For frontend work,
-the five general Agents select only the relevant `frontend-*` Skills:
-`frontend-web-quality` for UI, `frontend-browser-testing` for public browser
-flows, `frontend-form-validation` for forms, and framework or styling Skills
-when those technologies are present.
-
-## Priority after P0
-
-P1 adds repository-specific tool references and scripts only after the target
-repository selects its generator, linter, driver, runtime, and CI commands.
-P2 adds real fixtures and golden/compatibility tests. No placeholder directories
-are needed before those inputs exist.
+These selectors do not plan changes, run review loops, coordinate workers, or report generic Standards/Spec findings. OMP and oh-my-pstack own those responsibilities.
 
 ## Validation
 
-Run the bundled `quick_validate.py` once for every `SKILL.md`, including the
-workflow Skills. Also check that specialist names are unique, descriptions
-contain the language/engine/contract/frontend boundary, framework-specific
-descriptions, browser/form verification guidance, data-race and
-goroutine-liveness checks state their evidence limits,
-Python typing instructions handle `Any` propagation, generated JSON-tag
-instructions handle nullability/collisions, and no Agent references a removed
-umbrella Skill. Infrastructure instructions keep environment separation, state
-safety, IAM trust, deployment ownership, packaging, and monitoring failure
-paths explicit.
+Run `quick_validate.py` for every changed Skill directory. Check that Skill names are unique, Profile selectors resolve, installer results match the selected profiles, and references point to surviving Skills or agents. Specialist Skills state their domain boundary and evidence limits. Infrastructure instructions preserve state safety and prohibit unapproved cloud mutations.

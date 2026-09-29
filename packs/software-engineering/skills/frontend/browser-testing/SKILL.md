@@ -5,7 +5,7 @@ description: "Use when verifying public, user-facing web flows in real browsers 
 
 # Frontend Browser Testing
 
-Use with `frontend-web-quality` and the global `$tdd` skill. Add a framework
+Use with `frontend-web-quality` and oh-my-pstack's TDD workflow. Add a framework
 specialist only when the application uses that framework. Reuse the project's
 existing browser runner, fixtures, and test environment; this Skill does not
 require a new browser-testing dependency.

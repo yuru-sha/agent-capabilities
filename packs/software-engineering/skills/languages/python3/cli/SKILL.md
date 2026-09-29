@@ -5,7 +5,7 @@ description: "Use when Python 3 code involves CLI parsing, streams, exit codes, 
 
 # Python 3 CLI
 
-Use this specialist with the global `$tdd` skill for implementation and `$code-review` for review. It owns only Python 3-specific decisions for this concern.
+Use oh-my-pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
 
 ## Rules
 

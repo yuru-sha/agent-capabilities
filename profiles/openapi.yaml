@@ -6,16 +6,3 @@ description: OpenAPI contract skills and the agents used to plan, implement, rev
 skills:
   include:
     - packs/software-engineering/skills/openapi/**
-
-agents:
-  include:
-    - planner
-    - tdd-implementer
-    - reviewer
-    - security-reviewer
-    - test-reviewer
-    - repo-doctor
-
-external_skills:
-  - tdd
-  - code-review

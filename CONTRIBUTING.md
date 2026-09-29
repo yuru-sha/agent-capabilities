@@ -11,8 +11,8 @@ existing capability boundaries.
   Skills for a language, database, OpenAPI, or GitHub workflow.
 - Keep engineering capabilities under `packs/software-engineering/` and GitHub
   operations under `packs/operations/github/`.
-- Reuse external Skills such as `$tdd`, `$code-review`, and `$gh-fix-ci`; do
-  not copy or redefine them here.
+- Use oh-my-pstack for generic TDD and code-review workflows; do not copy or
+  redefine those workflows here. Keep `$gh-fix-ci` as an external dependency.
 - Do not include secrets, credentials, or personal data.
 
 ## Adding or changing capabilities

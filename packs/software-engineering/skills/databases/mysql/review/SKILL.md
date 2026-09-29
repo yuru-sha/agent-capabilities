@@ -5,8 +5,8 @@ description: "Use when reviewing MySQL schema, SQL, access code, transactions, s
 
 # MySQL Review
 
-Use with `$code-review` and the focused MySQL specialists for the concerns in
-the diff. It is a review lens, not a replacement for those specialists.
+Use with oh-my-pstack's review workflow and the focused MySQL specialists for
+the concerns in the diff. It is a review lens, not a replacement for those specialists.
 
 ## Check
 

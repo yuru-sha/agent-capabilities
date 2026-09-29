@@ -5,7 +5,7 @@ description: "Use when reviewing Go concurrency for goroutine leaks, blocked shu
 
 # Go Goroutine Leak and Deadlock Check
 
-Use with `$tdd`, `go-concurrency`, `go-resource-management`, and
+Use with oh-my-pstack's TDD workflow, `go-concurrency`, `go-resource-management`, and
 `go-data-race-check` when relevant. This skill is a liveness review, not a
 replacement for the race detector.
 

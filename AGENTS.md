@@ -27,8 +27,8 @@ Profiles for software engineering and GitHub workflows.
   catalog entry when introducing a new pack.
 - Profiles select Skills and Agents. They are distribution metadata, not another
   instruction layer.
-- `$tdd`, `$code-review`, and `$gh-fix-ci` are external Skills. Do not copy or
-  redefine them in this repository.
+- oh-my-pstack owns generic TDD and code-review workflows. Do not copy or
+  redefine them here. `$gh-fix-ci` remains an external Skill.
 - `security-review` reviews code and trust boundaries. `security-alerts` reads
   GitHub security findings. Alert remediation is a separate mutation concern.
 - `gh-fix-ci` diagnoses and fixes failed GitHub Actions after approval. A

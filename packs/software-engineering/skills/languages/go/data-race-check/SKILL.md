@@ -5,7 +5,7 @@ description: "Use when checking Go code for data races, unsafe shared state, gor
 
 # Go data-race check
 
-Use this specialist with the global `$tdd` skill for implementation work and `$code-review` for review work. It owns only this language-specific concern.
+Use this specialist with oh-my-pstack's TDD workflow for implementation work and oh-my-pstack's review workflow for review work. It owns only this language-specific concern.
 
 ## Rules
 

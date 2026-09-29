@@ -5,7 +5,7 @@ description: "Use when changing a Rust crate's public API, semver behavior, feat
 
 # Rust API Compatibility
 
-Use with `$code-review`, `rust-features-workspaces`, and the matching wire or
+Use with oh-my-pstack's review workflow, `rust-features-workspaces`, and the matching wire or
 OpenAPI skill when the crate is a protocol client/server.
 
 ## Check

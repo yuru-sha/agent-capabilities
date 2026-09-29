@@ -5,8 +5,8 @@ description: "Use when MySQL server upgrades, connector compatibility, SQL modes
 
 # MySQL Compatibility and Upgrade
 
-Use with `mysql-review`, `mysql-backup-restore`, `mysql-replication-ha`, and
-`package-release-compatibility` for application releases.
+Use with `mysql-review`, `mysql-backup-restore`, and `mysql-replication-ha` to
+check application release compatibility against MySQL versions and connectors.
 
 ## Check
 

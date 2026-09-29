@@ -5,8 +5,8 @@ description: "Use when publishing or reviewing a TypeScript or JavaScript packag
 
 # TypeScript Package Publishing
 
-Use with `typescript-module-build`, `package-release-compatibility`, and the
-repository's package-manager skill.
+Use with `typescript-module-build` and the repository's package-manager skill.
+Apply generic compatibility checks to the published package's public API and supported consumers.
 
 ## Check
 

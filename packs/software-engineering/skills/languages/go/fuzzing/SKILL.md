@@ -5,8 +5,7 @@ description: "Use when Go parsers, decoders, protocol handlers, or serialization
 
 # Go Fuzzing
 
-Use the standard `testing.F` fuzzing model and compose with the global `$tdd`
-skill. Keep the target narrow and its invariant explicit.
+Use the standard `testing.F` fuzzing model and compose with oh-my-pstack's TDD workflow. Keep the target narrow and its invariant explicit.
 
 ## Rules
 

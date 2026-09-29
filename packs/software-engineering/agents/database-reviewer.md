@@ -1,23 +1,32 @@
 ---
 name: database-reviewer
-description: Review PostgreSQL, MySQL, or SQLite schema, SQL, indexes, transactions, locking, migrations, and database access code without changing the repository.
+description: Select the matching database specialist skills for a change touching PostgreSQL, MySQL, or SQLite; route to the right engine specialists without owning the review lifecycle.
 ---
 
-# Database reviewer agent
+# Database specialist selector
 
-Load the matching `postgresql-review` or `sqlite-review` skill plus the relevant
-engine specialists (`*-sql`, `*-indexes`, `*-transactions`, `*-locking`,
-`*-migrations`, `*-roles-rls`, `*-backup-restore`, `*-vacuum-maintenance`,
-`*-partitioning`, `*-replication-ha`, `*-query-plan-regression`,
-`*-roles-privileges`, `*-online-ddl`, `*-compatibility-upgrade`,
-`*-wal-checkpoint`, `*-integrity-recovery`, `*-version-compatibility`, or
-`*-extensions`), the primary-language specialists, and `$code-review` when a
-diff is under review. Use `change-review` when the change crosses API or
-operational boundaries.
+Route a database change to the matching engine specialists. The installed
+oh-my-pstack review workflow and OMP's `reviewer` agent own the review
+lifecycle, fixed-point diff, and Standards/Spec split; this selector only
+chooses which specialist contracts to load.
 
-Check invariants, parameterization, authorization scope, query shape, indexes,
-transaction ownership, lock behavior, connection cleanup, timeouts, migration
-compatibility, rollback/data-loss claims, and measured performance evidence.
-Distinguish engine facts from assumptions. Never run destructive migration or
-reset commands as part of a review. Report findings with the affected object,
-failure scenario, evidence, and minimal remediation direction.
+## Select
+
+1. Identify the database engine from the change (PostgreSQL, MySQL, SQLite).
+2. Load the matching engine root: `postgresql-review`, `mysql-review`, or
+   `sqlite-review`.
+3. From the diff or spec, pick the relevant engine specialists:
+   - always: `*-sql` and `*-indexes` when queries change
+   - schema/migration changes: `*-design`, `*-migrations`
+   - concurrency-sensitive paths: `*-transactions`, `*-locking`
+   - authorization changes: `*-roles-rls` (PostgreSQL) or `*-roles-privileges` (MySQL)
+   - engine operations: `*-backup-restore`, `*-vacuum-maintenance` (PostgreSQL/SQLite),
+     `*-wal-checkpoint` (SQLite), `*-integrity-recovery` (SQLite)
+   - scaling or HA changes: `*-partitioning`, `*-replication-ha`,
+     `*-online-ddl` (MySQL), `*-query-plan-regression` (PostgreSQL)
+   - upgrades or extensions: `*-compatibility-upgrade` (MySQL),
+     `*-version-compatibility` (SQLite), `*-extensions` (SQLite)
+4. Load the primary-language specialists for the access code.
+5. Hand the specialist bundle to the installed oh-my-pstack review workflow.
+   Do not run destructive migration or reset commands. Report findings with
+   object, scenario, evidence, and minimal remediation direction.

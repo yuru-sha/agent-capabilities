@@ -9,14 +9,4 @@ skills:
 
 agents:
   include:
-    - planner
-    - tdd-implementer
-    - reviewer
     - database-reviewer
-    - security-reviewer
-    - test-reviewer
-    - repo-doctor
-
-external_skills:
-  - tdd
-  - code-review

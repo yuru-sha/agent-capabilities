@@ -1,37 +1,41 @@
 ---
 name: security-review
-description: Use for a security review of application code, dependencies, configuration, database access, network/API boundaries, secrets, authentication, authorization, or untrusted input.
+description: Cross-engine trust-boundary checklist for application, dependency, database, network, and OpenAPI surfaces when no engine-specific security specialist fits.
 ---
 
-# Security review adapter
+# Trust-boundary specialist
 
-Use this skill for a focused, evidence-based security pass. Load the matching
-language, database, and OpenAPI skills for implementation details. Keep the
-review read-only unless the user explicitly requests remediation.
+Use this skill when a security concern spans multiple surfaces and the
+language, database, OpenAPI, or infrastructure specialists already cover
+the engine-specific rules. Engine-specific security rules live in each
+language `*-security` skill and database `*-roles-rls` /
+`*-roles-privileges` skill. This skill adds only the cross-cutting checks
+those specialists do not own.
 
-## Review the boundary
+## Cross-cutting boundary
 
-- Identify untrusted inputs, trust transitions, identities, assets, and the
-  operation that authorizes access. Trace the value to storage, output, logs,
-  subprocesses, files, and network calls.
-- Check authentication, object/function authorization, tenant isolation,
-  default-deny behavior, privilege changes, and failure responses.
+- Trace untrusted input to storage, output, logs, subprocesses, files, and
+  network calls across trust transitions.
+- Verify default-deny authorization, tenant isolation, and failure responses
+  at request boundaries.
 - Check validation and encoding for injection, path traversal, SSRF, unsafe
-  redirects, command execution, unsafe deserialization, and resource abuse.
+  redirects, command execution, and unsafe deserialization when no
+  engine-specific skill already covers the surface.
 
-## Protect data and availability
+## Cross-cutting data and availability
 
 - Search for secrets in source, configuration, examples, generated artifacts,
-  fixtures, logs, traces, errors, and metrics. Verify redaction at the boundary.
+  fixtures, logs, traces, errors, and metrics. Verify redaction at boundaries.
 - Review timeouts, body/file/queue limits, pagination, concurrency bounds,
-  retry storms, lock contention, and expensive input paths.
+  retry storms, lock contention, and expensive input paths not covered by
+  engine specialists.
 - Review dependency provenance, lockfiles, known-vulnerability gates, and
   permissions without claiming a clean result from an unrun tool.
 
 ## Evidence and output
 
-For every finding, state the asset, attack path, precondition, impact, changed
-location, and a minimal remediation direction. Distinguish confirmed behavior,
-code-path inference, and checks that were not run. Do not reproduce secret
-values in the report.
-
+For every finding, state the asset, attack path, precondition, impact,
+changed location, and a minimal remediation direction. Distinguish confirmed
+behavior, code-path inference, and checks that were not run. Do not
+reproduce secret values in the report. Keep this skill read-only unless the
+user explicitly requests remediation.

@@ -6,14 +6,3 @@ description: Cross-cutting review, security, operations, compatibility, testing,
 skills:
   include:
     - packs/software-engineering/skills/cross-cutting/**
-
-agents:
-  include:
-    - planner
-    - reviewer
-    - security-reviewer
-    - test-reviewer
-    - repo-doctor
-
-external_skills:
-  - code-review

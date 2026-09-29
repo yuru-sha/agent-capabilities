@@ -5,8 +5,8 @@ description: "Use when MySQL query performance, optimizer plans, statistics, buf
 
 # MySQL Performance
 
-Use with `mysql-indexes`, `mysql-sql`, `mysql-locking`, and
-`benchmark-regression` when a measurable regression is claimed.
+Use with `mysql-indexes` and `mysql-sql` to assess performance claims using
+measured regression evidence.
 
 ## Check
 

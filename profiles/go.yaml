@@ -8,13 +8,4 @@ skills:
     - packs/software-engineering/skills/languages/go/**
 
 agents:
-  include:
-    - planner
-    - tdd-implementer
-    - reviewer
-    - test-reviewer
-    - repo-doctor
-
-external_skills:
-  - tdd
-  - code-review
+  include: []

@@ -5,7 +5,7 @@ description: "Use when Go code involves database/sql access, query boundaries, t
 
 # Go Database access review
 
-Use this specialist with the global `$tdd` skill for implementation and `$code-review` for review. It owns only Go-specific decisions for this concern.
+Use this specialist with oh-my-pstack's TDD workflow for implementation and oh-my-pstack's review workflow for review. It owns only Go-specific decisions for this concern.
 
 ## Rules
 
