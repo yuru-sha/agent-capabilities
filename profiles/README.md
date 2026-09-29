@@ -38,6 +38,13 @@ The engineering Profiles select content from
 specialist selectors (`database-reviewer`, `infrastructure-reviewer`) are
 added only when the profile's domain touches those concerns.
 
+The `cross-cutting` Profile includes `technical-authoring` for document-type
+structure, technical evidence, executable examples, verification, and
+operational safety. Compose it with a language, database, OpenAPI, or
+infrastructure Profile when both document design and domain-specific behavior
+are in scope. Language-specific documentation Skills remain focused on their
+language's docstrings, examples, CLI help, and toolchain support.
+
 The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only `infrastructure-reviewer` specialist selector.
 It is intended to compose with a language or database Profile rather than

@@ -1,7 +1,7 @@
 schema: 1
 id: cross-cutting
 kind: cross-cutting
-description: Cross-cutting review, security, operations, compatibility, testing, and release skills.
+description: Cross-cutting documentation, security, operations, compatibility, testing, and release skills.
 
 skills:
   include:

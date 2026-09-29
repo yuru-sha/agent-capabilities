@@ -15,7 +15,7 @@ capabilities that OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 170 language, database, OpenAPI, cross-cutting, infrastructure, and frontend engineering Skills
+- 171 language, database, OpenAPI, cross-cutting, infrastructure, and frontend engineering Skills
 - 12 repository workflow Skills: pull requests (ready and draft), issue clarification, decomposition and implementation, issue creation, Copilot review, review-thread replies, GitHub releases, security alerts, and post-merge cleanup
 - 1 reusable Orca Automation pipeline prompt for Issue-tree development
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
