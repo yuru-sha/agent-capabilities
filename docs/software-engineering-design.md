@@ -27,10 +27,10 @@ There are no language, database, OpenAPI, or infrastructure umbrella `SKILL.md` 
 | Language | 98 | `go-testing`, `go-goroutine-leak-deadlock-check`, `python3-type-checking`, `rust-unsafe-audit` |
 | Database | 42 | `postgresql-roles-rls`, `mysql-online-ddl`, `sqlite-wal-checkpoint` |
 | OpenAPI | 13 | `openapi-lint`, `openapi-codegen`, `openapi-breaking-change-detection` |
-| Cross-cutting | 3 | `security-review`, `operational-quality`, `zero-downtime-migration` |
+| Cross-cutting | 4 | `security-review`, `operational-quality`, `zero-downtime-migration`, `technical-authoring` |
 | Infrastructure | 7 | `terraform-infrastructure`, `aws-infrastructure`, `terraform-policy-testing` |
 | Frontend | 7 | `frontend-web-quality`, `frontend-browser-testing`, `frontend-form-validation`, framework and styling Skills |
-| **Total** | **170** | specialist Skills |
+| **Total** | **171** | specialist Skills |
 
 The repository also ships 12 GitHub workflow Skills: `create-pr`, `create-draft-pr`, `mark-pr-ready`, `request-copilot-review`, `reply-to-review-thread`, `github-release`, `create-issue`, `clarify-issue`, `decompose-issue`, `implement-issue`, `security-alerts`, and `post-merge-cleanup`. The `commit-push` Skill was removed as generic Git workflow.
 
@@ -50,7 +50,7 @@ The installer unions selected Skills and de-duplicates selected agents by ID. A 
 
 The `github` profile selects GitHub operations. `workflows` selects the complete GitHub operations pack. The separate Orca Automation prompt at `packs/operations/github/automations/issue-development-pipeline.md` is configured by Orca, not installed as a Profile skill.
 
-The infrastructure profile selects seven Terraform and AWS specialists plus the `infrastructure-reviewer` selector. Database profiles select the matching engine skills and the `database-reviewer` selector. Cross-cutting and OpenAPI profiles select `security-reviewer` only where the profile uses that specialist selector.
+The infrastructure profile selects seven Terraform and AWS specialists plus the `infrastructure-reviewer` selector. Database profiles select the matching engine skills and the `database-reviewer` selector.
 
 ## Capability map
 
@@ -93,4 +93,7 @@ These selectors do not plan changes, run review loops, coordinate workers, or re
 
 ## Validation
 
-Run `quick_validate.py` for every changed Skill directory. Check that Skill names are unique, Profile selectors resolve, installer results match the selected profiles, and references point to surviving Skills or agents. Specialist Skills state their domain boundary and evidence limits. Infrastructure instructions preserve state safety and prohibit unapproved cloud mutations.
+Run `quick_validate.py` for every changed Skill directory. Check that Skill
+names are unique, Profile selectors resolve, installer results match the
+selected Profiles, and references point to existing Skills or Agents. Run the
+repository's relevant validation tests.

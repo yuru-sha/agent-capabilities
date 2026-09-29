@@ -35,8 +35,9 @@ Profiles for software engineering and GitHub workflows.
 
 ## Editing Skills and Profiles
 
-- Read the Skill Creator and writing-for-agents guidance before creating or
-  substantially changing a Skill or Agent document.
+- Follow the repository's structure, existing Skill examples, validation scripts,
+  and Profile conventions when creating or substantially changing a Skill or
+  Agent document.
 - Give every Skill a unique frontmatter `name` and a discriminating
   `description` that states when it applies.
 - Keep external mutations explicit, scoped, and followed by state verification.
@@ -51,7 +52,8 @@ Profiles for software engineering and GitHub workflows.
 ## Validation
 
 - Run `quick_validate.py` for every changed Skill directory.
-- Check that Skill names are unique and all Profile selectors resolve.
+- Check that Skill names are unique, Profile selectors resolve, and references
+  point to existing capabilities.
 - Run `git diff --check` before committing.
 - Do not claim checks passed unless they were actually run.
 

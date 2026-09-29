@@ -69,4 +69,4 @@ Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbor
 
 ## 検証
 
-変更した Skill directory ごとに `quick_validate.py` を実行します。Skill名の一意性、Profile selector、installer出力、参照先を検証します。
+変更した Skill directory ごとに `quick_validate.py` を実行します。Skill 名の一意性、Profile selector、installer 出力、参照先を確認し、関連するリポジトリのテストも実行します。
