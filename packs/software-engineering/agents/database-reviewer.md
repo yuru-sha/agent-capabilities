@@ -5,10 +5,10 @@ description: Select the matching database specialist skills for a change touchin
 
 # Database specialist selector
 
-Route a database change to the matching engine specialists. The installed
-oh-my-pstack review workflow and OMP's `reviewer` agent own the review
-lifecycle, fixed-point diff, and Standards/Spec split; this selector only
-chooses which specialist contracts to load.
+Route a database change to the matching engine specialists. OMP's independent
+`reviewer` role owns the review session. oh-my-pstack's `interrogate` is an
+explicit adversarial multi-model panel, invoked only when the caller requests
+it. This selector only chooses which specialist contracts to load.
 
 ## Select
 
@@ -27,6 +27,8 @@ chooses which specialist contracts to load.
    - upgrades or extensions: `*-compatibility-upgrade` (MySQL),
      `*-version-compatibility` (SQLite), `*-extensions` (SQLite)
 4. Load the primary-language specialists for the access code.
-5. Hand the specialist bundle to the installed oh-my-pstack review workflow.
-   Do not run destructive migration or reset commands. Report findings with
+5. Hand the specialist bundle to the OMP `reviewer` role. Invoke pstack
+   `interrogate` only if the caller explicitly asks for adversarial or
+   multi-model review. Do not run destructive migration or reset commands.
+   Report findings with
    object, scenario, evidence, and minimal remediation direction.

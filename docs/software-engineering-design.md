@@ -7,7 +7,7 @@ Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, Postgr
 ## Ownership boundaries
 
 - OMP owns task execution, model routing, session persistence, and runtime lifecycle.
-- oh-my-pstack owns generic development workflow, including planning, architecture workflow, TDD, review, orchestration, and recovery.
+- oh-my-pstack provides general development playbooks, including TDD, architecture, orchestration, and the explicitly invoked `interrogate` adversarial review panel.
 - Language Skills own language-specific mechanics for one concern.
 - Database Skills own one engine and one database concern.
 - OpenAPI Skills own one contract concern.
@@ -15,7 +15,7 @@ Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, Postgr
 - Frontend Skills own cross-framework web quality, browser testing, forms, and framework mechanics.
 - `database-reviewer` and `infrastructure-reviewer` select specialist Skills. They do not own review workflow.
 - `security-review` adds cross-cutting trust-boundary checks not already owned by engine-specific security Skills.
-- oh-my-pstack owns fixed-point diff review and the Standards/Spec split.
+- oh-my-pstack provides `interrogate` for adversarial multi-model review only when the caller explicitly invokes it. OMP's `reviewer` role owns independent review sessions; neither defines a PR-specific publication policy.
 - oh-my-pstack owns TDD. This repository does not define a second TDD workflow.
 
 There are no language, database, OpenAPI, or infrastructure umbrella `SKILL.md` files. Skill descriptions provide the selection boundary. README and this design document are the human-facing catalog.
@@ -32,7 +32,7 @@ There are no language, database, OpenAPI, or infrastructure umbrella `SKILL.md` 
 | Frontend | 7 | `frontend-web-quality`, `frontend-browser-testing`, `frontend-form-validation`, framework and styling Skills |
 | **Total** | **171** | specialist Skills |
 
-The repository ships 11 GitHub operation Skills: `create-pr`, `create-draft-pr`, `mark-pr-ready`, `request-copilot-review`, `reply-to-review-thread`, `github-release`, `create-issue`, `clarify-issue`, `decompose-issue`, `security-alerts`, and `post-merge-cleanup`. The `implement-issue` Skill was removed because OMP with oh-my-pstack owns Issue implementation.
+The repository ships 12 GitHub operation Skills, including `review-mode` for independent PR review composition. Generic development playbooks remain owned by oh-my-pstack, while OMP's `reviewer` role conducts independent review sessions. `review-mode` resolves PR context, selects relevant specialists, applies caller-controlled reporting/publication policy, and never fixes the PR. The `implement-issue` Skill was removed because OMP with oh-my-pstack owns Issue implementation.
 
 Each specialist has a `SKILL.md` with a discriminating description. Profiles compose Skill sets; they are distribution metadata, not another instruction layer.
 
@@ -82,14 +82,14 @@ Seven Skills keep Terraform state and policy testing separate from AWS topology,
 
 `security-review` covers only trust-boundary checks not already handled by language, database, OpenAPI, or infrastructure specialists. `operational-quality` covers runtime operation and reproducibility. `zero-downtime-migration` composes database migration, locking, compatibility, and API-versioning knowledge.
 
-GitHub operation Skills each own a narrow operation. `request-copilot-review` changes only the reviewer request on an existing PR. `reply-to-review-thread` resolves a unique GraphQL thread ID, replies, and verifies the stored reply. `security-alerts` inventories alerts in read-only mode. Alert remediation remains separate.
+GitHub operation Skills each own a narrow operation. `review-mode` composes the OMP `reviewer` role with PR scope, specialist selection, severity filtering, and opt-in publication; it uses pstack `interrogate` for adversarial panels only when the caller explicitly invokes it. Default behavior is report-only. `request-copilot-review` changes only the reviewer request on an existing PR. `reply-to-review-thread` resolves a unique GraphQL thread ID, replies, and verifies the stored reply. `security-alerts` inventories alerts in read-only mode. Alert remediation remains separate.
 
 ## Specialist selectors
 
-- `database-reviewer`: identify the engine, select relevant engine and primary-language Skills, and hand them to the pstack review workflow.
-- `infrastructure-reviewer`: select Terraform/AWS Skills for the changed surface and hand them to the pstack review workflow.
+- `database-reviewer`: identify the engine and relevant engine/primary-language Skills, then return that bundle to the OMP reviewer.
+- `infrastructure-reviewer`: select Terraform/AWS Skills for the changed surface and return that bundle to the OMP reviewer.
 
-These selectors do not plan changes, run review loops, coordinate workers, or report generic Standards/Spec findings. OMP and oh-my-pstack own those responsibilities.
+These selectors choose domain specialists only. OMP's `reviewer` role owns the independent review session; oh-my-pstack's `interrogate` supplies an adversarial panel and synthesis only when explicitly invoked. `review-mode` owns PR-specific target, severity, and publication policy.
 
 ## Validation
 

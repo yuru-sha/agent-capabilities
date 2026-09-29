@@ -20,6 +20,8 @@ The `workflows` Profile contains every Skill in the
 review requests, releases, security alerts, issue creation, clarification,
 decomposition, and post-merge cleanup.
 
+The `review-mode` Skill is included in both `github` and `workflows`. It uses the OMP `reviewer` role for an independent session and composes relevant specialists. Invoke oh-my-pstack `interrogate` only when the caller explicitly requests an adversarial panel. Report-only is the default; explicit caller policy is required for GitHub comments. Review never fixes the PR.
+
 The `github` and `workflows` Profiles do not install an Issue implementation
 Skill. ORCA's Issue-to-OMP contract is the separate automation prompt at
 `packs/operations/github/automations/issue-omp-handoff.md`. Configure that

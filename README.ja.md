@@ -6,12 +6,12 @@
 
 AI コーディングエージェント向けに、再利用可能な Skills、専門セレクタ、Profiles、ワークフロー機能を提供します。
 
-このリポジトリは [OMP](https://omp.sh/) と [oh-my-pstack](https://github.com/shrimpwtf/oh-my-pstack) を補完します。OMP が実行環境を、oh-my-pstack が一般的な開発ワークフロー（TDD、アーキテクチャ設計、レビュー、オーケストレーション）を所有し、このリポジトリは OMP + oh-my-pstack が提供しない専門ドメインの機能を所有します。
+このリポジトリは [OMP](https://omp.sh/) と [oh-my-pstack](https://github.com/shrimpwtf/oh-my-pstack) を補完します。OMP は実行環境と独立レビュー担当を提供し、oh-my-pstack は一般的な開発 Playbook と、callerが明示した場合に使う adversarial multi-model panel `interrogate` を提供します。このリポジトリは専門知識と、両者が持たないPR固有のレビュー構成を提供します。
 
 ## 内容
 
 - 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド向けのエンジニアリング Skills 171 個
-- GitHub 操作 Skills 11 個。Draft/Ready PR、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup を扱います。
+- GitHub 操作 Skills 12 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup を扱います。
 - Issue を ORCA から OMP に引き渡す Orca Automation Prompt 1 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
 - `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`infrastructure.yaml`、`github.yaml` など、組み合わせ可能な Profiles 13 個

@@ -8,15 +8,16 @@ Reusable Skills, specialist selectors, Profiles, and workflow capabilities
 for AI coding agents.
 
 This repository complements [OMP](https://omp.sh/) and
-[oh-my-pstack](https://github.com/shrimpwtf/oh-my-pstack): OMP owns the
-runtime, oh-my-pstack owns generic development workflow (TDD, architecture,
-review, orchestration), and this repository owns specialist domain
-capabilities that OMP + oh-my-pstack do not supply.
+[oh-my-pstack](https://github.com/shrimpwtf/oh-my-pstack): OMP owns the runtime
+and independent reviewer role; oh-my-pstack supplies generic development
+playbooks and `interrogate` for adversarial multi-model review when the caller explicitly invokes it. This
+repository owns specialist knowledge and PR-specific review composition that
+OMP + oh-my-pstack do not supply.
 
 ## Contents
 
 - 171 language, database, OpenAPI, cross-cutting, infrastructure, and frontend engineering Skills
-- 11 repository workflow Skills: pull requests (ready and draft), issue clarification and decomposition, issue creation, Copilot review, review-thread replies, GitHub releases, security alerts, and post-merge cleanup
+- 12 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, and post-merge cleanup
 - 1 Orca Automation prompt for the Issue-to-OMP handoff
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
 - 13 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, and `github.yaml`
@@ -37,7 +38,9 @@ profiles:
 ```
 
 The resolver takes the union of selected Skills and de-duplicates agents by
-ID. oh-my-pstack provides the review and TDD workflows.
+ID. `review-mode` composes the OMP reviewer role with relevant specialists,
+caller policy, and optional GitHub publication. Use pstack `interrogate` only
+when the caller explicitly requests an adversarial multi-model panel.
 
 For a Rust + SQLite project that also needs the complete repository workflow:
 

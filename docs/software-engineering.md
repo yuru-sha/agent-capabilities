@@ -16,14 +16,15 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
 | **合計** | **専門 Skill** | **171** |
 
-このほか GitHub 操作 Skill が11個あります。Draft/Ready PR、Issue の要件整理・分割・作成、Copilot review、レビュー スレッドへの返信、GitHub release、security alert、マージ後の cleanup を扱います。
+このほか GitHub 操作 Skill が12個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup を扱います。
 
 ORCA から OMP への Issue 引き渡し契約は `packs/operations/github/automations/issue-omp-handoff.md` にあります。専門セレクタは `database-reviewer` と `infrastructure-reviewer` の2個です。
 
 ## 所有境界
 
-- OMP が Task 実行、モデル選択、セッション、runtime lifecycle を所有します。
-- oh-my-pstack が一般的な開発 workflow を所有します。
+- OMP が Task 実行、モデル選択、セッション、runtime lifecycle と、独立レビュー担当を提供します。
+- oh-my-pstack は一般的な開発 Playbook を提供し、caller が明示的に起動した場合に `interrogate` で adversarial multi-model review を行います。
+- `review-mode` はPR文脈、専門家選択、caller指定のseverity・投稿ポリシーを構成します。汎用レビューや `interrogate` のレビュー調整は再実装しません。
 - ORCA は Issue の選択、実行 state、worktree 準備、OMP の起動を所有します。
 - `issue-omp-handoff` は ORCA の coarse Issue state と OMP への最小 handoff を定義する Orca Automation です。Skill ではなく、Profile からインストールしません。
 - このPackは言語、データベース、OpenAPI、フロントエンド、インフラの専門知識と、technical-authoring の技術文書設計知識を所有します。
@@ -40,9 +41,10 @@ agent-capabilities/
 │   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,frontend}/...
 │   │   └── agents/{database-reviewer,infrastructure-reviewer}.md
 │   └── operations/github/
-│       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,request-copilot-review,
-│       │           reply-to-review-thread,github-release,create-issue,clarify-issue,
-│       │           decompose-issue,security-alerts,post-merge-cleanup}/SKILL.md
+│       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,review-mode,
+│       │           request-copilot-review,reply-to-review-thread,github-release,
+│       │           create-issue,clarify-issue,decompose-issue,security-alerts,
+│       │           post-merge-cleanup}/SKILL.md
 │       └── automations/issue-omp-handoff.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
 │             cross-cutting,infrastructure,frontend,workflows,github}.yaml
@@ -55,7 +57,7 @@ agent-capabilities/
 選択したProfileから必要な専門Skillを組み合わせます。例:
 
 ```text
-oh-my-pstack TDD / review workflow
+oh-my-pstack TDD / caller-triggered `interrogate`
   + go-concurrency + go-data-race-check
   + go-goroutine-leak-deadlock-check
   + postgresql-transactions + postgresql-locking
