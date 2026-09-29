@@ -16,14 +16,16 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
 | **合計** | **専門 Skill** | **171** |
 
-このほか GitHub 固有の操作 Skill が12個あります。Draft/Ready PR、Issue の整理・分割・実装・作成、Copilot review、レビュー スレッドへの返信、GitHub release、security alert、マージ後の cleanup を扱います。
+このほか GitHub 操作 Skill が11個あります。Draft/Ready PR、Issue の要件整理・分割・作成、Copilot review、レビュー スレッドへの返信、GitHub release、security alert、マージ後の cleanup を扱います。
 
-Issue Tree開発向けの Orca Automation Prompt は `packs/operations/github/automations/issue-development-pipeline.md` にあります。専門セレクタは `database-reviewer` と `infrastructure-reviewer` の2個です。
+ORCA から OMP への Issue 引き渡し契約は `packs/operations/github/automations/issue-omp-handoff.md` にあります。専門セレクタは `database-reviewer` と `infrastructure-reviewer` の2個です。
 
 ## 所有境界
 
 - OMP が Task 実行、モデル選択、セッション、runtime lifecycle を所有します。
-- oh-my-pstack が一般的な開発ワークフローと TDD を所有します。
+- oh-my-pstack が一般的な開発 workflow を所有します。
+- ORCA は Issue の選択、実行 state、worktree 準備、OMP の起動を所有します。
+- `issue-omp-handoff` は ORCA の coarse Issue state と OMP への最小 handoff を定義する Orca Automation です。Skill ではなく、Profile からインストールしません。
 - このPackは言語、データベース、OpenAPI、フロントエンド、インフラの専門知識と、technical-authoring の技術文書設計知識を所有します。
 - `technical-authoring` は文書種別に応じた構成、技術的根拠、実行可能な例、検証、安全性を扱います。一般的な文章作成 workflow は installed `technical-writing` と oh-my-pstack に委ねます。
 - `database-reviewer` と `infrastructure-reviewer` は適切な専門 Skill を選択します。レビューの進行方法は定義しません。
@@ -40,8 +42,8 @@ agent-capabilities/
 │   └── operations/github/
 │       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,request-copilot-review,
 │       │           reply-to-review-thread,github-release,create-issue,clarify-issue,
-│       │           decompose-issue,implement-issue,security-alerts,post-merge-cleanup}/SKILL.md
-│       └── automations/issue-development-pipeline.md
+│       │           decompose-issue,security-alerts,post-merge-cleanup}/SKILL.md
+│       └── automations/issue-omp-handoff.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
 │             cross-cutting,infrastructure,frontend,workflows,github}.yaml
 ├── scripts/install-profile
@@ -65,7 +67,7 @@ Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbor
 
 ## GitHub操作
 
-12個のGitHub Skillは明示的な操作境界を持ちます。外部状態を変更する操作は、対象と権限を確認し、結果を再取得して検証します。Orca Automation Prompt はIssueの選択、claim、worktree、recovery、Issue Treeの実行を扱い、Profile経由ではなくOrca Automationとして設定します。
+11個のGitHub Skillは明示的な操作境界を持ちます。外部状態を変更する操作は、対象と権限を確認し、結果を再取得して検証します。Orca Automation Prompt はIssueの選択、coarse state、worktreeの準備、OMPへのhandoffだけを定め、Profile経由ではなくOrca Automationとして設定します。
 
 ## 検証
 

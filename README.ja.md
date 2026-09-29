@@ -11,8 +11,8 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 ## 内容
 
 - 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド向けのエンジニアリング Skills 171 個
-- Pull Request（Ready と Draft）、Issue の要件整理・分割・実装・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup を扱うリポジトリ運用 Skills 12 個
-- Issue Tree 開発向けの再利用可能な Orca Automation パイプライン Prompt 1 個
+- GitHub 操作 Skills 11 個。Draft/Ready PR、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup を扱います。
+- Issue を ORCA から OMP に引き渡す Orca Automation Prompt 1 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
 - `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`infrastructure.yaml`、`github.yaml` など、組み合わせ可能な Profiles 13 個
 

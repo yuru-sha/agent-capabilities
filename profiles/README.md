@@ -18,13 +18,12 @@ agents by ID. `go+sqlite` is a generated bundle name, not a source Profile.
 The `workflows` Profile contains every Skill in the
 `packs/operations/github` pack: ready and draft pull requests, Copilot
 review requests, releases, security alerts, issue creation, clarification,
-decomposition and implementation, and post-merge cleanup.
+decomposition, and post-merge cleanup.
 
-The `github` and `workflows` Profiles install the `clarify-issue`,
-`decompose-issue`, and `implement-issue` Skills. The separate Orca Automation
-prompt at `packs/operations/github/automations/issue-development-pipeline.md`
-is not selected by a Profile; configure it as an Orca Automation for a specific
-repo, provider, and schedule.
+The `github` and `workflows` Profiles do not install an Issue implementation
+Skill. ORCA's Issue-to-OMP contract is the separate automation prompt at
+`packs/operations/github/automations/issue-omp-handoff.md`. Configure that
+prompt in Orca for a specific repository, provider, and schedule.
 
 The `github` Profile selects the GitHub operation Skills without the removed
 generic commit/push Skill. It includes both read and mutation workflows such as

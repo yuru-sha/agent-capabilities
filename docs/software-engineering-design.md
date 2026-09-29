@@ -32,7 +32,7 @@ There are no language, database, OpenAPI, or infrastructure umbrella `SKILL.md` 
 | Frontend | 7 | `frontend-web-quality`, `frontend-browser-testing`, `frontend-form-validation`, framework and styling Skills |
 | **Total** | **171** | specialist Skills |
 
-The repository also ships 12 GitHub workflow Skills: `create-pr`, `create-draft-pr`, `mark-pr-ready`, `request-copilot-review`, `reply-to-review-thread`, `github-release`, `create-issue`, `clarify-issue`, `decompose-issue`, `implement-issue`, `security-alerts`, and `post-merge-cleanup`. The `commit-push` Skill was removed as generic Git workflow.
+The repository ships 11 GitHub operation Skills: `create-pr`, `create-draft-pr`, `mark-pr-ready`, `request-copilot-review`, `reply-to-review-thread`, `github-release`, `create-issue`, `clarify-issue`, `decompose-issue`, `security-alerts`, and `post-merge-cleanup`. The `implement-issue` Skill was removed because OMP with oh-my-pstack owns Issue implementation.
 
 Each specialist has a `SKILL.md` with a discriminating description. Profiles compose Skill sets; they are distribution metadata, not another instruction layer.
 
@@ -48,7 +48,7 @@ profiles:
 
 The installer unions selected Skills and de-duplicates selected agents by ID. A generated `go+sqlite` bundle is an output artifact, not a source Profile.
 
-The `github` profile selects GitHub operations. `workflows` selects the complete GitHub operations pack. The separate Orca Automation prompt at `packs/operations/github/automations/issue-development-pipeline.md` is configured by Orca, not installed as a Profile skill.
+The `github` profile selects GitHub operation Skills. `workflows` selects the complete GitHub operations pack. The separate ORCA prompt at `packs/operations/github/automations/issue-omp-handoff.md` defines the ORCA-to-OMP Issue handoff, not a Profile Skill or development workflow.
 
 The infrastructure profile selects seven Terraform and AWS specialists plus the `infrastructure-reviewer` selector. Database profiles select the matching engine skills and the `database-reviewer` selector.
 
