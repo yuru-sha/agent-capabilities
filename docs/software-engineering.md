@@ -28,8 +28,6 @@ Issue Tree開発向けの Orca Automation Prompt は `packs/operations/github/au
 - `technical-authoring` は文書種別に応じた構成、技術的根拠、実行可能な例、検証、安全性を扱います。一般的な文章作成 workflow は installed `technical-writing` と oh-my-pstack に委ねます。
 - `database-reviewer` と `infrastructure-reviewer` は適切な専門 Skill を選択します。レビューの進行方法は定義しません。
 - `security-review` は既存の言語・データベース・インフラの専門知識で扱えない横断的な trust boundary を補います。
-- oh-my-pstack owns generic code-review and TDD workflows. `$gh-fix-ci`
-  remains an external Skill; this repository does not redefine it.
 
 ## ディレクトリ
 

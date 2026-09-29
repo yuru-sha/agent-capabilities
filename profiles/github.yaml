@@ -20,6 +20,3 @@ skills:
 
 agents:
   include: []
-
-external_skills:
-  - gh-fix-ci

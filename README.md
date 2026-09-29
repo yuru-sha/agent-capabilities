@@ -37,9 +37,7 @@ profiles:
 ```
 
 The resolver takes the union of selected Skills and de-duplicates agents by
-ID. The installed oh-my-pstack review workflow handles code review; `$gh-fix-ci`
-remains an external global dependency and is not redefined here. TDD workflow
-is also provided by oh-my-pstack.
+ID. oh-my-pstack provides the review and TDD workflows.
 
 For a Rust + SQLite project that also needs the complete repository workflow:
 
@@ -92,10 +90,8 @@ Use `--target /path/to/project` when running it from elsewhere. Use `--copy`
 for a self-contained copy, and `--force` to replace entries installed by an
 earlier run. During uninstall, modified managed copies are kept unless
 `--force` is specified. `--link` is also accepted as an explicit spelling of
-the default. External Skills such as `$gh-fix-ci` are reported but not
-copied. Legacy link-only installs without a manifest are also removed when
-their links still point to this checkout; untracked copies are left in
-place.
+the default. Legacy link-only installs without a manifest are also removed when
+their links still point to this checkout; untracked copies are left in place.
 
 ## GitHub Release
 

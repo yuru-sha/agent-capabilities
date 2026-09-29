@@ -12,7 +12,7 @@ existing capability boundaries.
 - Keep engineering capabilities under `packs/software-engineering/` and GitHub
   operations under `packs/operations/github/`.
 - Use oh-my-pstack for generic TDD and code-review workflows; do not copy or
-  redefine those workflows here. Keep `$gh-fix-ci` as an external dependency.
+  redefine those workflows here.
 - Do not include secrets, credentials, or personal data.
 
 ## Adding or changing capabilities

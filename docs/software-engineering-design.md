@@ -16,7 +16,6 @@ Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, Postgr
 - `database-reviewer` and `infrastructure-reviewer` select specialist Skills. They do not own review workflow.
 - `security-review` adds cross-cutting trust-boundary checks not already owned by engine-specific security Skills.
 - oh-my-pstack owns fixed-point diff review and the Standards/Spec split.
-  `$gh-fix-ci` owns approved GitHub Actions remediation and remains external.
 - oh-my-pstack owns TDD. This repository does not define a second TDD workflow.
 
 There are no language, database, OpenAPI, or infrastructure umbrella `SKILL.md` files. Skill descriptions provide the selection boundary. README and this design document are the human-facing catalog.
@@ -49,7 +48,7 @@ profiles:
 
 The installer unions selected Skills and de-duplicates selected agents by ID. A generated `go+sqlite` bundle is an output artifact, not a source Profile.
 
-The `github` profile selects GitHub operations and declares `$gh-fix-ci` as an external Skill. `workflows` selects the complete GitHub operations pack. The separate Orca Automation prompt at `packs/operations/github/automations/issue-development-pipeline.md` is configured by Orca, not installed as a Profile skill.
+The `github` profile selects GitHub operations. `workflows` selects the complete GitHub operations pack. The separate Orca Automation prompt at `packs/operations/github/automations/issue-development-pipeline.md` is configured by Orca, not installed as a Profile skill.
 
 The infrastructure profile selects seven Terraform and AWS specialists plus the `infrastructure-reviewer` selector. Database profiles select the matching engine skills and the `database-reviewer` selector. Cross-cutting and OpenAPI profiles select `security-reviewer` only where the profile uses that specialist selector.
 

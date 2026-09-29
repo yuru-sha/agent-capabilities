@@ -27,12 +27,6 @@ Profiles for software engineering and GitHub workflows.
   catalog entry when introducing a new pack.
 - Profiles select Skills and Agents. They are distribution metadata, not another
   instruction layer.
-- oh-my-pstack owns generic TDD and code-review workflows. Do not copy or
-  redefine them here. `$gh-fix-ci` remains an external Skill.
-- `security-review` reviews code and trust boundaries. `security-alerts` reads
-  GitHub security findings. Alert remediation is a separate mutation concern.
-- `gh-fix-ci` diagnoses and fixes failed GitHub Actions after approval. A
-  future CI-status Skill must remain read-only and must not duplicate that flow.
 - `request-copilot-review` only requests or re-requests a Copilot review. It does
   not review findings, reply to threads, or merge a PR.
 - `reply-to-review-thread` only replies to an existing PR review thread after
@@ -71,5 +65,3 @@ Profiles for software engineering and GitHub workflows.
 - Preserve unrelated work and stage only files in the requested change.
 - Do not merge a pull request, delete branches, or change repository settings
   unless the user explicitly requests that operation.
-- Keep the official global `gh-fix-ci` Skill installed; this repository may
-  declare it through `external_skills` but does not own its files.

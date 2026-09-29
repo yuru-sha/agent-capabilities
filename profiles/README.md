@@ -29,8 +29,6 @@ repo, provider, and schedule.
 The `github` Profile selects the GitHub operation Skills without the removed
 generic commit/push Skill. It includes both read and mutation workflows such as
 creating PRs and issues, publishing releases, and security-alert operations.
-It declares the official global `$gh-fix-ci` Skill as an external dependency
-and does not copy it.
 
 The engineering Profiles select content from
 `packs/software-engineering/skills/` and their agent IDs resolve from
@@ -54,10 +52,9 @@ The frontend Profile selects seven frontend Skills spanning framework-agnostic
 web quality, browser testing, form validation, and framework/styling mechanics.
 It composes with a language Profile and the TypeScript DOM, performance, or
 security specialists where those concerns apply.
-
-`external_skills` names external Skills such as `$gh-fix-ci`; the profiles do
-not copy or redefine them. The installed oh-my-pstack review and TDD workflows
-are used directly.
+Profiles may declare `external_skills` requirements. The installer reports
+those requirements but does not copy external Skills. The installed oh-my-pstack
+review and TDD workflows are used directly.
 
 ## Project-local installation
 
