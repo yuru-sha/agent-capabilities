@@ -141,6 +141,20 @@ class InstallProfileUpgradeTests(unittest.TestCase):
             self.assertIn(legacy_path, manifest["profiles"]["sqlite"])
             self.assertIn(legacy_path, manifest["entries"])
 
+    def test_uninstall_without_profile_removes_all_manifest_owned_entries(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            target = Path(temporary_directory)
+            self.install_go(target, link=True)
+            paths = INSTALLER["load_manifest"](target)["entries"]
+
+            self.assertEqual(
+                INSTALLER["uninstall_profiles"](target, None, force=False),
+                0,
+            )
+            self.assertTrue(all(not (target / path).exists() for path in paths))
+            self.assertFalse(INSTALLER["manifest_path"](target).exists())
+
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -477,10 +477,14 @@ def install_profiles(target: Path, profiles: list[dict], *, link: bool, force: b
     return 0
 
 
-def uninstall_profiles(target: Path, profile_names: list[str], *, force: bool) -> int:
+def uninstall_profiles(target: Path, profile_names: list[str] | None, *, force: bool) -> int:
     manifest = load_manifest(target)
-    profiles = resolve_profiles(profile_names, strict=False)
-    selected_ids = {profile["id"] for profile in profiles}
+    if profile_names is None:
+        profiles = []
+        selected_ids = set(manifest["profiles"])
+    else:
+        profiles = resolve_profiles(profile_names, strict=False)
+        selected_ids = {profile["id"] for profile in profiles}
     selected_paths = {
         relative_path
         for profile_id_value in selected_ids
@@ -560,7 +564,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Install or uninstall agent-capabilities profiles in a project."
     )
-    parser.add_argument("profiles", nargs="+", help="profile IDs, for example: rust sqlite")
+    parser.add_argument("profiles", nargs="*", help="profile IDs, for example: rust sqlite (required for installation)")
     parser.add_argument(
         "--target",
         default=".",
@@ -602,7 +606,11 @@ def main() -> int:
 
     try:
         if args.uninstall:
-            return uninstall_profiles(target, args.profiles, force=args.force)
+            return uninstall_profiles(
+                target, args.profiles or None, force=args.force
+            )
+        if not args.profiles:
+            parser.error("at least one profile is required for installation")
         profiles = resolve_profiles(args.profiles)
         return install_profiles(target, profiles, link=not args.copy, force=args.force)
     except (OSError, ValueError) as error:
