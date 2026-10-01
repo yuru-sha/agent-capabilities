@@ -17,8 +17,8 @@ OMP + oh-my-pstack do not supply.
 ## Contents
 
 - 171 language, database, OpenAPI, cross-cutting, infrastructure, and frontend engineering Skills
-- 12 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, and post-merge cleanup
-- 1 Orca Automation prompt for the Issue-to-OMP handoff
+- 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
+- 2 Orca Automation prompts: Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
 - 13 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, and `github.yaml`
 
