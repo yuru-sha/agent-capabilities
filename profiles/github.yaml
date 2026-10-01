@@ -17,6 +17,7 @@ skills:
     - packs/operations/github/skills/decompose-issue/**
     - packs/operations/github/skills/security-alerts/**
     - packs/operations/github/skills/post-merge-cleanup/**
+    - packs/operations/github/skills/orca-lock-recovery/**
 
 agents:
   include: []

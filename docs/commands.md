@@ -11,8 +11,10 @@ the selected Profiles and the target repository.
 |---|---|---|
 | `git` | inspect, commit, push, branch, worktree, and remote-state operations | Required for repository workflows |
 | `gh` | pull requests, review-thread GraphQL replies, issues, releases, Copilot review requests, and GitHub security APIs | Required for GitHub workflows |
-| `orca` | Orca-managed worktrees and scheduled Automations | Required only when using the Issue-development Automation pipeline |
-| `rtk` | command output reduction and the configured shell wrapper | Optional; use when the environment provides it |
+| `jq` | filter paginated Issue results and read or update lock owner metadata | Required only when using either Orca Issue Automation |
+| `orca` | Orca-managed worktrees, manually invoked or scheduled Automations, and run-state inspection | Required only when using either Orca Issue Automation or recovering its shared lock |
+| `uuidgen` | generate unique lock run IDs for Orca Issue Automations | Required only when using either Automation |
+| `gt` | Graphite merge-when-ready flow used by pstack Shipping | Required only when using the manual PR lifecycle Automation |
 | `python3` + `quick_validate.py` | validate Skill frontmatter and descriptions | Maintainer check; use the locally available validator |
 
 The project-local profile installer is invoked from a consumer project:
