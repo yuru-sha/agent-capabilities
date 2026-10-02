@@ -19,7 +19,7 @@ Users select a workflow Profile to install GitHub operation Skills, then invoke 
 Preconditions:
 
 - Run from the repository root.
-- Read `profiles/github.yaml`, `profiles/workflows.yaml`, `profiles/README.md`, and the target Skill instructions.
+- Read `profiles/github.yaml`, `profiles/workflows.yaml`, `profiles/README.md`, and the target Skill instructions; export `RUN_ID` so this run's evidence has its own subdirectory.
 
 - **Select a workflow set.** Create a disposable target with `mkdir -p "$VERIFY_ROOT/workflows"`, then run `PATH="$VERIFY_ROOT/bin:$PATH" scripts/install-profile workflows --agent codex --scope project --target "$VERIFY_ROOT/workflows" --from-local`. Require exit code `0` and capture the shim requests.
 - **Find an operation.** Open `packs/operations/github/skills/review-mode/SKILL.md`. Verify its frontmatter declares `name: review-mode`; read the instructions to identify its invocation scope and boundaries.

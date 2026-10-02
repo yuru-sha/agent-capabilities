@@ -17,7 +17,7 @@ A maintainer or consumer runs the Profile installer to install the selected Skil
 
 Preconditions:
 
-- Follow `../SKILL.md` Launch and Doctor.
+- Follow `../SKILL.md` Launch and Doctor; export `RUN_ID` from Launch so evidence lands in its own subdirectory.
 - Use the recording `gh` shim and an empty temporary project target.
 - Run from the repository root.
 

@@ -17,7 +17,8 @@ Users choose Profile IDs to install named capability sets. The installer resolve
 
 Preconditions:
 
-- Follow `../SKILL.md` Launch and Doctor; create a fresh scratch root and recording `gh` shim.
+- Follow `../SKILL.md` Launch and Doctor; export `RUN_ID` from Launch so evidence lands in its own subdirectory.
+- Create a fresh scratch root and recording `gh` shim.
 - Run from the repository root.
 
 - **Resolve one Profile.** Run `PATH="$VERIFY_ROOT/bin:$PATH" scripts/install-profile github --agent codex --scope project --target "$VERIFY_ROOT/project" --from-local`. Require exit code `0` and stdout `Profiles: github`.
