@@ -57,6 +57,19 @@ Profiles for software engineering and GitHub workflows.
 - Run `git diff --check` before committing.
 - Do not claim checks passed unless they were actually run.
 
+## Branch And Pull Request Workflow
+
+- Do not edit, commit, or push directly to `main`. Make changes on a feature branch and merge them through a pull request.
+- Direct work on `main` is allowed only when the user explicitly authorizes it.
+
+## GitHub workflow
+
+- GitHub Issues are the canonical work tracker.
+- Shared Bug / Feature / Question forms and the default Pull Request template are inherited from `yuru-sha/.github`.
+- Shared non-default labels, including `orca:*`, are synchronized from `yuru-sha/project-template`.
+- Use `orca:*` labels only for ORCA execution state; do not treat them as release categories.
+- For release execution behavior, `packs/operations/github/skills/github-release/SKILL.md` is the source of truth.
+
 ## Commit Messages
 
 - Follow the commit-message policy in [`CONTRIBUTING.md`](CONTRIBUTING.md#commit-messages).
