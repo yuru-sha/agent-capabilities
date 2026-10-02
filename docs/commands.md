@@ -10,32 +10,34 @@ the selected Profiles and the target repository.
 | Command | Used for | Availability |
 |---|---|---|
 | `git` | inspect, commit, push, branch, worktree, and remote-state operations | Required for repository workflows |
-| `gh` | pull requests, review-thread GraphQL replies, issues, releases, Copilot review requests, and GitHub security APIs | Required for GitHub workflows |
+| `gh` | GitHub workflows and `gh skill install` for Profile Skills | Required for GitHub workflows and Profile installation |
 | `jq` | filter paginated Issue results and read or update lock owner metadata | Required only when using either Orca Issue Automation |
 | `orca` | Orca-managed worktrees, manually invoked or scheduled Automations, and run-state inspection | Required only when using either Orca Issue Automation or recovering its shared lock |
 | `uuidgen` | generate unique lock run IDs for Orca Issue Automations | Required only when using either Automation |
 | `gt` | Graphite merge-when-ready flow used by pstack Shipping | Required only when using the manual PR lifecycle Automation |
 | `python3` + `quick_validate.py` | validate Skill frontmatter and descriptions | Maintainer check; use the locally available validator |
 
-The project-local profile installer is invoked from a consumer project:
+The Profile installer requires Python 3 and GitHub CLI with `gh skill install`
+support. Run it from this repository checkout:
 
 ```sh
-/path/to/agent-capabilities/scripts/install-profile rust sqlite workflows
+/path/to/agent-capabilities/scripts/install-profile rust sqlite workflows \
+  --agent codex --scope project
 ```
 
-It uses Python 3 and links selected Skills under `.agents/skills/` and Agents
-under `.codex/agents/` by default. Use `--copy` for a self-contained copy and
-`--target` to select a different project. The installer records managed paths
-in `.agents/agent-capabilities/manifest.json`; remove selected profiles with:
+`--agent` selects the host passed to `gh skill install`. `--scope` selects
+`project` or `user`. OMP Agent definitions are copied separately to
+`.omp/agents/` for project scope or `~/.omp/agent/agents/` for user scope.
+Add `--from-local` to install Skills from the checkout instead of the published
+`yuru-sha/agent-capabilities` repository. Use `--target /path/to/project` to
+select a project when running the installer from elsewhere.
 
-```sh
-/path/to/agent-capabilities/scripts/install-profile \
-  --target /path/to/project --uninstall rust sqlite workflows
-```
+If a later `gh skill install` fails, earlier successful Skill installations
+remain. OMP Agent definitions are copied after all Skill installs succeed.
 
-Modified managed copies are kept unless `--force` is supplied.
-Legacy links without a manifest are removed when they still point to this
-checkout; untracked copies are not removed.
+External Skills declared by Profiles are reported but are not installed by the
+installer. Legacy link-and-copy installs and their manifests are not modified;
+inspect their recorded paths before removing them manually.
 
 The workflow Skills contain the exact operation-specific forms, including
 `git status`, `git diff --check`, `git push`, `gh pr`, `gh issue`, `gh release`,

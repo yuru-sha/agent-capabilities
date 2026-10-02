@@ -45,24 +45,20 @@ Terraform と AWS のインフラ作業では infrastructure Profile を選択�
 
 フロントエンド作業では `frontend` Profile を選択します。フレームワークに依存しない Web 品質、ブラウザーテスト、フォーム検証の Skills に加え、React 19、Next.js、Svelte 5、Tailwind CSS v4 以降の専門機能が含まれます。
 
-## プロジェクトへの Profile のインストール
+## Profile のインストール
 
-機能を利用するプロジェクトから、絶対パスまたはこのリポジトリへの相対パスを指定してインストーラーを実行します。
-
-```sh
-/path/to/agent-capabilities/scripts/install-profile rust sqlite workflows
-```
-
-`github` を指定すると、一般的な commit/push を除く GitHub 操作 Skills を選択します。読み取りと PR 作成・release 公開などの変更操作の両方が含まれます。
-
-このコマンドは、選択した Skill ディレクトリをプロジェクトの `.agents/skills/` に、専門セレクタ定義を `.codex/agents/` にリンクします。所有情報は `.agents/agent-capabilities/manifest.json` に記録されるため、後で Profile を削除できます。
+このリポジトリの checkout にあるインストーラーを実行します。
 
 ```sh
-/path/to/agent-capabilities/scripts/install-profile \
-  --target /path/to/project --uninstall rust sqlite workflows
+/path/to/agent-capabilities/scripts/install-profile rust sqlite workflows \
+  --agent codex --scope project
 ```
 
-別の場所から実行する場合は `--target /path/to/project` を指定します。独立したコピーを作成するには `--copy` を、以前にインストールした項目を置き換えるには `--force` を指定します。アンインストール時、管理対象のコピーに変更が加えられている場合は `--force` を指定しない限り保持します。デフォルトを明示する場合は `--link` も指定できます。manifest がない従来のリンクのみのインストールも、リンク先がこの checkout を指していれば削除します。未追跡のコピーはそのまま残します。
+`--agent` は `gh skill install` に渡すホスト名です。`--scope` は `project` または `user` を指定します。OMP Agent 定義は Skill とは別に、project scope では `.omp/agents/`、user scope では `~/.omp/agent/agents/` にコピーされます。
+
+デフォルトでは Skill を `yuru-sha/agent-capabilities` からインストールします。開発中の checkout からインストールする場合は `--from-local` を追加します。Profile metadata はどちらの場合もこの checkout から読み込みます。
+
+別の場所から project scope で実行する場合は `--target /path/to/project` を指定します。既存の OMP Agent 定義と内容が同じなら変更しません。内容が異なるファイルがある場合は上書きせずエラーにします。従来の link/copy 方式が作成したファイルや manifest は変更しません。手動で削除する場合は、先に内容を確認してください。
 
 ## GitHub Release
 

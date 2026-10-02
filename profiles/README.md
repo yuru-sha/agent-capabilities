@@ -59,27 +59,35 @@ Profiles may declare `external_skills` requirements. The installer reports
 those requirements but does not copy external Skills. The installed oh-my-pstack
 review and TDD workflows are used directly.
 
-## Project-local installation
+## Installation
 
-From the project that should use the capabilities, run:
-
-```sh
-/path/to/agent-capabilities/scripts/install-profile rust sqlite workflows
-```
-
-The installer resolves the union of the selected profiles and links Skills
-into `.agents/skills/` and specialist selectors into `.codex/agents/` by
-default. It skips existing entries; pass `--force` to replace them. Pass
-`--copy` for a self-contained installation. Installation ownership is
-recorded in `.agents/agent-capabilities/manifest.json`, which enables
-profile-specific uninstallation:
+Run the installer from this repository checkout:
 
 ```sh
-/path/to/agent-capabilities/scripts/install-profile \
-  --target /path/to/project --uninstall rust sqlite
+/path/to/agent-capabilities/scripts/install-profile rust sqlite workflows \
+  --agent codex --scope project
 ```
 
-Modified managed copies are kept by default; pass `--force` to remove them.
-External Skills are printed as requirements and remain managed by the
-consumer's global Skill installation. Legacy link-only installs without a
-manifest are recognized when their links still point to this checkout.
+The installer resolves the union of selected Profiles. It installs each
+selected Skill with `gh skill install`, passing `--agent` as the host selector
+and `--scope` as the project or user scope. It copies OMP Agent definitions
+separately to `.omp/agents/` for project scope or `~/.omp/agent/agents/` for
+user scope.
+
+By default, Skills come from `yuru-sha/agent-capabilities`. Add `--from-local`
+to install Skills from the checkout for development. Profile metadata is
+resolved from the checkout in either mode.
+
+Use `--target /path/to/project` when installing into a project from elsewhere.
+Existing OMP Agent definitions with matching contents are left unchanged;
+different contents cause an error. The installer does not remove files or
+manifests created by the legacy link-and-copy flow. Check those paths before
+removing them manually.
+
+If a later `gh skill install` fails, earlier successful Skill installations
+remain. The installer copies OMP Agent definitions after all Skill installs
+succeed.
+
+Profiles may declare `external_skills` requirements. The installer reports
+those requirements but does not install them. The installed oh-my-pstack
+review and TDD workflows are used directly.

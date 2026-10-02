@@ -65,36 +65,43 @@ For frontend work, select the `frontend` Profile. It provides the
 framework-agnostic web-quality, browser-testing, and form-validation Skills
 plus React 19, Next.js, Svelte 5, and Tailwind CSS v4+ specialists.
 
-## Install profiles into a project
+## Install profiles
 
-Run the installer from the project that should use the capabilities, using an
-absolute or relative path to this repository:
-
-```sh
-/path/to/agent-capabilities/scripts/install-profile rust sqlite workflows
-```
-
-Use `github` to select the GitHub operation Skills without the generic
-commit/push Skill; these include both read and mutation workflows. `workflows`
-selects the complete GitHub operations pack.
-
-The command links the selected Skill directories into the project's
-`.agents/skills/` and the selected specialist selectors into
-`.codex/agents/`. The installer records ownership in
-`.agents/agent-capabilities/manifest.json`, so selected profiles can be
-removed later:
+Run the installer from this repository checkout. It installs selected Skills
+through GitHub CLI and copies selected OMP Agent definitions separately:
 
 ```sh
-/path/to/agent-capabilities/scripts/install-profile \
-  --target /path/to/project --uninstall rust sqlite workflows
+/path/to/agent-capabilities/scripts/install-profile rust sqlite workflows \
+  --agent codex --scope project
 ```
 
-Use `--target /path/to/project` when running it from elsewhere. Use `--copy`
-for a self-contained copy, and `--force` to replace entries installed by an
-earlier run. During uninstall, modified managed copies are kept unless
-`--force` is specified. `--link` is also accepted as an explicit spelling of
-the default. Legacy link-only installs without a manifest are also removed when
-their links still point to this checkout; untracked copies are left in place.
+`--agent` selects the host passed to `gh skill install`. `--scope` selects the
+project or user installation scope. Project-scope Skills use the project's
+host-specific Skill directory, and OMP Agent definitions go to
+`.omp/agents/`. User-scope OMP Agent definitions go to
+`~/.omp/agent/agents/`.
+
+The installer reads Profile metadata from this checkout and installs Skills
+from `yuru-sha/agent-capabilities`. For development, add `--from-local` to
+install Skills from the checkout instead:
+
+```sh
+/path/to/agent-capabilities/scripts/install-profile rust sqlite \
+  --agent codex --scope project --from-local
+```
+
+Use `--target /path/to/project` to select a project when running the installer
+from elsewhere. User scope targets the current user's home directory for OMP
+Agent definitions. Existing OMP Agent files with different contents cause an
+error rather than being overwritten. Repeating an installation skips identical
+Agent definitions.
+
+If a later `gh skill install` fails, Skills installed by earlier calls remain.
+The installer copies OMP Agent definitions only after all Skill installs
+succeed.
+
+The installer does not remove files or manifests created by the legacy
+link-and-copy workflow. Clean those up manually after checking their contents.
 
 ## GitHub Release
 
