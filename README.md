@@ -21,6 +21,7 @@ OMP + oh-my-pstack do not supply.
 - 2 Orca Automation prompts: Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
 - 13 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, and `github.yaml`
+- 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
 [`software-engineering` pack](packs/README.md) and the
@@ -103,6 +104,10 @@ succeed.
 The installer does not remove files or manifests created by the legacy
 link-and-copy workflow. Clean those up manually after checking their contents.
 
+
+## Local verification Skill
+
+`.agents/skills/verify-agent-capabilities/SKILL.md` is a local verification Skill for this installer. It is not distributed through any Profile; consumers should not reference it from their own workflows.
 
 ## GitHub workflow
 
