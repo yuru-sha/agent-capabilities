@@ -14,7 +14,7 @@ This repository distributes Skills, Agent selectors, Profiles, and Orca Automati
 - Use the exact CLI commands and setup steps in the feature files.
 - Save command, stdout, stderr, exit code, target file listing, and external request log under `$VERIFY_ROOT/evidence/`.
 - The recording `gh` shim prevents GitHub mutations. It verifies only delegated arguments, not real authentication or installation.
-- `artifacts/` is gitignored; copy proof outside the scratch root into `$PWD/artifacts/verify-agent-capabilities/` before cleanup.
+- `artifacts/` is gitignored; set the unique `RUN_ID` in the Skill's Launch step and copy proof to `$PWD/artifacts/verify-agent-capabilities/$RUN_ID/` before cleanup.
 
 ## Features
 

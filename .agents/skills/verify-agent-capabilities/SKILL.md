@@ -12,6 +12,7 @@ This repository distributes Skills, Agent selectors, Profiles, and Orca Automati
 From the repository root, create a unique scratch root and recording `gh` shim:
 
 ```sh
+RUN_ID="$(python3 -c 'import uuid; print(uuid.uuid4())')"
 VERIFY_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/verify-agent-capabilities.XXXXXX")"
 mkdir -p "$VERIFY_ROOT/bin" "$VERIFY_ROOT/project" "$VERIFY_ROOT/evidence"
 cat > "$VERIFY_ROOT/bin/gh" <<'SH'
@@ -55,13 +56,13 @@ The recording shim is allowed only at the external `gh skill install` boundary. 
 
 ## Cleanup
 
-`artifacts/` is gitignored; copy proof outside the repository before sharing it because the directory is not tracked.
+`artifacts/` is gitignored; copy proof outside the repository before sharing it because the directory is not tracked. `RUN_ID` comes from the Launch step, so each run lives in its own subdirectory.
 
 ```sh
-mkdir -p "$PWD/artifacts/verify-agent-capabilities"
-cp -R "$VERIFY_ROOT/evidence/." "$PWD/artifacts/verify-agent-capabilities/"
+mkdir -p "$PWD/artifacts/verify-agent-capabilities/$RUN_ID"
+cp -R "$VERIFY_ROOT/evidence/." "$PWD/artifacts/verify-agent-capabilities/$RUN_ID/"
 rm -rf -- "$VERIFY_ROOT"
-test -d "$PWD/artifacts/verify-agent-capabilities"
+test -d "$PWD/artifacts/verify-agent-capabilities/$RUN_ID"
 ```
 
 This run starts no server or long-lived process, so there is no process teardown. Remove only the scratch root created by this run. Never remove `artifacts/` during cleanup; proof must survive there. Keep proof out of commits unless requested.
