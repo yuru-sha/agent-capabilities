@@ -60,6 +60,9 @@ Terraform と AWS のインフラ作業では infrastructure Profile を選択�
 
 別の場所から project scope で実行する場合は `--target /path/to/project` を指定します。既存の OMP Agent 定義と内容が同じなら変更しません。内容が異なるファイルがある場合は上書きせずエラーにします。従来の link/copy 方式が作成したファイルや manifest は変更しません。手動で削除する場合は、先に内容を確認してください。
 
-## GitHub Release
 
-リリースノートの形式と作成手順は [docs/agents/release.md](docs/agents/release.md) を参照してください。リリース本文のテンプレートは [.github/release-notes-template.md](.github/release-notes-template.md)、自動生成ノートのカテゴリは [.github/release.yml](.github/release.yml) で管理します。
+## GitHub運用
+
+Issue Form と既定の Pull Request テンプレートは `yuru-sha/.github` の共通設定を利用します。`orca:*` を含む共通ラベルは `yuru-sha/project-template` から同期します。
+
+エージェントによる GitHub Release 操作は `packs/operations/github/skills/github-release/SKILL.md` を唯一の実行手順とし、Release Notes のカテゴリは `.github/release.yml` で管理します。

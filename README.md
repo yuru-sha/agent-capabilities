@@ -103,6 +103,9 @@ succeed.
 The installer does not remove files or manifests created by the legacy
 link-and-copy workflow. Clean those up manually after checking their contents.
 
-## GitHub Release
 
-See [docs/agents/release.md](docs/agents/release.md) for the release note format and creation procedure. The shared body template is [.github/release-notes-template.md](.github/release-notes-template.md), and the generated-note categories are managed in [.github/release.yml](.github/release.yml).
+## GitHub workflow
+
+Shared Issue Forms and the default Pull Request template are inherited from `yuru-sha/.github`. Shared labels, including `orca:*`, are synchronized from `yuru-sha/project-template`.
+
+For agent-driven GitHub Release operations, `packs/operations/github/skills/github-release/SKILL.md` is the source of truth. Repository release-note categories remain in `.github/release.yml`.
