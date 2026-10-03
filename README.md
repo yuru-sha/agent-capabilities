@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 171 language, database, OpenAPI, cross-cutting, infrastructure, and frontend engineering Skills
+- 172 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 13 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, and `github.yaml`
+- 14 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, and `github.yaml`
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -65,6 +65,10 @@ consumer repository needs those concerns too.
 For frontend work, select the `frontend` Profile. It provides the
 framework-agnostic web-quality, browser-testing, and form-validation Skills
 plus React 19, Next.js, Svelte 5, and Tailwind CSS v4+ specialists.
+
+For projects that interact with note.com's undocumented web APIs, select the
+`note-com` Profile. It adds note.com-specific API research and safety guidance;
+the consuming project still owns implementation and authorization boundaries.
 
 ## Install profiles
 

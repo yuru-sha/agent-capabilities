@@ -46,6 +46,18 @@ infrastructure Profile when both document design and domain-specific behavior
 are in scope. Language-specific documentation Skills remain focused on their
 language's docstrings, examples, CLI help, and toolchain support.
 
+The `note-com` Profile installs the `note-com-unofficial-api` Skill for
+projects that interact with note.com's undocumented web APIs. Select it only
+for note.com integrations; it does not add runtime code or authorize API
+operations. The consuming project retains its own API and write boundaries.
+Compose it with the project's language or database Profile as needed:
+
+```yaml
+profiles:
+  - typescript
+  - note-com
+```
+
 The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only `infrastructure-reviewer` specialist selector.
 It is intended to compose with a language or database Profile rather than

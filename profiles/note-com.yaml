@@ -1,0 +1,8 @@
+schema: 1
+id: note-com
+kind: integration
+description: Research and integrate note.com's unofficial web APIs.
+
+skills:
+  include:
+    - packs/software-engineering/skills/integrations/note-com-unofficial-api
