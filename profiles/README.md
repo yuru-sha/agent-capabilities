@@ -58,6 +58,17 @@ profiles:
   - note-com
 ```
 
+The `x-ads` Profile installs the `x-ads-api` Skill for projects that create,
+manage, or report on X advertising. It is language-independent and requires
+fresh official API verification before relying on endpoint, enum, metric, or
+media behavior. Compose it with the target language Profile as needed:
+
+```yaml
+profiles:
+  - go
+  - x-ads
+```
+
 The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only `infrastructure-reviewer` specialist selector.
 It is intended to compose with a language or database Profile rather than
