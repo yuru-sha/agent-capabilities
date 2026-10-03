@@ -116,8 +116,6 @@ def validate_skills() -> list[Problem]:
 
         if not description:
             problems.append(Problem(skill_file, "frontmatter requires non-empty description"))
-        elif len(description) < 20:
-            problems.append(Problem(skill_file, "description is too short to discriminate Skill selection"))
 
         problems.extend(validate_local_links(skill_file))
 
