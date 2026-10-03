@@ -10,11 +10,11 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 
 ## 内容
 
-- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 173 個
+- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 174 個
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に引き渡す Automation と、PR stack を手動で Babysit → Shipping する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`github.yaml` など、組み合わせ可能な Profiles 15 個
+- `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`dropbox.yaml`、`github.yaml` など、組み合わせ可能な Profiles 16 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
@@ -49,6 +49,8 @@ Terraform と AWS のインフラ作業では infrastructure Profile を選択�
 note.com の非公式Web APIを使うプロジェクトでは `note-com` Profile を選択します。note.com 固有のAPI調査・安全境界を導入します。実装や認可の範囲は、利用するプロジェクト側の契約に従います。
 
 X Ads API を扱うプロジェクトでは `x-ads` Profile を選択します。現行仕様の freshness 確認を前提に、広告タイプからのリソース依存解決、メディア処理、ライフサイクル診断、分析・レポート取得を言語非依存で支援します。
+
+Dropbox API を扱うプロジェクトでは `dropbox` Profile を選択します。OAuth、ファイル/フォルダー、ストリーミングと upload session、cursor ベースの差分追跡、共有、namespace/team space、retry と並列 write 制御を現行仕様の確認付きで言語非依存に支援します。
 
 ## Profile のインストール
 

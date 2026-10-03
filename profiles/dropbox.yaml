@@ -1,0 +1,8 @@
+schema: 1
+id: dropbox
+kind: integration
+description: Research and integrate the current Dropbox API across authentication, files, transfers, change tracking, sharing, namespaces, team content, and resilience.
+
+skills:
+  include:
+    - packs/software-engineering/skills/integrations/dropbox-api
