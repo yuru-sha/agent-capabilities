@@ -90,6 +90,38 @@ class InstallProfileTests(unittest.TestCase):
         self.assertEqual([agent_id for agent_id, _ in plan.agents], ["planner"])
         self.assertEqual(plan.external_skills, ("other-vendor", "vendor-skill"))
 
+    def test_skill_directory_must_match_frontmatter_name(self):
+        self.add_skill("skills/api-client", "go-api-client")
+        self.add_profile("go", ["skills/api-client"])
+
+        with self.assertRaisesRegex(ValueError, "does not match frontmatter name"):
+            INSTALLER["build_install_plan"](["go"])
+
+    def test_repository_composed_profiles_keep_namespaced_skill_directories(self):
+        with patch.dict(
+            INSTALLER_GLOBALS,
+            {
+                "PROFILE_ROOT": ROOT / "profiles",
+                "SOURCE_ROOT": ROOT,
+                "AGENT_ROOT": ROOT / "packs" / "software-engineering" / "agents",
+            },
+        ):
+            plan = INSTALLER["build_install_plan"](
+                ["go", "typescript", "postgresql", "sqlite", "openapi", "frontend"]
+            )
+
+        skills = dict(plan.skills)
+        for expected in (
+            "go-api-client",
+            "typescript-api-client",
+            "postgresql-design",
+            "sqlite-design",
+            "openapi-design",
+            "frontend-browser-testing",
+        ):
+            self.assertIn(expected, skills)
+            self.assertEqual(skills[expected].name, expected)
+
     def test_conflicting_skill_name_from_distinct_sources_fails_before_side_effects(self):
         self.add_skill("skills/a", "shared")
         self.add_skill("skills/b", "shared")
