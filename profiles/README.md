@@ -151,3 +151,31 @@ succeed.
 Profiles may declare `external_skills` requirements. The installer reports
 those requirements but does not install them. The installed oh-my-pstack
 review and TDD workflows are used directly.
+
+
+## Monorepos and Skill directory names
+
+Profiles are additive. A monorepo may select multiple language, database, contract,
+and frontend Profiles at the same time, for example:
+
+```yaml
+profiles:
+  - go
+  - typescript
+  - postgresql
+  - openapi
+  - frontend
+```
+
+Every distributable Skill directory is globally namespaced and its directory
+basename must exactly match the Skill frontmatter `name`. For example,
+`languages/go/go-api-client/SKILL.md` declares `name: go-api-client`, while
+`languages/typescript/typescript-api-client/SKILL.md` declares
+`name: typescript-api-client`. This lets `gh skill install` place both Skills
+under the same project scope without one replacing the other.
+
+Consumers that installed older revisions may have stale unnamespaced directories
+such as `.agents/skills/api-client/`, `.agents/skills/design/`, or
+`.agents/skills/testing/`. Remove those stale generated Skill directories and
+reinstall the selected Profiles so the namespaced directories are populated.
+Do not remove project-owned Skills that were not installed from this repository.
