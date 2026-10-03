@@ -33,9 +33,9 @@ existing capability boundaries.
 
 From the repository root:
 
-- Run `quick_validate.py` for every changed Skill directory.
-- Check that Skill names are unique, Profile selectors resolve, and references
-  point to existing capabilities.
+- Run `python3 scripts/validate` to validate Skill frontmatter, unique names,
+  local references, Profile structure/resolution, and documented catalog counts.
+- Run `python3 -m unittest discover -s tests` for installer and validation tests.
 - Run `git diff --check`.
 - Run any additional checks relevant to the files changed and report what was
   run in the pull request.
