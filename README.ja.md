@@ -15,6 +15,7 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 - Issue を ORCA から OMP に引き渡す Automation と、PR stack を手動で Babysit → Shipping する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
 - `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`infrastructure.yaml`、`github.yaml` など、組み合わせ可能な Profiles 13 個
+- `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
 
@@ -60,6 +61,10 @@ Terraform と AWS のインフラ作業では infrastructure Profile を選択�
 
 別の場所から project scope で実行する場合は `--target /path/to/project` を指定します。既存の OMP Agent 定義と内容が同じなら変更しません。内容が異なるファイルがある場合は上書きせずエラーにします。従来の link/copy 方式が作成したファイルや manifest は変更しません。手動で削除する場合は、先に内容を確認してください。
 
+
+## ローカル検証 Skill
+
+`.agents/skills/verify-agent-capabilities/SKILL.md` はこのインストーラー向けのローカル検証 Skill です。Profile 経由では配布しないため、利用プロジェクトのワークフローから参照しないでください。
 
 ## GitHub運用
 

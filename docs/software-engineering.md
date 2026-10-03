@@ -18,7 +18,11 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
-ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実行で Babysit → Shipping する契約は、それぞれ `packs/operations/github/automations/issue-omp-handoff.md` と `packs/operations/github/automations/issue-pr-lifecycle.md` にあります。専門セレクタは `database-reviewer` と `infrastructure-reviewer` の2個です。
+ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実行で Babysit → Shipping する契約は、それぞれ `packs/operations/github/automations/issue-omp-handoff.md` と `packs/operations/github/automations/issue-pr-lifecycle.md` にある。専門セレクタは `database-reviewer` と `infrastructure-reviewer` の2個である。
+
+## ローカル検証 Skill
+
+`.agents/skills/verify-agent-capabilities/SKILL.md` はこのリポジトリ自身のインストーラーを検証するためのローカル Skill で、Profile や pack の配布物ではなく、リポジトリ保守時の検証手順として配置します。Profile 経由ではインストールしません。
 
 ## 所有境界
 
