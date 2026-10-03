@@ -81,6 +81,18 @@ profiles:
   - dropbox
 ```
 
+The `youtube` Profile installs the `youtube-api` Skill for projects that
+work with YouTube Data API v3, uploads, Analytics, Reporting, or Live Streaming.
+It is language-independent and requires current official API verification for
+scopes, quota behavior, resources, metrics/dimensions, upload protocol, and live
+state transitions. Compose it with the target language Profile as needed:
+
+```yaml
+profiles:
+  - go
+  - youtube
+```
+
 The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only `infrastructure-reviewer` specialist selector.
 It is intended to compose with a language or database Profile rather than
