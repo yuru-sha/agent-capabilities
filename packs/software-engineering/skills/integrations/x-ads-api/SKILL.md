@@ -47,23 +47,30 @@ conflict. Record the re-verification date when updating this Skill.
 2. Pass the freshness gate and resolve the current API version and endpoint
    family.
 3. Identify the advertising type before constructing dependencies. Read
+   [references/ad-types.md](references/ad-types.md) and
    [references/resource-model.md](references/resource-model.md).
 4. Build a resource plan in which each resource is explicitly `create`,
    `reuse`, `upload`, or `not_required`. Never create a replacement solely
    because the integration knows how to create one.
-5. Validate parent/child compatibility, permissions, funding, schedule,
-   targeting, creative/media requirements, and current enum values.
+5. Validate authentication/account access with
+   [references/authentication.md](references/authentication.md), then validate
+   parent/child compatibility, permissions, funding, targeting, current
+   endpoint semantics, and current enum values using
+   [references/endpoints.md](references/endpoints.md).
 6. Upload only required media using bounded-memory behavior described in
    [references/media.md](references/media.md).
 7. Create or reuse the required Post/Card/Creative or other advertising object,
    then create only the required association to the line item or other parent.
-8. Validate the resulting hierarchy and effective-delivery prerequisites before
+8. Resolve scheduling and lifecycle constraints from
+   [references/scheduling-and-lifecycle.md](references/scheduling-and-lifecycle.md).
+   Validate the resulting hierarchy and effective-delivery prerequisites before
    activation.
 9. Apply the smallest required status mutation. Verify state through a follow-up
    read after writes.
 10. For analytics/reporting intents, derive entity scope, time range,
     granularity, metric groups, placements, segmentation, and sync/async mode
-    from [references/reporting.md](references/reporting.md).
+    from [references/reporting.md](references/reporting.md) and verify concrete
+    fields/dimensions with [references/metrics.md](references/metrics.md).
 11. Apply pagination, rate-limit, error, polling, and retry rules from
     [references/resilience.md](references/resilience.md).
 
@@ -96,14 +103,25 @@ separate from language-specific adapters.
 
 ## Reference map
 
-- [current-api.md](references/current-api.md): verified version, authentication,
-  official-source priority, endpoint families, and official implementation
-  research.
-- [resource-model.md](references/resource-model.md): advertising types,
-  dependency resolution, scheduling, lifecycle, and effective delivery.
+- [current-api.md](references/current-api.md): verified API version, source
+  priority, freshness rules, and official implementation research.
+- [authentication.md](references/authentication.md): OAuth 1.0a, request signing,
+  account access, secret handling, and cross-language implementation guidance.
+- [endpoints.md](references/endpoints.md): current endpoint-family catalog across
+  accounts, campaign management, targeting, creatives, audiences, catalog, lead
+  generation, analytics, and measurement.
+- [ad-types.md](references/ad-types.md): advertising-family matrix and
+  type-specific dependency resolution.
+- [resource-model.md](references/resource-model.md): hierarchy, resource reuse,
+  dependency planning, and effective-delivery model.
+- [scheduling-and-lifecycle.md](references/scheduling-and-lifecycle.md):
+  timezone handling, parent/child scheduling, status/lifecycle, minimum-scope
+  mutation, and read-after-write verification.
 - [media.md](references/media.md): uploads, Media Library/Account Media, bounded
   memory, chunking, polling, and processing failures.
-- [reporting.md](references/reporting.md): analytics entity levels, metric
-  groups, time semantics, synchronous/asynchronous retrieval, and large reports.
+- [reporting.md](references/reporting.md): analytics entity levels, time
+  semantics, synchronous/asynchronous retrieval, and large reports.
+- [metrics.md](references/metrics.md): metric groups, derived metrics,
+  segmentation/dimensions, missing-value semantics, and creative-level checks.
 - [resilience.md](references/resilience.md): pagination, rate limits, errors,
   retries, concurrency, and async-job polling.
