@@ -1,0 +1,8 @@
+schema: 1
+id: youtube
+kind: integration
+description: Research and integrate current YouTube APIs across Data API, uploads, Analytics, Reporting, Live Streaming, authentication, quota, batching, and resilience.
+
+skills:
+  include:
+    - packs/software-engineering/skills/integrations/youtube-api
