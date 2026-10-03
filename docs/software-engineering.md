@@ -14,9 +14,18 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 | Cross-cutting | security-review、operational-quality、zero-downtime-migration、technical-authoring | 4 |
 | Infrastructure | Terraform、AWS | 7 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
-| **合計** | **専門 Skill** | **171** |
+| Integrations | note.com 非公式API | 1 |
+| **合計** | **専門 Skill** | **172** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
+
+### Integrations
+
+`note-com-unofficial-api` records observed note.com REST v1/v2/v3 and GraphQL
+behavior, including authentication, article/search/creator/archive/hashtag
+reads, and write-safety caveats. Its endpoint catalog is based on the linked
+third-party survey and must be revalidated before implementation. It does not
+add runtime code or authorize an integrating project's API operations.
 
 ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実行で Babysit → Shipping する契約は、それぞれ `packs/operations/github/automations/issue-omp-handoff.md` と `packs/operations/github/automations/issue-pr-lifecycle.md` にある。専門セレクタは `database-reviewer` と `infrastructure-reviewer` の2個である。
 
@@ -42,7 +51,7 @@ ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,frontend}/...
+│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,frontend,integrations}/...
 │   │   └── agents/{database-reviewer,infrastructure-reviewer}.md
 │   └── operations/github/
 │       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,review-mode,
@@ -51,7 +60,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,infrastructure,frontend,workflows,github}.yaml
+│             cross-cutting,infrastructure,frontend,note-com,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```

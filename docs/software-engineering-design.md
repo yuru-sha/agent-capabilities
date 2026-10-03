@@ -2,7 +2,7 @@
 
 ## Goal
 
-Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS infrastructure, and frontend work. Each Skill owns one concrete domain concern. OMP and oh-my-pstack own the generic runtime and development workflow.
+Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS infrastructure, frontend, and selected platform integrations. Each Skill owns one concrete domain concern. OMP and oh-my-pstack own the generic runtime and development workflow.
 
 ## Ownership boundaries
 
@@ -13,6 +13,7 @@ Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, Postgr
 - OpenAPI Skills own one contract concern.
 - Infrastructure Skills own one Terraform or AWS concern.
 - Frontend Skills own cross-framework web quality, browser testing, forms, and framework mechanics.
+- Platform integration Skills own narrow service-specific API knowledge, such as note.com's undocumented web API behavior.
 - `database-reviewer` and `infrastructure-reviewer` select specialist Skills. They do not own review workflow.
 - `security-review` adds cross-cutting trust-boundary checks not already owned by engine-specific security Skills.
 - oh-my-pstack provides `interrogate` for adversarial multi-model review only when the caller explicitly invokes it. OMP's `reviewer` role owns independent review sessions; neither defines a PR-specific publication policy.
@@ -30,9 +31,10 @@ There are no language, database, OpenAPI, or infrastructure umbrella `SKILL.md` 
 | Cross-cutting | 4 | `security-review`, `operational-quality`, `zero-downtime-migration`, `technical-authoring` |
 | Infrastructure | 7 | `terraform-infrastructure`, `aws-infrastructure`, `terraform-policy-testing` |
 | Frontend | 7 | `frontend-web-quality`, `frontend-browser-testing`, `frontend-form-validation`, framework and styling Skills |
-| **Total** | **171** | specialist Skills |
+| Integrations | 1 | `note-com-unofficial-api` |
+| **Total** | **172** | specialist Skills |
 
-The repository ships 12 GitHub operation Skills, including `review-mode` for independent PR review composition. Generic development playbooks remain owned by oh-my-pstack, while OMP's `reviewer` role conducts independent review sessions. `review-mode` resolves PR context, selects relevant specialists, applies caller-controlled reporting/publication policy, and never fixes the PR. The `implement-issue` Skill was removed because OMP with oh-my-pstack owns Issue implementation.
+The repository ships 13 GitHub operation Skills, including `review-mode` for independent PR review composition. Generic development playbooks remain owned by oh-my-pstack, while OMP's `reviewer` role conducts independent review sessions. `review-mode` resolves PR context, selects relevant specialists, applies caller-controlled reporting/publication policy, and never fixes the PR. The `implement-issue` Skill was removed because OMP with oh-my-pstack owns Issue implementation.
 
 Each specialist has a `SKILL.md` with a discriminating description. Profiles compose Skill sets; they are distribution metadata, not another instruction layer.
 
@@ -51,6 +53,10 @@ The installer unions selected Skills and de-duplicates selected agents by ID. A 
 The `github` profile selects GitHub operation Skills. `workflows` selects the complete GitHub operations pack. The separate ORCA prompts at `packs/operations/github/automations/issue-omp-handoff.md` and `packs/operations/github/automations/issue-pr-lifecycle.md` define the Issue-to-OMP handoff and its manually invoked Babysit/Shipping follow-up; they are not Profile Skills or development workflows.
 
 The infrastructure profile selects seven Terraform and AWS specialists plus the `infrastructure-reviewer` selector. Database profiles select the matching engine skills and the `database-reviewer` selector.
+
+The `note-com` profile selects the note.com unofficial API Skill for projects
+that interact with that service. It can be composed with a language or database
+profile; it adds guidance only and does not change a consumer's API contract.
 
 ## Capability map
 

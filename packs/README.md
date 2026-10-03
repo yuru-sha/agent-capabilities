@@ -6,8 +6,8 @@ installation into a consumer project.
 ## Current packs
 
 - `software-engineering`: language, database, OpenAPI, cross-cutting,
-  infrastructure, frontend web-quality, browser-testing, form-validation, and
-  framework/styling Skills, plus reusable engineering Agents.
+  infrastructure, frontend, and platform integration Skills, plus reusable
+  engineering Agents.
 - `operations/github`: pull request, issue clarification and decomposition, issue creation, Orca Issue-to-OMP handoff and manual PR lifecycle Automations, Orca Automation lock recovery, Copilot review, security alert, and post-merge Skills. It does not own Issue implementation workflow.
 
 Future packs such as documentation or research should be added only when they
