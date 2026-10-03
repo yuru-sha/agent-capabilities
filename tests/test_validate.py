@@ -30,6 +30,19 @@ class ValidateTests(unittest.TestCase):
 
         self.assertTrue(any("description" in problem.message for problem in problems))
 
+    def test_skill_directory_name_must_match_frontmatter_name(self):
+        directory = self.root / "api-client"
+        directory.mkdir()
+        (directory / "SKILL.md").write_text(
+            "---\nname: go-api-client\ndescription: Go API client Skill.\n---\n",
+            encoding="utf-8",
+        )
+
+        with patch.dict(GLOBALS, {"ROOT": self.root, "SKILL_ROOTS": (self.root,)}):
+            problems = VALIDATOR["validate_skills"]()
+
+        self.assertTrue(any("does not match frontmatter name" in problem.message for problem in problems))
+
     def test_duplicate_skill_names_are_rejected(self):
         for directory in ("a", "b"):
             path = self.root / directory
