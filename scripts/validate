@@ -107,6 +107,13 @@ def validate_skills() -> list[Problem]:
         elif NAME_PATTERN.fullmatch(name) is None:
             problems.append(Problem(skill_file, f"invalid Skill name {name!r}"))
         else:
+            if skill_file.parent.name != name:
+                problems.append(
+                    Problem(
+                        skill_file,
+                        f"Skill directory name {skill_file.parent.name!r} does not match frontmatter name {name!r}",
+                    )
+                )
             previous = names.get(name)
             if previous is not None and previous != skill_file:
                 problems.append(

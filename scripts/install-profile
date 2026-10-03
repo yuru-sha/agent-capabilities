@@ -88,6 +88,11 @@ def skill_name(skill_dir: Path) -> str:
             name = scalar(line.split(":", 1)[1])
             if NAME_PATTERN.fullmatch(name) is None:
                 raise ValueError(f"invalid Skill name {name!r}: {frontmatter}")
+            if skill_dir.name != name:
+                raise ValueError(
+                    f"Skill directory name {skill_dir.name!r} does not match "
+                    f"frontmatter name {name!r}: {frontmatter}"
+                )
             return name
     raise ValueError(f"missing Skill name: {frontmatter}")
 
