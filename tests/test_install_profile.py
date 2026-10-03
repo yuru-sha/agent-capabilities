@@ -123,10 +123,10 @@ class InstallProfileTests(unittest.TestCase):
             self.assertEqual(skills[expected].name, expected)
 
     def test_conflicting_skill_name_from_distinct_sources_fails_before_side_effects(self):
-        self.add_skill("skills/a", "shared")
-        self.add_skill("skills/b", "shared")
-        self.add_profile("one", ["skills/a"])
-        self.add_profile("two", ["skills/b"])
+        self.add_skill("skills/a/shared", "shared")
+        self.add_skill("skills/b/shared", "shared")
+        self.add_profile("one", ["skills/a/shared"])
+        self.add_profile("two", ["skills/b/shared"])
         target = self.root / "target"
         target.mkdir()
         run = patch.object(INSTALLER["subprocess"], "run")
