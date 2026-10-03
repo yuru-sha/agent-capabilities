@@ -1,0 +1,294 @@
+#!/usr/bin/env python3
+
+from __future__ import annotations
+
+import re
+import runpy
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SKILL_ROOTS = (
+    ROOT / "packs" / "software-engineering" / "skills",
+    ROOT / "packs" / "operations" / "github" / "skills",
+)
+PROFILE_ROOT = ROOT / "profiles"
+NAME_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
+LINK_PATTERN = re.compile(r"!?(?:\[[^\]]*\])\(([^)]+)\)")
+README_SKILL_COUNT = re.compile(
+    r"^- (\d+) language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills$",
+    re.MULTILINE,
+)
+README_PROFILE_COUNT = re.compile(r"^- (\d+) composable Profiles,", re.MULTILINE)
+README_JA_SKILL_COUNT = re.compile(r"Skills (\d+) 個", re.MULTILINE)
+README_JA_PROFILE_COUNT = re.compile(r"Profiles (\d+) 個", re.MULTILINE)
+DOC_TOTAL_COUNT = re.compile(r"^\| \*\*合計\*\* \| \*\*専門 Skill\*\* \| \*\*(\d+)\*\* \|$", re.MULTILINE)
+DOC_INTEGRATION_COUNT = re.compile(r"^\| Integrations \| .* \| (\d+) \|$", re.MULTILINE)
+
+
+@dataclass(frozen=True)
+class Problem:
+    path: Path
+    message: str
+
+    def render(self) -> str:
+        try:
+            path = self.path.relative_to(ROOT)
+        except ValueError:
+            path = self.path
+        return f"{path}: {self.message}"
+
+
+def scalar(value: str) -> str:
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+        return value[1:-1]
+    return value
+
+
+def distributed_skill_files() -> list[Path]:
+    files: set[Path] = set()
+    for root in SKILL_ROOTS:
+        if root.is_dir():
+            files.update(root.rglob("SKILL.md"))
+    return sorted(files)
+
+
+def engineering_skill_files() -> list[Path]:
+    root = ROOT / "packs" / "software-engineering" / "skills"
+    return sorted(root.rglob("SKILL.md")) if root.is_dir() else []
+
+
+def parse_frontmatter(path: Path) -> tuple[dict[str, str], list[Problem]]:
+    problems: list[Problem] = []
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if not lines or lines[0].strip() != "---":
+        return {}, [Problem(path, "missing opening frontmatter delimiter")]
+
+    fields: dict[str, str] = {}
+    closing = None
+    for index, raw_line in enumerate(lines[1:], start=2):
+        line = raw_line.strip()
+        if line == "---":
+            closing = index
+            break
+        if not line or line.startswith("#"):
+            continue
+        if raw_line[:1].isspace():
+            continue
+        if ":" not in raw_line:
+            problems.append(Problem(path, f"invalid frontmatter line {index}: {raw_line!r}"))
+            continue
+        key, value = raw_line.split(":", 1)
+        fields[key.strip()] = scalar(value)
+
+    if closing is None:
+        problems.append(Problem(path, "missing closing frontmatter delimiter"))
+    return fields, problems
+
+
+def validate_skills() -> list[Problem]:
+    problems: list[Problem] = []
+    names: dict[str, Path] = {}
+    skill_files = distributed_skill_files()
+    if not skill_files:
+        return [Problem(ROOT, "no distributed SKILL.md files found")]
+
+    for skill_file in skill_files:
+        fields, field_problems = parse_frontmatter(skill_file)
+        problems.extend(field_problems)
+
+        name = fields.get("name", "").strip()
+        description = fields.get("description", "").strip()
+        if not name:
+            problems.append(Problem(skill_file, "frontmatter requires non-empty name"))
+        elif NAME_PATTERN.fullmatch(name) is None:
+            problems.append(Problem(skill_file, f"invalid Skill name {name!r}"))
+        else:
+            previous = names.get(name)
+            if previous is not None and previous != skill_file:
+                problems.append(
+                    Problem(skill_file, f"duplicate Skill name {name!r}; also defined by {previous.relative_to(ROOT)}")
+                )
+            names[name] = skill_file
+
+        if not description:
+            problems.append(Problem(skill_file, "frontmatter requires non-empty description"))
+
+        problems.extend(validate_local_links(skill_file))
+
+    return problems
+
+
+def validate_local_links(path: Path) -> list[Problem]:
+    problems: list[Problem] = []
+    text = path.read_text(encoding="utf-8")
+    for match in LINK_PATTERN.finditer(text):
+        target = match.group(1).strip()
+        if not target or target.startswith(("#", "http://", "https://", "mailto:", "data:")):
+            continue
+        if target.startswith("<") and target.endswith(">"):
+            target = target[1:-1].strip()
+        target = target.split("#", 1)[0].split("?", 1)[0]
+        if not target:
+            continue
+        candidate = (path.parent / target).resolve()
+        try:
+            candidate.relative_to(ROOT)
+        except ValueError:
+            problems.append(Problem(path, f"local link escapes repository: {match.group(1)!r}"))
+            continue
+        if not candidate.exists():
+            problems.append(Problem(path, f"broken local link: {match.group(1)!r}"))
+    return problems
+
+
+def validate_profile_shape(path: Path) -> list[Problem]:
+    problems: list[Problem] = []
+    lines = path.read_text(encoding="utf-8").splitlines()
+    top_scalars: dict[str, str] = {}
+    section: str | None = None
+    subsection: str | None = None
+    allowed_scalars = {"schema", "id", "kind", "description"}
+    allowed_sections = {"skills", "agents", "external_skills"}
+
+    for number, raw_line in enumerate(lines, start=1):
+        if "\t" in raw_line:
+            problems.append(Problem(path, f"line {number}: tabs are not allowed in Profile YAML"))
+            continue
+        if not raw_line.strip() or raw_line.lstrip().startswith("#"):
+            continue
+
+        indent = len(raw_line) - len(raw_line.lstrip(" "))
+        line = raw_line.strip()
+
+        if indent == 0:
+            subsection = None
+            if ":" not in line:
+                problems.append(Problem(path, f"line {number}: expected top-level key"))
+                continue
+            key, value = line.split(":", 1)
+            key = key.strip()
+            value = value.strip()
+            if key in allowed_scalars:
+                if not value:
+                    problems.append(Problem(path, f"line {number}: {key} requires a scalar value"))
+                top_scalars[key] = scalar(value)
+                section = None
+            elif key in allowed_sections and not value:
+                section = key
+            else:
+                problems.append(Problem(path, f"line {number}: unsupported Profile key or value: {line!r}"))
+            continue
+
+        if section in {"skills", "agents"} and indent == 2:
+            if line == "include:":
+                subsection = "include"
+                continue
+            if line == "include: []":
+                subsection = None
+                continue
+            problems.append(Problem(path, f"line {number}: expected include: or include: []"))
+            continue
+
+        if section in {"skills", "agents"} and subsection == "include" and indent == 4 and line.startswith("- "):
+            if not scalar(line[2:]):
+                problems.append(Problem(path, f"line {number}: empty include selector"))
+            continue
+
+        if section == "external_skills" and indent == 2 and line.startswith("- "):
+            if not scalar(line[2:]):
+                problems.append(Problem(path, f"line {number}: empty external Skill"))
+            continue
+
+        problems.append(Problem(path, f"line {number}: unsupported Profile YAML structure"))
+
+    for key in ("schema", "id", "kind", "description"):
+        if not top_scalars.get(key):
+            problems.append(Problem(path, f"missing required Profile field {key!r}"))
+    if top_scalars.get("schema") != "1":
+        problems.append(Problem(path, f"unsupported Profile schema {top_scalars.get('schema')!r}"))
+    if top_scalars.get("id") != path.stem:
+        problems.append(Problem(path, f"Profile id {top_scalars.get('id')!r} does not match filename {path.stem!r}"))
+
+    return problems
+
+
+def validate_profiles() -> list[Problem]:
+    problems: list[Problem] = []
+    profile_paths = sorted(PROFILE_ROOT.glob("*.yaml"))
+    if not profile_paths:
+        return [Problem(PROFILE_ROOT, "no Profile YAML files found")]
+
+    for path in profile_paths:
+        problems.extend(validate_profile_shape(path))
+
+    installer_path = ROOT / "scripts" / "install-profile"
+    try:
+        installer = runpy.run_path(str(installer_path))
+        profile_ids = [path.stem for path in profile_paths]
+
+        for profile_id in profile_ids:
+            installer["build_install_plan"]([profile_id])
+
+        union = installer["build_install_plan"](profile_ids)
+        if tuple(sorted(profile_ids)) != union.profile_ids:
+            problems.append(Problem(PROFILE_ROOT, "union Profile resolution returned unexpected profile IDs"))
+    except Exception as exc:  # validation must report repository errors, not hide them
+        problems.append(Problem(installer_path, f"Profile resolution failed: {exc}"))
+
+    return problems
+
+
+def documented_count(path: Path, pattern: re.Pattern[str], label: str, actual: int) -> list[Problem]:
+    text = path.read_text(encoding="utf-8")
+    match = pattern.search(text)
+    if not match:
+        return [Problem(path, f"could not find documented {label} count")]
+    documented = int(match.group(1))
+    if documented != actual:
+        return [Problem(path, f"documented {label} count is {documented}, actual is {actual}")]
+    return []
+
+
+def validate_catalog_counts() -> list[Problem]:
+    problems: list[Problem] = []
+    engineering_count = len(engineering_skill_files())
+    integration_root = ROOT / "packs" / "software-engineering" / "skills" / "integrations"
+    integration_count = len(list(integration_root.rglob("SKILL.md")))
+    profile_count = len(list(PROFILE_ROOT.glob("*.yaml")))
+
+    problems.extend(documented_count(ROOT / "README.md", README_SKILL_COUNT, "engineering Skill", engineering_count))
+    problems.extend(documented_count(ROOT / "README.md", README_PROFILE_COUNT, "Profile", profile_count))
+    problems.extend(documented_count(ROOT / "README.ja.md", README_JA_SKILL_COUNT, "engineering Skill", engineering_count))
+    problems.extend(documented_count(ROOT / "README.ja.md", README_JA_PROFILE_COUNT, "Profile", profile_count))
+    problems.extend(documented_count(ROOT / "docs" / "software-engineering.md", DOC_TOTAL_COUNT, "engineering Skill", engineering_count))
+    problems.extend(documented_count(ROOT / "docs" / "software-engineering.md", DOC_INTEGRATION_COUNT, "integration Skill", integration_count))
+    return problems
+
+
+def main() -> int:
+    problems = [
+        *validate_skills(),
+        *validate_profiles(),
+        *validate_catalog_counts(),
+    ]
+    if problems:
+        print(f"validation failed with {len(problems)} problem(s):", file=sys.stderr)
+        for problem in problems:
+            print(f"- {problem.render()}", file=sys.stderr)
+        return 1
+
+    print(
+        "validation passed: "
+        f"{len(engineering_skill_files())} engineering Skills, "
+        f"{len(distributed_skill_files())} distributed Skills, "
+        f"{len(list(PROFILE_ROOT.glob('*.yaml')))} Profiles"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
