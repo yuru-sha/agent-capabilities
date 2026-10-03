@@ -53,7 +53,9 @@ conflict. Record the re-verification date when updating this Skill.
    `reuse`, `upload`, or `not_required`. Never create a replacement solely
    because the integration knows how to create one.
 5. Validate authentication/account access with
-   [references/authentication.md](references/authentication.md), then validate
+   [references/authentication.md](references/authentication.md), resolve Ads
+   account timezone/currency context from
+   [references/account-context.md](references/account-context.md), then validate
    parent/child compatibility, permissions, funding, targeting, current
    endpoint semantics, and current enum values using
    [references/endpoints.md](references/endpoints.md).
@@ -71,7 +73,9 @@ conflict. Record the re-verification date when updating this Skill.
     granularity, metric groups, placements, segmentation, and sync/async mode
     from [references/reporting.md](references/reporting.md) and verify concrete
     fields/dimensions with [references/metrics.md](references/metrics.md).
-11. Apply pagination, rate-limit, error, polling, and retry rules from
+11. Apply collection traversal and ordering rules from
+    [references/collections.md](references/collections.md), then apply
+    rate-limit, error, retry, polling, and concurrency rules from
     [references/resilience.md](references/resilience.md).
 
 ## Language-independent implementation guidance
@@ -114,14 +118,19 @@ separate from language-specific adapters.
   type-specific dependency resolution.
 - [resource-model.md](references/resource-model.md): hierarchy, resource reuse,
   dependency planning, and effective-delivery model.
+- [account-context.md](references/account-context.md): Ads account timezone and
+  currency semantics for schedules, budgets, bids, spend, and reporting.
 - [scheduling-and-lifecycle.md](references/scheduling-and-lifecycle.md):
-  timezone handling, parent/child scheduling, status/lifecycle, minimum-scope
-  mutation, and read-after-write verification.
+  parent/child scheduling, status/lifecycle, minimum-scope mutation, and
+  read-after-write verification.
 - [media.md](references/media.md): uploads, Media Library/Account Media, bounded
   memory, chunking, polling, and processing failures.
 - [reporting.md](references/reporting.md): analytics entity levels, time
   semantics, synchronous/asynchronous retrieval, and large reports.
 - [metrics.md](references/metrics.md): metric groups, derived metrics,
   segmentation/dimensions, missing-value semantics, and creative-level checks.
-- [resilience.md](references/resilience.md): pagination, rate limits, errors,
-  retries, concurrency, and async-job polling.
+- [collections.md](references/collections.md): cursor pagination, stable
+  traversal, server/client sorting, and large-collection memory behavior.
+- [resilience.md](references/resilience.md): rate-limit scopes, error
+  classification, retryability, ambiguous writes, concurrency, and async-job
+  polling.
