@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 175 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 176 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 17 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, and `github.yaml`
+- 18 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, and `github.yaml`
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -84,6 +84,12 @@ For projects that integrate with YouTube, select the `youtube` Profile. It adds
 freshness-gated, language-independent guidance across Data API v3, uploads,
 Analytics, Reporting, Live Streaming, authentication/channel identity, quota,
 batching, and retry/error behavior.
+
+For projects that integrate with Meta advertising, select the `meta-marketing`
+Profile. It adds freshness-gated, language-independent guidance for Graph and
+Marketing API versioning, Ad Account/Campaign/Ad Set/Ad resources, creative and
+media handling, audiences/conversions/catalogs, Ads Insights, batching,
+rate-limit handling, and safe mutation/reconciliation.
 
 ## Install profiles
 

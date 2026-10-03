@@ -14,8 +14,8 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 | Cross-cutting | security-review、operational-quality、zero-downtime-migration、technical-authoring | 4 |
 | Infrastructure | Terraform、AWS | 7 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
-| Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API | 4 |
-| **合計** | **専門 Skill** | **175** |
+| Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API | 5 |
+| **合計** | **専門 Skill** | **176** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -45,6 +45,14 @@ uploads, Analytics queries, bulk Reporting jobs/downloads, Live Streaming,
 channel-aware OAuth, quota-aware collection access, multi-channel batching,
 local-file/video mapping, and retry/error handling without depending on a
 programming language.
+
+`meta-marketing-api` uses current official Meta Graph API / Marketing API
+reference pages, changelogs, and access documentation as primary sources with a
+30-day freshness gate. It covers Business/Ad Account context, Campaign/Ad Set/Ad
+resource planning, creative/media reuse and upload, targeting/placements,
+Custom Audiences and conversion/catalog dependencies, Ads Insights sync/async
+reporting, cursor pagination/batching, rate-limit headers, structured errors,
+and ambiguous-write reconciliation without depending on a programming language.
 
 ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実行で Babysit → Shipping する契約は、それぞれ `packs/operations/github/automations/issue-omp-handoff.md` と `packs/operations/github/automations/issue-pr-lifecycle.md` にある。専門セレクタは `database-reviewer` と `infrastructure-reviewer` の2個である。
 
@@ -79,7 +87,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,infrastructure,frontend,note-com,x-ads,dropbox,youtube,workflows,github}.yaml
+│             cross-cutting,infrastructure,frontend,note-com,x-ads,dropbox,youtube,meta-marketing,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```

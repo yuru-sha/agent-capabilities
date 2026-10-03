@@ -1,0 +1,8 @@
+schema: 1
+id: meta-marketing
+kind: integration
+description: Research and integrate the current Meta Marketing API across ad accounts, campaign delivery, creatives/media, audiences, conversions, catalogs, and Ads Insights/reporting.
+
+skills:
+  include:
+    - packs/software-engineering/skills/integrations/meta-marketing-api
