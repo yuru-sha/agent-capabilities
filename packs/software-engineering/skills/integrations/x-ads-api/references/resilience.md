@@ -1,105 +1,131 @@
-# Pagination, rate limits, errors, and retries
+# Rate limits, errors, retries, and polling
 
 verified_at: 2026-10-03
 
-## Cursor pagination
+Operational failures must be classified before retrying. Rate-limit scope,
+mutation ambiguity, async processing, and validation freshness are all part of
+the same recovery decision.
 
-Many collection GET endpoints support `count`, `cursor`, and
-`next_cursor`.
+## Rate-limit scopes
 
-Algorithm:
+At verification time X documents user-token and Ads-account rate-limit headers.
 
-1. Request the first page with an allowed count.
-2. Process that page before fetching the next one.
-3. If `next_cursor` is null, stop.
-4. Otherwise pass the cursor opaquely on the next request.
-5. De-duplicate by stable resource ID if the consuming workflow cannot tolerate
-   changes between pages.
+User scope:
 
-The current pagination guide says most endpoints use a default count of 200 and
-a maximum of 1000. Verify per endpoint. Analytics does not use this generic
-pagination model; partition analytics by time/entity/job limits instead.
+- `x-rate-limit-limit`;
+- `x-rate-limit-remaining`;
+- `x-rate-limit-reset`.
 
-## Rate limits
+Ads-account scope:
 
-Read the current Rate Limiting documentation and response headers for every
-endpoint family. Do not assume one global rate.
+- `x-account-rate-limit-limit`;
+- `x-account-rate-limit-remaining`;
+- `x-account-rate-limit-reset`.
 
-At verification time, X documents both user-token and ad-account rate-limit
-scopes. Prefer account-level headers when they are returned:
+Prefer account-level capacity for eligible account-scoped reads when returned,
+but do not assume those headers exist for every endpoint or write.
 
-- user scope: `x-rate-limit-limit`, `x-rate-limit-remaining`,
-  `x-rate-limit-reset`;
-- ad-account scope: `x-account-rate-limit-limit`,
-  `x-account-rate-limit-remaining`, `x-account-rate-limit-reset`.
+Rate-limit values vary by endpoint/category. Do not implement one global rate.
 
-Account-level limits are documented for eligible GET endpoints and are not a
-general write-limit contract. Current rate-limit tables also distinguish
-categories and endpoints, so do not use one concurrency budget for all calls.
+## Adaptive concurrency
 
-At minimum:
+Bound concurrency according to:
 
-- observe remaining/reset headers when provided;
-- prefer the ad-account limit when the response includes it;
-- stop increasing concurrency when remaining capacity is low;
-- wait until reset for hard rate-limit responses;
-- use bounded exponential backoff with jitter for eligible transient failures;
-- cap concurrency separately for account-scoped async jobs and high-volume
-  collection reads;
-- use high-count reads and multi-entity filters where the current endpoint
-  supports them rather than repeatedly fetching the same data.
+- remaining/reset capacity;
+- endpoint latency;
+- async-job limits;
+- downstream processing capacity.
 
-Current Analytics documentation states synchronous analytics is user-level 250
-requests per 15 minutes and asynchronous analytics allows 100 concurrently
-processing jobs per account. Re-check these values before relying on them.
+Reduce or stop new work when capacity approaches zero. On a rate-limit response,
+pause the affected scope until reset and add bounded jitter before resuming.
+
+Current Analytics documentation has dedicated sync request limits and an
+account-level maximum for concurrently processing async jobs. Re-check current
+values before relying on them.
 
 ## Error classes
 
-Distinguish:
+Distinguish at least:
 
-- authentication/signature errors;
+- authentication/signature;
 - authorization/account access;
-- invalid/expired resource IDs;
-- validation/enum/schema errors;
+- resource ownership/not-found;
+- validation/schema/enum;
+- targeting incompatibility;
+- schedule/timezone;
+- currency/budget/funding;
+- rate limit;
+- media upload/processing;
+- creative approval/review;
+- async analytics job;
+- transient network/server;
+- non-idempotent/destructive write with unknown outcome.
+
+Use both HTTP status and the current structured error payload when available.
+Preserve documented error code/message, affected parameter, request/correlation
+ID, and retry/reset metadata. Do not log credentials or OAuth headers.
+
+## Retryability
+
+Usually retryable with bounds:
+
+- rate limits after reset;
+- selected network/5xx failures for idempotent reads;
+- non-terminal media/report processing states.
+
+Usually not retryable without changing request/state:
+
+- invalid parameters or enums;
+- permission/account-access failures;
+- unsupported advertising/product combinations;
+- invalid media format/category;
 - funding/budget constraints;
-- rate limiting;
-- media format or processing errors;
-- async job processing failures;
-- transient server/network errors.
+- terminal media-processing failure;
+- terminal async-report failure.
 
-The official API returns structured `errors[].code` values for many failures,
-but HTTP status remains authoritative when a structured body is unavailable.
+## Ambiguous writes
 
-## Retry policy
+For POST/PUT/DELETE timeout or connection loss:
 
-Usually retryable after appropriate delay:
+1. do not assume the mutation failed;
+2. read back the resource/association;
+3. determine whether the intended state already exists;
+4. retry only when current semantics make it safe.
 
-- explicit rate-limit responses after reset;
-- selected 5xx/transient network failures for idempotent reads;
-- polling when an async job or media object is still processing.
+Do not blindly retry resource creation, association creation, or destructive
+operations.
 
-Usually non-retryable without changing the request or authorization:
+## Validation errors as freshness signals
 
-- invalid parameter / unsupported enum;
-- permission/account access failure;
-- not-found for the intended resource;
-- invalid media/category;
-- funding constraints;
-- rejected/failed async job after terminal state.
+Unexpected 4xx validation failures can indicate stale local knowledge.
 
-For POST/PUT/DELETE, never assume a transport error means no mutation occurred.
-Before retrying a non-idempotent or destructive operation, read back the
-resource or use an available idempotency/deduplication mechanism documented by
-the current API.
+Re-open current official documentation when failures suggest:
+
+- changed required parameters;
+- removed/changed enums;
+- changed resource relationships;
+- changed media requirements;
+- changed metric/dimension compatibility.
+
+Update local references only after confirming the current contract.
 
 ## Polling
 
-For media processing and async analytics:
+For media processing and async Analytics:
 
-- use an explicit terminal-state set from the current reference;
-- back off between polls rather than tight-looping;
-- honor any server-provided retry hints;
+- use the current documented terminal states;
+- back off between polls;
+- honor server retry hints when present;
 - impose an overall deadline and maximum attempts;
-- persist identifiers required to resume polling;
-- on terminal failure, surface the server-provided failure details rather than
-  re-submitting the whole workflow blindly.
+- persist IDs needed to resume polling;
+- surface terminal failure details rather than resubmitting the whole workflow.
+
+## Request reduction
+
+Prefer supported mechanisms that reduce request volume:
+
+- multi-ID filters;
+- reasonable larger pages;
+- reusable cached lookup/reference data within freshness bounds;
+- async reporting for large historical ranges;
+- avoiding repeated reads of static metadata inside loops.
