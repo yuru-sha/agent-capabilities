@@ -69,6 +69,18 @@ profiles:
   - x-ads
 ```
 
+The `dropbox` Profile installs the `dropbox-api` Skill for projects that read,
+write, synchronize, or share Dropbox content. It is language-independent and
+requires current official API verification for scopes, transfer limits,
+namespace/team-space behavior, and endpoint contracts. Compose it with the
+target language Profile as needed:
+
+```yaml
+profiles:
+  - python3
+  - dropbox
+```
+
 The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only `infrastructure-reviewer` specialist selector.
 It is intended to compose with a language or database Profile rather than

@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 173 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 174 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 15 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, and `github.yaml`
+- 16 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, and `github.yaml`
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -74,6 +74,11 @@ For projects that manage advertising through X Ads API, select the `x-ads`
 Profile. It adds freshness-gated, language-independent guidance for campaign and
 creative resource resolution, media handling, lifecycle diagnosis, and
 analytics/reporting.
+
+For projects that integrate with Dropbox, select the `dropbox` Profile. It adds
+freshness-gated, language-independent guidance for OAuth, files and folders,
+streaming/upload sessions, cursor-based change tracking, sharing, namespaces,
+team spaces, and retry/concurrency behavior.
 
 ## Install profiles
 
