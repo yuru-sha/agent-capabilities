@@ -76,15 +76,30 @@ URL in the current reference page.
 
 ## Official implementation research
 
+At verification time, X's Tools and Libraries page identifies these official
+Ads API implementation resources:
+
+- `twitter-python-ads-sdk` for Python;
+- `twitter-ruby-ads-sdk` for Ruby;
+- the official Ads API Postman collection.
+
+The same page lists PHP, Java, and JavaScript/Node.js libraries under
+**community tools and libraries**, not as X-maintained SDKs. Preserve that
+distinction. An official repository can still lag the current endpoint
+reference, so use it to understand protocol behavior rather than as a current
+contract.
+
 When the target language has weak or no Ads API support:
 
 1. Inspect current official docs and Postman examples for request shape.
-2. Inspect official libraries/samples in any language for OAuth signing,
-   serialization, pagination, media streaming/chunk boundaries, async polling,
-   and error handling.
-3. Extract those protocol behaviors.
-4. Re-implement them using the target language's normal HTTP, streaming, and
-   cancellation primitives.
+2. Inspect the official Python/Ruby SDKs and any current official samples in
+   other languages for OAuth signing, serialization, pagination, media
+   streaming/chunk boundaries, async polling, and error handling.
+3. Use community implementations only as supporting evidence.
+4. Extract protocol behavior rather than copying language-specific client
+   architecture.
+5. Re-implement those semantics using the target language's normal HTTP,
+   streaming, cancellation, and resource-management primitives.
 
 Do not copy an old SDK's endpoint version, enum set, buffering strategy, or
 retry behavior without confirming each item against the current reference.
