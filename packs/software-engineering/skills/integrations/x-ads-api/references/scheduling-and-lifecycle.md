@@ -4,32 +4,19 @@ verified_at: 2026-10-03
 
 ## Scheduling inputs
 
+Read [account-context.md](account-context.md) first for timezone semantics.
+
 Capture:
 
 - requested start datetime;
 - requested end datetime or indefinite/no-end intent;
-- user timezone;
-- Ads account timezone;
 - Campaign schedule;
 - Line Item schedule/constraints where currently supported.
 
-Preserve the user's timezone in the plan even if the API requires normalized
-timestamps.
-
-## Time normalization
-
-General X Ads API datetime responses are UTC-oriented, while Analytics DAY
-boundaries use the Ads account timezone.
-
-Do not apply one timezone rule to both campaign scheduling and reporting.
-
-Before a write:
-
-1. parse the user's timezone-aware datetime;
-2. verify account timezone where relevant;
-3. check current Campaign/Line Item scheduling parameter semantics;
-4. normalize only to the form required by the endpoint;
-5. retain the source timezone for user-facing output and auditing.
+Keep both the user's timezone-aware intent and the normalized instant required by
+the current endpoint. Do not duplicate timezone-conversion rules here; account
+timezone, Analytics day boundaries, DST, and display-timezone handling belong to
+the account-context reference.
 
 ## Parent/child schedule relationships
 
