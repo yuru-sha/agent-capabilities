@@ -76,8 +76,9 @@ through GitHub CLI and copies selected OMP Agent definitions separately:
   --agent codex --scope project
 ```
 
-`--agent` selects the host passed to `gh skill install`. `--scope` selects the
-project or user installation scope. Project-scope Skills use the project's
+`--agent` selects the host passed to `gh skill install`; `omp` is translated to
+`universal` because `gh skill install` does not accept `omp`. `--scope` selects
+the project or user installation scope. Project-scope Skills use the project's
 host-specific Skill directory, and OMP Agent definitions go to
 `.omp/agents/`. User-scope OMP Agent definitions go to
 `~/.omp/agent/agents/`.
