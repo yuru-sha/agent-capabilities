@@ -69,10 +69,10 @@ Run the installer from this repository checkout:
 ```
 
 The installer resolves the union of selected Profiles. It installs each
-selected Skill with `gh skill install`, passing `--agent` as the host selector
-and `--scope` as the project or user scope. It copies OMP Agent definitions
-separately to `.omp/agents/` for project scope or `~/.omp/agent/agents/` for
-user scope.
+selected Skill with `gh skill install`, passing `--agent` as the host selector;
+`omp` is translated to `universal`, the supported generic host. `--scope`
+selects the project or user scope. OMP Agent definitions are copied separately
+to `.omp/agents/` for project scope or `~/.omp/agent/agents/` for user scope.
 
 By default, Skills come from `yuru-sha/agent-capabilities`. Add `--from-local`
 to install Skills from the checkout for development. Profile metadata is

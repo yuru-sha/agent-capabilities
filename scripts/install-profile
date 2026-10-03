@@ -183,10 +183,13 @@ def preflight_agents(destinations: tuple[tuple[Path, Path], ...]) -> None:
 
 
 def gh_argv(repository: str, skill_name: str, skill_path: Path, *, from_local: bool, agent: str, scope: str) -> list[str]:
+    gh_agent = "universal" if agent == "omp" else agent
     if from_local:
-        return ["gh", "skill", "install", str(skill_path.resolve()), skill_name, "--from-local", "--agent", agent, "--scope", scope]
+        return ["gh", "skill", "install", str(skill_path.resolve()), skill_name, "--from-local", "--agent", gh_agent, "--scope", scope]
     relative_skill = skill_path.relative_to(SOURCE_ROOT).as_posix() + "/SKILL.md"
-    return ["gh", "skill", "install", repository, relative_skill, "--agent", agent, "--scope", scope]
+    return ["gh", "skill", "install", repository, relative_skill, "--agent", gh_agent, "--scope", scope]
+
+
 
 
 def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path | None, from_local: bool) -> int:
@@ -216,7 +219,7 @@ def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Install selected agent-capabilities Profiles.")
     parser.add_argument("profiles", nargs="+", help="profile IDs, for example: rust sqlite")
-    parser.add_argument("--agent", required=True, metavar="HOST", help="host passed to gh skill install --agent; selects Skills, not the OMP Agent-definition directory")
+    parser.add_argument("--agent", required=True, metavar="HOST", help="host passed to gh skill install --agent; omp is mapped to universal; selects Skills, not the OMP Agent-definition directory")
     parser.add_argument("--scope", required=True, choices=("project", "user"), help="gh installation scope and OMP Agent-definition target (.omp/agents for project; ~/.omp/agent/agents for user)")
     parser.add_argument("--target", help="project directory (default: current directory); OMP Agent definitions go under .omp/agents")
     parser.add_argument("--from-local", action="store_true", help="install Skills from this checkout instead of the published repository")

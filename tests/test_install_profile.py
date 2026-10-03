@@ -125,6 +125,16 @@ class InstallProfileTests(unittest.TestCase):
         self.assertFalse(any(str(skill) in str(arg) for arg in gh.call_args.args[0]))
         self.assertEqual((target / ".omp" / "agents" / "planner.md").read_bytes(), agent_source.read_bytes())
 
+
+    def test_omp_host_maps_to_universal_for_gh_skill_install(self):
+        skill = self.add_skill("skills/alpha", "alpha")
+        plan = INSTALLER["InstallPlan"](("one",), (("alpha", skill),), (), ())
+        with patch.object(INSTALLER["subprocess"], "run", return_value=type("Result", (), {"returncode": 0})()) as gh:
+            result = INSTALLER["install_profiles"](plan, agent="omp", scope="project", target=self.root, from_local=True)
+
+        self.assertEqual(result, 0)
+        self.assertEqual(gh.call_args.args[0][gh.call_args.args[0].index("--agent") + 1], "universal")
+
     def test_local_install_uses_skill_directory_as_source(self):
         skill = self.add_skill("skills/alpha", "alpha")
         self.add_profile("one", ["skills/alpha"])

@@ -55,7 +55,7 @@ Terraform と AWS のインフラ作業では infrastructure Profile を選択�
   --agent codex --scope project
 ```
 
-`--agent` は `gh skill install` に渡すホスト名です。`--scope` は `project` または `user` を指定します。OMP Agent 定義は Skill とは別に、project scope では `.omp/agents/`、user scope では `~/.omp/agent/agents/` にコピーされます。
+`--agent` は `gh skill install` に渡すホスト名です。`omp` を指定した場合は、同コマンドが `omp` を受け付けないため `universal` に読み替えます。`--scope` は `project` または `user` を指定します。OMP Agent 定義は Skill とは別に、project scope では `.omp/agents/`、user scope では `~/.omp/agent/agents/` にコピーされます。
 
 デフォルトでは Skill を `yuru-sha/agent-capabilities` からインストールします。開発中の checkout からインストールする場合は `--from-local` を追加します。Profile metadata はどちらの場合もこの checkout から読み込みます。
 
