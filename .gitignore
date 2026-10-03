@@ -16,3 +16,11 @@ Thumbs.db
 tmp/
 temp/
 artifacts/
+
+# Machine-local agent links; keep the project-owned verification skill versioned.
+.agents/*
+!.agents/skills/
+.agents/skills/*
+!.agents/skills/verify-*/
+.omp/
+.pstack/
