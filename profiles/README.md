@@ -93,6 +93,19 @@ profiles:
   - youtube
 ```
 
+The `meta-marketing` Profile installs the `meta-marketing-api` Skill for projects
+that manage or report on Meta advertising. It is language-independent and
+requires current official verification for Graph/Marketing API versions,
+permissions and Marketing API Access Tier, campaign-delivery schemas, creative
+and media behavior, Insights fields/breakdowns/attribution, and rate limits.
+Compose it with the target language Profile as needed:
+
+```yaml
+profiles:
+  - typescript
+  - meta-marketing
+```
+
 The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only `infrastructure-reviewer` specialist selector.
 It is intended to compose with a language or database Profile rather than
