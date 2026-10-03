@@ -1,0 +1,8 @@
+schema: 1
+id: x-ads
+kind: integration
+description: Research and integrate the current X Ads API across campaign, creative, media, audience, catalog, lead generation, and reporting workflows.
+
+skills:
+  include:
+    - packs/software-engineering/skills/integrations/x-ads-api

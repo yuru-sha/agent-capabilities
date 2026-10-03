@@ -14,8 +14,8 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 | Cross-cutting | security-review、operational-quality、zero-downtime-migration、technical-authoring | 4 |
 | Infrastructure | Terraform、AWS | 7 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
-| Integrations | note.com 非公式API | 1 |
-| **合計** | **専門 Skill** | **172** |
+| Integrations | note.com 非公式API、X Ads API | 2 |
+| **合計** | **専門 Skill** | **173** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -26,6 +26,12 @@ behavior, including authentication, article/search/creator/archive/hashtag
 reads, and write-safety caveats. Its endpoint catalog is based on the linked
 third-party survey and must be revalidated before implementation. It does not
 add runtime code or authorize an integrating project's API operations.
+
+`x-ads-api` uses the current official X Ads API documentation as the primary
+source and applies a 30-day freshness gate. It resolves resource dependencies
+from advertising type instead of a fixed hierarchy, prefers reusable assets and
+minimum-scope mutations, and covers streaming/chunked media behavior plus
+synchronous/asynchronous reporting without depending on a programming language.
 
 ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実行で Babysit → Shipping する契約は、それぞれ `packs/operations/github/automations/issue-omp-handoff.md` と `packs/operations/github/automations/issue-pr-lifecycle.md` にある。専門セレクタは `database-reviewer` と `infrastructure-reviewer` の2個である。
 
@@ -60,7 +66,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,infrastructure,frontend,note-com,workflows,github}.yaml
+│             cross-cutting,infrastructure,frontend,note-com,x-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
