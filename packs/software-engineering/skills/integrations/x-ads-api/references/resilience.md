@@ -25,14 +25,29 @@ pagination model; partition analytics by time/entity/job limits instead.
 Read the current Rate Limiting documentation and response headers for every
 endpoint family. Do not assume one global rate.
 
+At verification time, X documents both user-token and ad-account rate-limit
+scopes. Prefer account-level headers when they are returned:
+
+- user scope: `x-rate-limit-limit`, `x-rate-limit-remaining`,
+  `x-rate-limit-reset`;
+- ad-account scope: `x-account-rate-limit-limit`,
+  `x-account-rate-limit-remaining`, `x-account-rate-limit-reset`.
+
+Account-level limits are documented for eligible GET endpoints and are not a
+general write-limit contract. Current rate-limit tables also distinguish
+categories and endpoints, so do not use one concurrency budget for all calls.
+
 At minimum:
 
 - observe remaining/reset headers when provided;
+- prefer the ad-account limit when the response includes it;
 - stop increasing concurrency when remaining capacity is low;
 - wait until reset for hard rate-limit responses;
 - use bounded exponential backoff with jitter for eligible transient failures;
 - cap concurrency separately for account-scoped async jobs and high-volume
-  collection reads.
+  collection reads;
+- use high-count reads and multi-entity filters where the current endpoint
+  supports them rather than repeatedly fetching the same data.
 
 Current Analytics documentation states synchronous analytics is user-level 250
 requests per 15 minutes and asynchronous analytics allows 100 concurrently
