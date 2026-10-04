@@ -50,7 +50,7 @@ profiles:
 
 The installer unions selected Skills and de-duplicates selected agents by ID. A generated `go+sqlite` bundle is an output artifact, not a source Profile.
 
-The `github` profile selects GitHub operation Skills. `workflows` selects the complete GitHub operations pack. The separate ORCA prompts at `packs/operations/github/automations/issue-omp-handoff.md` and `packs/operations/github/automations/issue-pr-lifecycle.md` define the Issue-to-OMP handoff and its manually invoked Babysit/Shipping follow-up; they are not Profile Skills or development workflows.
+The `github` profile selects GitHub operation Skills. `workflows` selects the complete GitHub operations pack. The separate ORCA prompts at `packs/operations/github/automations/issue-omp-handoff.md` and `packs/operations/github/automations/issue-pr-lifecycle.md` define scheduled Issue-to-OMP handoff and the manually invoked Babysit/Shipping follow-up; they are not Profile Skills or development workflows.
 
 The infrastructure profile selects seven Terraform and AWS specialists plus the `infrastructure-reviewer` selector. Database profiles select the matching engine skills and the `database-reviewer` selector.
 

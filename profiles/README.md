@@ -26,8 +26,12 @@ The `github` and `workflows` Profiles do not install an Issue implementation
 Skill. The two Orca Automation prompts are
 `packs/operations/github/automations/issue-omp-handoff.md` and
 `issue-pr-lifecycle.md`. Configure them in Orca for the target repository and
-provider. Keep the PR lifecycle Automation disabled and start it only from the
-Orca UI; its dormant schedule must not run automatically.
+provider. Schedule the Issue handoff Automation. Keep the PR lifecycle
+Automation disabled; start it only from the Orca UI so Babysit and Shipping
+require a manual run.
+Use `scripts/sync-issue-automations --repo <repo-path> --enable-handoff` to
+enable the scheduled handoff and keep lifecycle manual. Use
+`--disable-automations` to disable both.
 
 The `github` Profile selects the GitHub operation Skills without the removed
 generic commit/push Skill. It includes both read and mutation workflows such as
