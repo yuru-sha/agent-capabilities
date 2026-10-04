@@ -16,7 +16,7 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 176 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 177 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
@@ -65,6 +65,12 @@ consumer repository needs those concerns too.
 For frontend work, select the `frontend` Profile. It provides the
 framework-agnostic web-quality, browser-testing, and form-validation Skills
 plus React 19, Next.js, Svelte 5, and Tailwind CSS v4+ specialists.
+
+The `cross-cutting` Profile includes `web-security-review` for evidence-driven,
+language-independent review of web applications and HTTP APIs. It maps attack
+surfaces, traces data and authority boundaries, checks state transitions, and
+requires bounded findings plus paired security/normal-path regression tests.
+Use `security-review` alongside it only for broader cross-engine trust boundaries.
 
 For projects that interact with note.com's undocumented web APIs, select the
 `note-com` Profile. It adds note.com-specific API research and safety guidance;
