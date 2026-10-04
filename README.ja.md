@@ -29,7 +29,7 @@ profiles:
   - sqlite
 ```
 
-resolver は選択された Skills を統合し、エージェントは ID ごとに重複を取り除きます。コードレビューと TDD は oh-my-pstack のワークフローが提供します。
+resolver は選択された Skills を統合し、エージェントは ID ごとに重複を取り除きます。`review-mode` は OMP の reviewer role と関連する専門 Skills、caller が指定する policy、任意の GitHub 投稿を組み合わせます。adversarial multi-model panel は、caller が明示的に求めた場合だけ pstack の `interrogate` で実行します。
 
 Rust と SQLite を使い、リポジトリ運用ワークフローもすべて必要な場合は、次のように指定します。
 
