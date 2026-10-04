@@ -12,6 +12,13 @@ language `*-security` skill and database `*-roles-rls` /
 `*-roles-privileges` skill. This skill adds only the cross-cutting checks
 those specialists do not own.
 
+For web applications and HTTP APIs, use `web-security-review` for the
+web-specific review workflow, browser/HTTP semantics, authentication and
+session lifecycle, authorization matrices, business-logic/state analysis,
+runtime evidence discipline, and regression requirements. Use this Skill
+alongside it only for cross-engine concerns that extend beyond the web
+boundary or are not already owned by a more specific specialist.
+
 ## Cross-cutting boundary
 
 - Trace untrusted input to storage, output, logs, subprocesses, files, and

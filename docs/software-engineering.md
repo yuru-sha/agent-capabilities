@@ -11,11 +11,11 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 | Language | Go、TypeScript、Python 3、Rust | 98 |
 | Database | PostgreSQL、MySQL、SQLite | 42 |
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 13 |
-| Cross-cutting | security-review、operational-quality、zero-downtime-migration、technical-authoring | 4 |
+| Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | Terraform、AWS | 7 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API | 5 |
-| **合計** | **専門 Skill** | **176** |
+| **合計** | **専門 Skill** | **177** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -70,7 +70,7 @@ ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実
 - このPackは言語、データベース、OpenAPI、フロントエンド、インフラの専門知識と、technical-authoring の技術文書設計知識を所有します。
 - `technical-authoring` は文書種別に応じた構成、技術的根拠、実行可能な例、検証、安全性を扱います。一般的な文章作成 workflow は installed `technical-writing` と oh-my-pstack に委ねます。
 - `database-reviewer` と `infrastructure-reviewer` は適切な専門 Skill を選択します。レビューの進行方法は定義しません。
-- `security-review` は既存の言語・データベース・インフラの専門知識で扱えない横断的な trust boundary を補います。
+- `security-review` は既存の言語・データベース・インフラの専門知識で扱えない横断的な trust boundary を補います。WebアプリケーションとHTTP APIのレビュー方法、認証・セッション・認可、ブラウザ境界、状態遷移、診断証跡、Findingと回帰テストは `web-security-review` が担当します。
 
 ## ディレクトリ
 
@@ -102,7 +102,8 @@ oh-my-pstack TDD / caller-triggered `interrogate`
   + go-goroutine-leak-deadlock-check
   + postgresql-transactions + postgresql-locking
   + openapi-contract-testing
-  + security-review (横断的なtrust boundaryがある場合)
+  + web-security-review (Webアプリ/APIのレビュー)
+  + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
 Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS trust、deploy、Lambda、CloudWatchを扱います。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
