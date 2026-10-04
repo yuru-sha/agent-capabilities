@@ -12,7 +12,7 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 
 - 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 176 個
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
-- Issue を ORCA から OMP に引き渡す Automation と、PR stack を手動で Babysit → Shipping する Automation Prompt 2 個
+- Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
 - `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`dropbox.yaml`、`youtube.yaml`、`meta-marketing.yaml`、`github.yaml` など、組み合わせ可能な Profiles 18 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
@@ -29,7 +29,7 @@ profiles:
   - sqlite
 ```
 
-resolver は選択された Skills を統合し、エージェントは ID ごとに重複を取り除きます。コードレビューと TDD は oh-my-pstack のワークフローが提供します。
+resolver は選択された Skills を統合し、エージェントは ID ごとに重複を取り除きます。`review-mode` は OMP の reviewer role と関連する専門 Skills、caller が指定する policy、任意の GitHub 投稿を組み合わせます。adversarial multi-model panel は、caller が明示的に求めた場合だけ pstack の `interrogate` で実行します。
 
 Rust と SQLite を使い、リポジトリ運用ワークフローもすべて必要な場合は、次のように指定します。
 

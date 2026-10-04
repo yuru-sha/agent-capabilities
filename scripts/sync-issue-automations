@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+
+from __future__ import annotations
+
+import argparse
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+AUTOMATIONS = ROOT / "packs" / "operations" / "github" / "automations"
+DEFINITIONS = (
+    ("issue-omp-handoff", "Issue OMP handoff", True),
+    ("issue-pr-lifecycle", "Issue PR lifecycle", False),
+)
+
+
+def run_orca(*args: str) -> dict:
+    result = subprocess.run(
+        ["orca", *args, "--json"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode:
+        raise RuntimeError(result.stderr.strip() or result.stdout.strip())
+    try:
+        response = json.loads(result.stdout)
+    except json.JSONDecodeError as error:
+        raise RuntimeError(f"orca returned invalid JSON: {error}") from error
+    if response.get("ok") is False:
+        raise RuntimeError(str(response.get("error", "orca command failed")))
+    return response.get("result", response)
+
+
+def automation_list() -> list[dict]:
+    result = run_orca("automations", "list")
+    automations = result.get("automations")
+    if not isinstance(automations, list):
+        raise RuntimeError("orca automations list response has no automations array")
+    return automations
+
+
+def matches_repository(automation: dict, repository: str) -> bool:
+    context = automation.get("runContext") or {}
+    if repository.startswith("id:"):
+        return context.get("repoId") == repository.removeprefix("id:")
+    if not context.get("path"):
+        return False
+    return Path(context["path"]).expanduser().resolve() == Path(repository).expanduser().resolve()
+
+
+def verify_created_automation(created: dict, name: str, prompt: str, repository: str, enabled: bool) -> str:
+    automation_id = (created.get("automation") or {}).get("id")
+    if not automation_id:
+        raise RuntimeError(f"creation response for {name} has no automation id")
+    verified = run_orca("automations", "show", automation_id).get("automation", {})
+    if verified.get("prompt") != prompt:
+        raise RuntimeError(f"prompt verification failed for {name} ({automation_id})")
+    if verified.get("name") != name or not matches_repository(verified, repository):
+        raise RuntimeError(f"target verification failed for {name} ({automation_id})")
+    if verified.get("workspaceMode") != "new_per_run" or verified.get("enabled") is not enabled:
+        raise RuntimeError(f"configuration verification failed for {name} ({automation_id})")
+    return automation_id
+
+
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Sync Orca Issue prompts; the handoff may be scheduled, while PR lifecycle stays manual."
+    )
+    parser.add_argument("--repo", required=True, help="Target repository path or Orca repo id:<id> selector")
+    parser.add_argument("--provider", help="Provider used only when an automation must be created")
+    parser.add_argument("--trigger", help="Schedule used only when an automation must be created")
+    parser.add_argument("--dry-run", action="store_true", help="Report planned changes without modifying Orca")
+    state = parser.add_mutually_exclusive_group()
+    state.add_argument(
+        "--enable-handoff", action="store_true",
+        help="Enable scheduled Issue handoff and keep PR lifecycle disabled for manual runs.",
+    )
+    state.add_argument(
+        "--disable-automations", action="store_true",
+        help="Disable both Issue automations.",
+    )
+    args = parser.parse_args()
+
+    repo_value = args.repo
+    repo_path = Path(repo_value).expanduser().resolve() if not repo_value.startswith("id:") else None
+    repo_selector = repo_value if repo_value.startswith("id:") else f"path:{repo_path}"
+    existing = automation_list()
+
+    for key, name, default_enabled in DEFINITIONS:
+        prompt_path = AUTOMATIONS / f"{key}.md"
+        prompt = prompt_path.read_text(encoding="utf-8")
+        if args.enable_handoff:
+            requested_enabled = key == "issue-omp-handoff"
+        elif args.disable_automations:
+            requested_enabled = False
+        else:
+            requested_enabled = None
+        candidates = [
+            item for item in existing
+            if item.get("name") == name and matches_repository(item, repo_value)
+        ]
+        if len(candidates) > 1:
+            raise RuntimeError(
+                f"multiple '{name}' automations match {repo_value}; resolve duplicates before syncing"
+            )
+        if candidates:
+            automation_id = candidates[0].get("id")
+            if not automation_id:
+                raise RuntimeError(f"'{name}' automation has no id")
+            prompt_changed = candidates[0].get("prompt") != prompt
+            state_changed = requested_enabled is not None and candidates[0].get("enabled") is not requested_enabled
+            if not prompt_changed and not state_changed:
+                print(f"unchanged: {name} ({automation_id})")
+                continue
+            command = ["automations", "edit", automation_id]
+            if prompt_changed:
+                command.extend(("--prompt", prompt))
+            if state_changed:
+                command.append("--enabled" if requested_enabled else "--disabled")
+            changes = []
+            if prompt_changed:
+                changes.append("prompt")
+            if state_changed:
+                changes.append(f"{'enabled' if requested_enabled else 'disabled'}")
+            print(f"update {' and '.join(changes)}: {name} ({automation_id})")
+            if not args.dry_run:
+                run_orca(*command)
+                verified = run_orca("automations", "show", automation_id).get("automation", {})
+                if prompt_changed and verified.get("prompt") != prompt:
+                    raise RuntimeError(f"prompt verification failed for {name} ({automation_id})")
+                if requested_enabled is not None and verified.get("enabled") is not requested_enabled:
+                    raise RuntimeError(f"enabled state verification failed for {name} ({automation_id})")
+            continue
+
+        if not args.provider or not args.trigger:
+            raise RuntimeError(
+                f"missing '{name}' for {repo_value}; provide --provider and --trigger to create it"
+            )
+        enabled = default_enabled if requested_enabled is None else requested_enabled
+        print(f"create {'enabled' if enabled else 'disabled'}: {name} for {repo_value}")
+        if not args.dry_run:
+            command = [
+                "automations", "create", "--name", name, "--trigger", args.trigger,
+                "--prompt", prompt, "--provider", args.provider, "--repo", repo_selector,
+                "--workspace-mode", "new-per-run",
+            ]
+            command.append("--enabled" if enabled else "--disabled")
+            created = run_orca(*command)
+            automation_id = verify_created_automation(
+                created, name, prompt, repo_value, enabled
+            )
+            print(f"created and verified: {name} ({automation_id})")
+
+    return 0
+
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except (OSError, RuntimeError) as error:
+        print(f"error: {error}", file=sys.stderr)
+        raise SystemExit(1)

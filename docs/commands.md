@@ -12,7 +12,7 @@ the selected Profiles and the target repository.
 | `git` | inspect, commit, push, branch, worktree, and remote-state operations | Required for repository workflows |
 | `gh` | GitHub workflows and `gh skill install` for Profile Skills | Required for GitHub workflows and Profile installation |
 | `jq` | filter paginated Issue results and read or update lock owner metadata | Required only when using either Orca Issue Automation |
-| `orca` | Orca-managed worktrees, manually invoked or scheduled Automations, and run-state inspection | Required only when using either Orca Issue Automation or recovering its shared lock |
+| `orca` | Orca-managed worktrees, scheduled Issue handoff, manual PR lifecycle, and run-state inspection | Required only when using either Orca Issue Automation or recovering its shared lock |
 | `uuidgen` | generate unique lock run IDs for Orca Issue Automations | Required only when using either Automation |
 | `gt` | Graphite merge-when-ready flow used by pstack Shipping | Required only when using the manual PR lifecycle Automation |
 | `python3` + `quick_validate.py` | validate Skill frontmatter and descriptions | Maintainer check; use the locally available validator |
