@@ -23,11 +23,13 @@ files. Use `create-draft-pr` when review should start later.
    concise commit. Never reset, checkout, amend, or force-push unless the user
    explicitly requests it. If the current branch is the default branch, make
    a descriptive feature branch before committing.
-4. Push the feature branch to the intended remote with upstream tracking. Use
-   `gh pr create` without `--draft` (or the repository's existing GitHub
-   tooling), with the requested issue linked as `Closes #N` when an issue is
-   known. Keep the title, body, and logs free of secrets and private session
-   data.
+4. Push the feature branch to the intended remote with upstream tracking.
+   Create the PR with `gh pr create` without `--draft` (or the repository's
+   existing GitHub tooling), linking the requested issue as `Closes #N` when
+   an issue is known. Pass a multi-line PR body through a temporary file, not
+   a shell argument. After creation, run `gh pr view --json body` and confirm
+   the returned body preserves the intended line breaks. Keep the title, body,
+   and logs free of secrets and private session data.
 5. Immediately re-fetch the PR URL, head/base, commit, changed files, CI/check
    state, and mergeability. Report pending or missing external checks as such;
    do not merge the PR.
