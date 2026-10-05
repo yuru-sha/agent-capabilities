@@ -1,0 +1,12 @@
+schema: 1
+id: gcp-gcs
+kind: cloud
+description: Google Cloud gcs guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/gcp/gcp-gcs/**
+
+agents:
+  include:
+    - infrastructure-reviewer

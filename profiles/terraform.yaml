@@ -1,0 +1,13 @@
+schema: 1
+id: terraform
+kind: infrastructure
+description: Terraform infrastructure and policy-testing guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/terraform-infrastructure/**
+    - packs/software-engineering/skills/infrastructure/terraform-policy-testing/**
+
+agents:
+  include:
+    - infrastructure-reviewer

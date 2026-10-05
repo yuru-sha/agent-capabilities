@@ -1,0 +1,13 @@
+schema: 1
+id: aws-redshift
+kind: cloud
+description: AWS redshift guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-redshift/**
+
+agents:
+  include:
+    - infrastructure-reviewer
+    - database-reviewer

@@ -1,0 +1,12 @@
+schema: 1
+id: aws-cloudwatch
+kind: cloud
+description: AWS cloudwatch guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-cloudwatch/**
+
+agents:
+  include:
+    - infrastructure-reviewer

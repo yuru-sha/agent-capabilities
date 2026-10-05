@@ -1,0 +1,12 @@
+schema: 1
+id: aws-s3
+kind: cloud
+description: AWS s3 guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-s3/**
+
+agents:
+  include:
+    - infrastructure-reviewer

@@ -1,0 +1,12 @@
+schema: 1
+id: aws-msk
+kind: cloud
+description: AWS msk guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-msk/**
+
+agents:
+  include:
+    - infrastructure-reviewer

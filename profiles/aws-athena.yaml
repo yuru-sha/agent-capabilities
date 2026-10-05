@@ -1,0 +1,12 @@
+schema: 1
+id: aws-athena
+kind: cloud
+description: AWS athena guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-athena/**
+
+agents:
+  include:
+    - infrastructure-reviewer
