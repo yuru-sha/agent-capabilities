@@ -1,9 +1,9 @@
 ---
-name: github-actions-aws-deploy
+name: aws-github-actions-deploy
 description: Use when designing or reviewing GitHub Actions deployments to AWS, GitHub OIDC federation, reusable workflows, deployment roles, or ECS and ecspresso responsibility boundaries.
 ---
 
-# GitHub Actions to AWS deployment design
+# aws-github-actions-deploy
 
 This is a deployment-design and review specialist. It does not create
 workflows, request reviews, mutate repositories, or deploy AWS resources.
