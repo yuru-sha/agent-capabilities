@@ -1,0 +1,12 @@
+schema: 1
+id: elasticache
+kind: data-system
+description: AWS elasticache service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/data-systems/aws/elasticache/**
+
+agents:
+  include:
+    - database-reviewer

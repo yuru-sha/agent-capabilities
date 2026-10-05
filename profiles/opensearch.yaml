@@ -1,0 +1,12 @@
+schema: 1
+id: opensearch
+kind: data-system
+description: AWS opensearch service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/data-systems/aws/opensearch/**
+
+agents:
+  include:
+    - database-reviewer

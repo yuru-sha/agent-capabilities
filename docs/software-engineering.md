@@ -14,10 +14,11 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Amazon DynamoD
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | Terraform、AWS architecture、IAM、Lambda、CloudWatch、GitHub Actions deploy、EKS、Fargate、VPC、EC2、ECS、ECR、ALB、S3、RDS、Secrets Manager、KMS、API Gateway、Step Functions、CloudFront、Route53、ACM、WAF | 24 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
-| Data systems | Redis、BigQuery、Google Cloud Storage、Amazon EFS | 4 |
-| Messaging | BullMQ、Amazon SQS、Amazon Kinesis Data Streams、Amazon EventBridge、Amazon SNS | 5 |
+| Data systems | Redis、BigQuery、Google Cloud Storage、Amazon EFS、Amazon ElastiCache、Amazon OpenSearch Service | 6 |
+| Messaging | BullMQ、Amazon SQS、Amazon Kinesis Data Streams、Amazon EventBridge、Amazon SNS、Amazon MSK | 6 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **63** |
+| Analytics | AWS Glue、Amazon Athena、Amazon EMR、Amazon Redshift | 4 |
+| **合計** | **専門 Skill** | **70** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -112,8 +113,38 @@ handling, Private CA integration, and service/Region deployment constraints.
 `waf` covers web ACLs, managed/custom rules, rate controls, Count-to-Block
 rollout, logging, and false-positive operations.
 
-`efs` covers mount targets, access points, NFS/POSIX access, performance and
+ `efs` covers mount targets, access points, NFS/POSIX access, performance and
 throughput modes, lifecycle storage classes, encryption, backup, and operations.
+
+### Analytics
+
+`glue` covers the Glue Data Catalog, crawlers, schema/partition discovery,
+ETL jobs, job bookmarks, worker sizing, replay/backfill, and data-quality
+validation around Glue pipelines.
+
+`athena` covers table/partition/file layout, workgroups, result locations,
+query-cost controls, CTAS/UNLOAD, Glue Catalog integration, and query
+performance over S3-backed analytical data.
+
+`emr` covers EMR deployment-model selection, release/runtime configuration,
+Spark/Hadoop workload design, instance fleets, autoscaling, Spot behavior,
+shuffle/memory tuning, and distributed-job operations.
+
+`redshift` covers provisioned and Serverless warehouse selection, table
+distribution/sort/compression, COPY/UNLOAD, workload management, scaling,
+Spectrum, query diagnostics, snapshots, and recovery.
+
+`elasticache` covers Valkey, Redis OSS, and Memcached engine/topology
+selection, sharding/replication/failover, TTL/eviction, client behavior,
+scaling, security, and cache operations.
+
+`opensearch` covers managed domains and OpenSearch Serverless, mappings,
+shards/replicas, indexing/search behavior, bulk ingestion, lifecycle,
+security, scaling, and cluster/search observability.
+
+`msk` covers provisioned and Serverless Kafka, topic/partition design,
+replication/retention, producer/consumer behavior, IAM/SASL/TLS,
+networking, scaling, lag, and broker operations.
 
 ### Messaging
 
@@ -230,7 +261,7 @@ to additional AWS/GCP services.
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,frontend,data-systems,messaging,integrations}/...
+│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,analytics,frontend,data-systems,messaging,integrations}/...
 │   │   └── agents/{database-reviewer,infrastructure-reviewer}.md
 │   └── operations/github/
 │       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,review-mode,
@@ -257,7 +288,7 @@ oh-my-pstack TDD / caller-triggered `interrogate`
   + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
-Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱い、DynamoDBではaccess pattern、partition/index、conditional write、capacity、Streams/global tablesを扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availability、BigQueryの分析データ設計/コスト最適化、Google Cloud Storageのobject lifecycle/transfer/security、Amazon EFSの共有filesystem/network/performance/lifecycleを扱います。Messaging SkillsはBullMQ、SQS、Kinesis Data Streams、EventBridge、SNSのdelivery semantics、idempotency、ordering/concurrency、filter/routing、retry、replay/recoveryを扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS横断architecture、IAM、GitHub Actions OIDC/deploy、言語非依存Lambda、CloudWatch、EKS、Fargate、VPC、EC2、ECS、ECR、ALB、S3、RDS、Secrets Manager、KMSに加え、API Gateway、Step Functions、CloudFront、Route53、ACM、WAFをサービス別に扱います。Node.js/TypeScript固有のLambda build/package知識はTypeScript Skillに置き、サービス固有設定は各AWSサービスSkillへ分離します。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
+Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱い、DynamoDBではaccess pattern、partition/index、conditional write、capacity、Streams/global tablesを扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availability、BigQueryの分析データ設計/コスト最適化、Google Cloud Storageのobject lifecycle/transfer/security、Amazon EFSの共有filesystem/network/performance/lifecycle、ElastiCacheのcache topology/failover、OpenSearchのindex/search運用を扱います。Messaging SkillsはBullMQ、SQS、Kinesis Data Streams、EventBridge、SNS、MSKのdelivery semantics、idempotency、ordering/concurrency、filter/routing、partitioning、retry、replay/recoveryを扱います。Analytics SkillsはGlue、Athena、EMR、Redshiftのcatalog/ETL/query/distributed-processing/data-warehouse運用を扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS横断architecture、IAM、GitHub Actions OIDC/deploy、言語非依存Lambda、CloudWatch、EKS、Fargate、VPC、EC2、ECS、ECR、ALB、S3、RDS、Secrets Manager、KMSに加え、API Gateway、Step Functions、CloudFront、Route53、ACM、WAFをサービス別に扱います。Node.js/TypeScript固有のLambda build/package知識はTypeScript Skillに置き、サービス固有設定は各AWSサービスSkillへ分離します。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
 
 ## GitHub操作
 

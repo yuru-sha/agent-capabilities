@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 63 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 70 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 49 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `dynamodb.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, `redis.yaml`, `bullmq.yaml`, `sqs.yaml`, `kinesis.yaml`, `eks.yaml`, `fargate.yaml`, `vpc.yaml`, `ec2.yaml`, `ecs.yaml`, `ecr.yaml`, `alb.yaml`, `s3.yaml`, `rds.yaml`, `secrets-manager.yaml`, `kms.yaml`, `api-gateway.yaml`, `eventbridge.yaml`, `sns.yaml`, `step-functions.yaml`, `cloudfront.yaml`, `route53.yaml`, `acm.yaml`, `waf.yaml`, `efs.yaml`, `bigquery.yaml`, `gcs.yaml`, and `github.yaml`
+- 56 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `dynamodb.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, `redis.yaml`, `bullmq.yaml`, `sqs.yaml`, `kinesis.yaml`, `eks.yaml`, `fargate.yaml`, `vpc.yaml`, `ec2.yaml`, `ecs.yaml`, `ecr.yaml`, `alb.yaml`, `s3.yaml`, `rds.yaml`, `secrets-manager.yaml`, `kms.yaml`, `api-gateway.yaml`, `eventbridge.yaml`, `sns.yaml`, `step-functions.yaml`, `cloudfront.yaml`, `route53.yaml`, `acm.yaml`, `waf.yaml`, `efs.yaml`, `glue.yaml`, `athena.yaml`, `emr.yaml`, `redshift.yaml`, `elasticache.yaml`, `opensearch.yaml`, `msk.yaml`, `bigquery.yaml`, `gcs.yaml`, and `github.yaml`
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -106,6 +106,11 @@ For the second-wave AWS services, compose `api-gateway`, `eventbridge`,
 and `efs` as needed. Messaging services remain under the messaging category,
 EFS under data-systems, and edge/API/DNS/security orchestration services under
 infrastructure.
+
+For AWS data-platform and search/streaming workloads, compose `glue`,
+`athena`, `emr`, `redshift`, `elasticache`, `opensearch`, and `msk`
+as needed. Analytics services live under `analytics/aws/`, cache/search
+services under `data-systems/aws/`, and MSK under `messaging/aws/`.
 
 For Amazon EKS, select the `eks` Profile. It covers cluster/node lifecycle,
 Pod Identity/IRSA, VPC CNI and ingress integration, autoscaling, add-ons,

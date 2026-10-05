@@ -1,0 +1,11 @@
+schema: 1
+id: glue
+kind: analytics
+description: AWS glue service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/analytics/aws/glue/**
+
+agents:
+  include: []

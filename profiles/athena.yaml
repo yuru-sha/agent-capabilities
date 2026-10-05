@@ -1,0 +1,11 @@
+schema: 1
+id: athena
+kind: analytics
+description: AWS athena service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/analytics/aws/athena/**
+
+agents:
+  include: []
