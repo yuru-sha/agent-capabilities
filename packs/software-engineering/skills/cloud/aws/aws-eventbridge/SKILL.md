@@ -1,9 +1,9 @@
 ---
-name: eventbridge
+name: aws-eventbridge
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon EventBridge event buses, rules, patterns, targets, retries, DLQs, archives/replay, schemas, or Scheduler integrations."
 ---
 
-# eventbridge
+# aws-eventbridge
 
 Use this skill for eventbridge-specific AWS behavior. Compose it with adjacent service Skills when broader architecture is in scope.
 
