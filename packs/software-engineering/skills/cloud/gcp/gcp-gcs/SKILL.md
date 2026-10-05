@@ -1,9 +1,9 @@
 ---
-name: gcs
+name: gcp-gcs
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Google Cloud Storage buckets, objects, uploads/downloads, signed URLs, lifecycle/storage classes, versioning, retention, object locks, IAM, or large-object transfer behavior."
 ---
 
-# Google Cloud Storage
+# gcp-gcs
 
 Use this skill for GCS-specific object storage semantics and operations.
 
