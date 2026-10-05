@@ -1,6 +1,6 @@
 ---
 name: github-actions-aws-deploy
-description: Use when designing or reviewing GitHub Actions deployments to AWS, OIDC permissions, reusable workflows, or ECS and ecspresso responsibility boundaries.
+description: Use when designing or reviewing GitHub Actions deployments to AWS, GitHub OIDC federation, reusable workflows, deployment roles, or ECS and ecspresso responsibility boundaries.
 ---
 
 # GitHub Actions to AWS deployment design
@@ -13,10 +13,14 @@ workflows, request reviews, mutate repositories, or deploy AWS resources.
 - Make triggers, protected environments, approvals, concurrency, cancellation,
   permissions, artifacts, and rollback behavior explicit. Grant id-token: write
   only to the job that needs OIDC and keep all other permissions minimal.
-- Prefer short-lived OIDC role sessions over static AWS credentials. Scope the
-  role trust to the intended repository, ref, and environment, and make the
-  workflow's environment selection visible rather than inferred from a branch
-  name alone.
+- Prefer short-lived OIDC role sessions over static AWS credentials. Grant
+  `id-token: write` only to jobs that assume AWS roles. Verify the configured
+  issuer and audience, and scope the IAM trust policy's GitHub subject/claims to
+  the intended repository, ref or protected environment. Use the separate
+  `iam` Skill for general IAM policy, trust, PassRole, and cross-account design.
+- Keep environment selection visible rather than inferring production authority
+  from a branch name alone. Separate build/test jobs from the job that receives
+  deployment identity.
 - Keep reusable workflow inputs, outputs, secrets, and permissions explicit.
   Pass only the required secrets; do not use broad secret inheritance as a
   convenience.
