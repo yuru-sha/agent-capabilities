@@ -99,6 +99,35 @@ profiles:
   - infrastructure
 ```
 
+The `eks` Profile installs the `eks` Skill and the
+`infrastructure-reviewer` selector for Amazon EKS. It owns cluster/node
+lifecycle, workload identity, AWS networking/ingress integration, autoscaling,
+add-ons, upgrades, and EKS operational behavior. Compose it with `fargate`
+when EKS Fargate profiles are part of the design:
+
+```yaml
+profiles:
+  - eks
+  - fargate
+  - infrastructure
+```
+
+The `fargate` Profile installs the `fargate` Skill for the AWS Fargate
+runtime model shared by ECS and EKS. It owns sizing/platform constraints,
+workload networking, ephemeral storage, scaling, Spot interruption behavior,
+cost, and runtime operations. Keep ECS/EKS orchestrator semantics in their own
+service Skills.
+
+The `bigquery` Profile installs the `bigquery` Skill for analytical data
+workloads on Google BigQuery. It covers partitioning/clustering, SQL
+performance and cost, ingestion/streaming/export, schema evolution, governance,
+and fine-grained access controls.
+
+The `gcs` Profile installs the `gcs` Skill for Google Cloud Storage. It
+covers bucket/object semantics, resumable transfers, generation preconditions,
+lifecycle/storage classes, versioning/retention, signed URLs, IAM, and
+public-access prevention.
+
 The `cross-cutting` Profile includes `technical-authoring` for document-type
 structure, technical evidence, executable examples, verification, and
 operational safety. Compose it with a language, database, OpenAPI, or
