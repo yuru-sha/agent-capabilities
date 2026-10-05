@@ -1,9 +1,9 @@
 ---
-name: elasticache
+name: aws-elasticache
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon ElastiCache for Valkey, Redis OSS, or Memcached, including topology, replication, sharding, failover, eviction, TTL, security, scaling, and client behavior."
 ---
 
-# elasticache
+# aws-elasticache
 
 Use this skill for elasticache-specific AWS behavior. Compose it with adjacent service Skills when broader architecture or data-platform behavior is in scope.
 
