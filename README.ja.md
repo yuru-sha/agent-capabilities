@@ -14,7 +14,7 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`dropbox.yaml`、`youtube.yaml`、`meta-marketing.yaml`、`smartnews-marketing.yaml`、`github.yaml` など、組み合わせ可能な Profiles 19 個
+- `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`dropbox.yaml`、`youtube.yaml`、`meta-marketing.yaml`、`smartnews-marketing.yaml`、`tiktok-business.yaml`、`github.yaml` など、組み合わせ可能な Profiles 20 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
@@ -57,6 +57,8 @@ Dropbox API を扱うプロジェクトでは `dropbox` Profile を選択しま�
 YouTube API を扱うプロジェクトでは `youtube` Profile を選択します。Data API v3、動画アップロード、Analytics、Reporting、Live Streaming、認証/チャンネル識別、quota、バッチ処理、retry/error handling を現行仕様の確認付きで言語非依存に支援します。
 
 Meta 広告を扱うプロジェクトでは `meta-marketing` Profile を選択します。Graph / Marketing API のバージョン確認、Ad Account / Campaign / Ad Set / Ad、クリエイティブとメディア、Audience / conversion / catalog、Ads Insights、batch、rate limit、曖昧な write の再照合を現行仕様の確認付きで言語非依存に支援します。
+
+TikTok API for Business を扱うプロジェクトでは `tiktok-business` Profile を選択します。Marketing API、Business Center、Accounts API、Events API、Manual / Upgraded Smart+、クリエイティブ/Spark Ads、Audience / catalog、webhook、同期/非同期レポートを現行仕様の確認付きで言語非依存に支援します。
 
 ## Profile のインストール
 
