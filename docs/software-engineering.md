@@ -8,14 +8,14 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 
 | 分類 | 内訳 | 数 |
 |---|---|---:|
-| Language | Go、TypeScript、Python 3、Rust | 98 |
+| Language | Go、TypeScript、Python 3、Rust | 4 |
 | Database | PostgreSQL、MySQL、SQLite | 42 |
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 13 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | Terraform、AWS | 7 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API | 5 |
-| **合計** | **専門 Skill** | **177** |
+| **合計** | **専門 Skill** | **83** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -98,8 +98,7 @@ agent-capabilities/
 
 ```text
 oh-my-pstack TDD / caller-triggered `interrogate`
-  + go-concurrency + go-data-race-check
-  + go-goroutine-leak-deadlock-check
+  + go (concurrency / data-race / goroutine references)
   + postgresql-transactions + postgresql-locking
   + openapi-contract-testing
   + web-security-review (Webアプリ/APIのレビュー)
