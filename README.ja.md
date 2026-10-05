@@ -10,11 +10,11 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 
 ## 内容
 
-- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 41 個
+- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 45 個
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`dynamodb.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`dropbox.yaml`、`youtube.yaml`、`meta-marketing.yaml`、`smartnews-marketing.yaml`、`tiktok-business.yaml`、`line-yahoo-ads.yaml`、`google-ads.yaml`、`redis.yaml`、`bullmq.yaml`、`sqs.yaml`、`kinesis.yaml`、`github.yaml` など、組み合わせ可能な Profiles 27 個
+- `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`dynamodb.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`dropbox.yaml`、`youtube.yaml`、`meta-marketing.yaml`、`smartnews-marketing.yaml`、`tiktok-business.yaml`、`line-yahoo-ads.yaml`、`google-ads.yaml`、`redis.yaml`、`bullmq.yaml`、`sqs.yaml`、`kinesis.yaml`、`eks.yaml`、`fargate.yaml`、`bigquery.yaml`、`gcs.yaml`、`github.yaml` など、組み合わせ可能な Profiles 31 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
@@ -55,6 +55,14 @@ Amazon SQS を使うプロジェクトでは `sqs` Profile を選択します。
 Amazon DynamoDB を使うプロジェクトでは `dynamodb` Profile を選択します。アクセスパターン起点の key/index 設計、conditional write、transaction、capacity/hot partition、Streams、TTL、global tables、recovery を扱います。AWS 全体の実装・インフラレビューも対象なら `infrastructure` と組み合わせます。
 
 Amazon Kinesis Data Streams を使うプロジェクトでは `kinesis` Profile を選択します。stream/queue の選択、partitioning/order、consumer/checkpoint、replay、scaling、retention、backpressure、Lambda 連携を扱います。AWS 全体の concern には `infrastructure`、KCL lease table や DynamoDB sink も対象なら `dynamodb` と組み合わせます。
+
+Amazon EKS を使うプロジェクトでは `eks` Profile を選択します。cluster/node lifecycle、Pod Identity/IRSA、VPC CNI/ingress、autoscaling、add-on、upgrade、security/operations を扱います。EKS Fargate を使う場合は `fargate` と組み合わせます。
+
+AWS Fargate を使うプロジェクトでは `fargate` Profile を選択します。ECS/EKS 共通の sizing/platform、workload network、ephemeral storage、scaling、Fargate Spot、cost/operations を扱います。
+
+Google BigQuery を使うプロジェクトでは `bigquery` Profile を選択します。table design、partitioning/clustering、query performance/cost、ingestion、schema evolution、governance、row/column-level security を扱います。
+
+Google Cloud Storage を使うプロジェクトでは `gcs` Profile を選択します。bucket/object semantics、resumable transfer、generation precondition、lifecycle/versioning、retention、signed URL、IAM/public access control を扱います。
 
 `cross-cutting` Profile には `web-security-review` が含まれます。WebアプリケーションとHTTP APIを対象に、攻撃面の棚卸し、データ・主体/権限・状態の境界追跡、根拠に基づくFinding、修正後のセキュリティ系/正常系回帰テストを言語非依存で支援します。より広いcross-engine trust boundaryは `security-review` と組み合わせます。
 
