@@ -99,6 +99,33 @@ profiles:
   - infrastructure
 ```
 
+The core AWS service Profiles are intentionally composable instead of bundled
+into `infrastructure`:
+
+- `vpc` — subnets, routes, egress, endpoints, security groups, DNS, and network capacity.
+- `ec2` — instance/AMI/EBS/IMDS lifecycle and fleet operations.
+- `ecs` — task definitions, services, deployments, capacity providers, IAM roles, and autoscaling.
+- `ecr` — image identity, scanning, lifecycle, replication, and pull/push permissions.
+- `alb` — listeners/rules/TLS, target groups, health checks, draining, and routing.
+- `s3` — object transfer, versioning/lifecycle/replication, Object Lock, events, and access control.
+- `rds` — RDS/Aurora topology, Multi-AZ, backups, replicas, failover, connectivity, and scaling.
+- `secrets-manager` — secret access, caching, rotation, resource policies, and recovery.
+- `kms` — key policies, IAM/grants, envelope encryption, rotation, and multi-Region keys.
+
+A typical ECS service behind an ALB can compose, for example:
+
+```yaml
+profiles:
+  - vpc
+  - ecs
+  - fargate
+  - ecr
+  - alb
+  - secrets-manager
+  - kms
+  - infrastructure
+```
+
 The `eks` Profile installs the `eks` Skill and the
 `infrastructure-reviewer` selector for Amazon EKS. It owns cluster/node
 lifecycle, workload identity, AWS networking/ingress integration, autoscaling,
