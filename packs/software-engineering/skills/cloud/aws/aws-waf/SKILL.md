@@ -1,9 +1,9 @@
 ---
-name: waf
+name: aws-waf
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting AWS WAF web ACLs, managed or custom rules, rate-based rules, IP sets, regex matching, logging, bot controls, or false-positive handling."
 ---
 
-# waf
+# aws-waf
 
 Use this skill for waf-specific AWS behavior. Compose it with adjacent service Skills when broader architecture is in scope.
 
