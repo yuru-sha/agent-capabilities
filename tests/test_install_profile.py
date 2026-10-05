@@ -112,8 +112,8 @@ class InstallProfileTests(unittest.TestCase):
 
         skills = dict(plan.skills)
         for expected in (
-            "go-api-client",
-            "typescript-api-client",
+            "go",
+            "typescript",
             "postgresql-design",
             "sqlite-design",
             "openapi-design",
