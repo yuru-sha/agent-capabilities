@@ -1,9 +1,9 @@
 ---
-name: iam
+name: aws-iam
 description: "Use when designing or reviewing AWS IAM identities, policies, roles, trust policies, STS assumptions, iam:PassRole, permission boundaries, cross-account access, or AWS authorization failures."
 ---
 
-# AWS IAM
+# aws-iam
 
 Use this skill for AWS identity and authorization. GitHub Actions workflow design and OIDC workflow integration stay in `github-actions-aws-deploy`; network security belongs to VPC/network Skills.
 
