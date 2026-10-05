@@ -1,0 +1,12 @@
+schema: 1
+id: route53
+kind: infrastructure
+description: AWS route53 service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/aws/route53/**
+
+agents:
+  include:
+    - infrastructure-reviewer

@@ -1,0 +1,12 @@
+schema: 1
+id: acm
+kind: infrastructure
+description: AWS acm service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/aws/acm/**
+
+agents:
+  include:
+    - infrastructure-reviewer

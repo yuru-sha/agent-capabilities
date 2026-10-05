@@ -1,0 +1,12 @@
+schema: 1
+id: efs
+kind: data-system
+description: AWS efs service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/aws/efs/**
+
+agents:
+  include:
+    - infrastructure-reviewer
