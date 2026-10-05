@@ -1,0 +1,12 @@
+schema: 1
+id: ecs
+kind: infrastructure
+description: Amazon ECS guidance for task definitions, services, deployments, capacity providers, networking, IAM roles, autoscaling, and recovery.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/aws/ecs/**
+
+agents:
+  include:
+    - infrastructure-reviewer

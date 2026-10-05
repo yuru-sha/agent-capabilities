@@ -1,0 +1,12 @@
+schema: 1
+id: kms
+kind: infrastructure
+description: AWS KMS guidance for key policies, IAM/grants, envelope encryption, key choice, rotation, multi-Region keys, and lifecycle operations.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/aws/kms/**
+
+agents:
+  include:
+    - infrastructure-reviewer

@@ -1,0 +1,12 @@
+schema: 1
+id: vpc
+kind: infrastructure
+description: Amazon VPC guidance for topology, subnets, routing, egress, endpoints, DNS, security groups, network capacity, and hybrid connectivity.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/aws/vpc/**
+
+agents:
+  include:
+    - infrastructure-reviewer
