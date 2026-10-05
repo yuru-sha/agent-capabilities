@@ -1,0 +1,11 @@
+schema: 1
+id: sqs
+kind: messaging
+description: Amazon SQS messaging guidance for Standard/FIFO selection, visibility, idempotency, consumers, batching, DLQs, security, and integrations.
+
+skills:
+  include:
+    - packs/software-engineering/skills/messaging/sqs/**
+
+agents:
+  include: []

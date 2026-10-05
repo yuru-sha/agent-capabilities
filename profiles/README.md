@@ -43,6 +43,35 @@ The engineering Profiles select content from
 specialist selectors (`database-reviewer`, `infrastructure-reviewer`) are
 added only when the profile's domain touches those concerns.
 
+The `redis` Profile installs the `redis` Skill for projects using Redis as
+a cache, data structure server, coordination primitive, stream, or ephemeral
+state store. It is language-independent. Compose it with the target language
+Profile and with `bullmq` when BullMQ is also used:
+
+```yaml
+profiles:
+  - typescript
+  - redis
+  - bullmq
+```
+
+The `bullmq` Profile installs the `bullmq` Skill for Redis-backed background
+jobs. It owns BullMQ queue/worker semantics and does not duplicate general Redis
+operations. Select `redis` separately when topology, persistence, memory, or
+Redis security are in scope.
+
+The `sqs` Profile installs the `sqs` Skill for Amazon SQS messaging. It owns
+Standard/FIFO selection, visibility/idempotency, polling/batching, and DLQ
+recovery. Compose it with `infrastructure` when broader AWS/IAM/Lambda/ECS or
+Terraform concerns are in scope:
+
+```yaml
+profiles:
+  - go
+  - sqs
+  - infrastructure
+```
+
 The `cross-cutting` Profile includes `technical-authoring` for document-type
 structure, technical evidence, executable examples, verification, and
 operational safety. Compose it with a language, database, OpenAPI, or

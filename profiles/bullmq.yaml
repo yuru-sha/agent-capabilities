@@ -1,0 +1,11 @@
+schema: 1
+id: bullmq
+kind: messaging
+description: BullMQ messaging guidance for queue/job design, retries, idempotency, workers, concurrency, scheduling, flows, and Redis-backed operations.
+
+skills:
+  include:
+    - packs/software-engineering/skills/messaging/bullmq/**
+
+agents:
+  include: []

@@ -1,6 +1,6 @@
 # Software Engineering Capability Pack
 
-Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terraform、AWS、フロントエンド向けの専門 Skills を配布します。
+Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ、Amazon SQS、OpenAPI、Terraform、AWS、フロントエンド向けの専門 Skills を配布します。
 
 一般的な開発ワークフローは OMP と oh-my-pstack が所有します。OMP は実行環境、Task、モデル、セッションを管理します。oh-my-pstack は計画、設計、TDD、レビュー、オーケストレーションを管理します。このリポジトリは、それらにない言語・データベース・API・インフラの専門知識と、固有の GitHub 操作を提供します。
 
@@ -14,10 +14,31 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | Terraform、AWS | 7 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
+| Data systems | Redis | 1 |
+| Messaging | BullMQ、Amazon SQS | 2 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **36** |
+| **合計** | **専門 Skill** | **39** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
+
+### Data systems
+
+`redis` covers workload-driven data-structure and key design, atomic
+operations/coordination, pipelining and memory behavior, RDB/AOF and
+replication/failover tradeoffs, plus production observability and security.
+It remains independent from BullMQ so Redis can be used for caching, sessions,
+coordination, Streams, and other workloads without pulling in queue semantics.
+
+### Messaging
+
+`bullmq` covers Redis-backed job contracts, retries/backoff, idempotency,
+stalled-job redelivery, worker concurrency, scheduling/flows, and BullMQ-specific
+connection/observability behavior. General Redis topology and operations stay in
+the separate `redis` Skill.
+
+`sqs` covers Standard/FIFO selection, visibility timeouts, idempotent
+consumers, long polling and batch operations, DLQ/redrive recovery,
+IAM/encryption/metrics, and Lambda/SNS/EventBridge/ECS-style integrations.
 
 ### Integrations
 
@@ -106,7 +127,7 @@ ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,frontend,integrations}/...
+│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,frontend,data-systems,messaging,integrations}/...
 │   │   └── agents/{database-reviewer,infrastructure-reviewer}.md
 │   └── operations/github/
 │       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,review-mode,
@@ -115,7 +136,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,infrastructure,frontend,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
+│             cross-cutting,infrastructure,frontend,redis,bullmq,sqs,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
@@ -133,7 +154,7 @@ oh-my-pstack TDD / caller-triggered `interrogate`
   + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
-Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS trust、deploy、Lambda、CloudWatchを扱います。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
+Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availabilityを扱います。Messaging SkillsはBullMQとSQSのdelivery semantics、idempotency、concurrency、retry、recoveryを扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS trust、deploy、Lambda、CloudWatchを扱います。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
 
 ## GitHub操作
 
