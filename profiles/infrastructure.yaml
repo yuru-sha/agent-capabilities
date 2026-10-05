@@ -1,11 +1,17 @@
 schema: 1
 id: infrastructure
 kind: infrastructure
-description: Terraform and AWS infrastructure Skills and the agents used to plan, implement, review, and verify infrastructure work.
+description: Core Terraform and AWS cross-service infrastructure Skills and the agent used to plan, implement, review, and verify infrastructure work. Compose service-specific Profiles separately.
 
 skills:
   include:
-    - packs/software-engineering/skills/infrastructure/**
+    - packs/software-engineering/skills/infrastructure/terraform-infrastructure/**
+    - packs/software-engineering/skills/infrastructure/terraform-policy-testing/**
+    - packs/software-engineering/skills/infrastructure/aws-architecture/**
+    - packs/software-engineering/skills/infrastructure/iam/**
+    - packs/software-engineering/skills/infrastructure/lambda/**
+    - packs/software-engineering/skills/infrastructure/cloudwatch/**
+    - packs/software-engineering/skills/infrastructure/github-actions-aws-deploy/**
 
 agents:
   include:

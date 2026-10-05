@@ -1,0 +1,12 @@
+schema: 1
+id: eks
+kind: infrastructure
+description: Amazon EKS guidance for cluster lifecycle, node groups, identity, networking, ingress, autoscaling, add-ons, upgrades, security, and operations.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/eks/**
+
+agents:
+  include:
+    - infrastructure-reviewer

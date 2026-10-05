@@ -1,0 +1,11 @@
+schema: 1
+id: bigquery
+kind: data-system
+description: Google BigQuery guidance for table design, partitioning, clustering, SQL performance, cost, ingestion, schema evolution, governance, and security.
+
+skills:
+  include:
+    - packs/software-engineering/skills/data-systems/bigquery/**
+
+agents:
+  include: []

@@ -1,6 +1,6 @@
 # Software Engineering Capability Pack
 
-Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Amazon DynamoDB、Redis、BullMQ、Amazon SQS、Amazon Kinesis Data Streams、OpenAPI、Terraform、AWS、フロントエンド向けの専門 Skills を配布します。
+Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Amazon DynamoDB、Redis、BigQuery、Google Cloud Storage、BullMQ、Amazon SQS、Amazon Kinesis Data Streams、OpenAPI、Terraform、AWS、フロントエンド向けの専門 Skills を配布します。
 
 一般的な開発ワークフローは OMP と oh-my-pstack が所有します。OMP は実行環境、Task、モデル、セッションを管理します。oh-my-pstack は計画、設計、TDD、レビュー、オーケストレーションを管理します。このリポジトリは、それらにない言語・データベース・API・インフラの専門知識と、固有の GitHub 操作を提供します。
 
@@ -12,12 +12,12 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Amazon DynamoD
 | Database | PostgreSQL、MySQL、SQLite、Amazon DynamoDB | 4 |
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 1 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
-| Infrastructure | Terraform、AWS architecture、IAM、Lambda、CloudWatch、GitHub Actions deploy | 7 |
+| Infrastructure | Terraform、AWS architecture、IAM、Lambda、CloudWatch、GitHub Actions deploy、EKS、Fargate | 9 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
-| Data systems | Redis | 1 |
+| Data systems | Redis、BigQuery、Google Cloud Storage | 3 |
 | Messaging | BullMQ、Amazon SQS、Amazon Kinesis Data Streams | 3 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **41** |
+| **合計** | **専門 Skill** | **45** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -36,6 +36,25 @@ operations/coordination, pipelining and memory behavior, RDB/AOF and
 replication/failover tradeoffs, plus production observability and security.
 It remains independent from BullMQ so Redis can be used for caching, sessions,
 coordination, Streams, and other workloads without pulling in queue semantics.
+
+`bigquery` covers analytical table design, partitioning/clustering, query
+performance and cost, ingestion/streaming/export, schema evolution, nested and
+repeated fields, IAM, row-level security, and policy-tag/column-level controls.
+
+`gcs` covers Google Cloud Storage bucket/object semantics, resumable transfers,
+generation/metageneration concurrency controls, lifecycle/storage classes,
+versioning/retention, signed URLs, IAM, and public-access prevention.
+
+### AWS compute
+
+`eks` covers Amazon EKS cluster and node lifecycle, Pod Identity/IRSA, VPC CNI,
+ingress/load-balancer integration, autoscaling, add-ons, upgrades, security, and
+operations.
+
+`fargate` covers the AWS Fargate runtime model shared by ECS and EKS:
+CPU/memory/platform selection, task/pod networking, ephemeral storage, scaling,
+Fargate Spot, cost, and operational failure modes. Orchestrator-specific rules
+remain in ECS/EKS Skills.
 
 ### Messaging
 
@@ -150,7 +169,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,dynamodb,openapi,
-│             cross-cutting,infrastructure,frontend,redis,bullmq,sqs,kinesis,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
+│             cross-cutting,infrastructure,frontend,redis,bigquery,gcs,bullmq,sqs,kinesis,eks,fargate,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
@@ -168,7 +187,7 @@ oh-my-pstack TDD / caller-triggered `interrogate`
   + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
-Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱い、DynamoDBではaccess pattern、partition/index、conditional write、capacity、Streams/global tablesを扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availabilityを扱います。Messaging SkillsはBullMQ、SQS、Kinesis Data Streamsのdelivery semantics、idempotency、ordering/concurrency、retry、replay/recoveryを扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS横断architecture、IAM、GitHub Actions OIDC/deploy、言語非依存Lambda、CloudWatchを扱います。Node.js/TypeScript固有のLambda build/package知識はTypeScript Skillに置き、サービス固有設定は各AWSサービスSkillへ分離します。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
+Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱い、DynamoDBではaccess pattern、partition/index、conditional write、capacity、Streams/global tablesを扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availabilityに加え、BigQueryの分析データ設計/コスト最適化とGoogle Cloud Storageのobject lifecycle/transfer/securityを扱います。Messaging SkillsはBullMQ、SQS、Kinesis Data Streamsのdelivery semantics、idempotency、ordering/concurrency、retry、replay/recoveryを扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS横断architecture、IAM、GitHub Actions OIDC/deploy、言語非依存Lambda、CloudWatch、EKS、Fargateを扱います。Node.js/TypeScript固有のLambda build/package知識はTypeScript Skillに置き、サービス固有設定は各AWSサービスSkillへ分離します。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
 
 ## GitHub操作
 

@@ -1,0 +1,11 @@
+schema: 1
+id: gcs
+kind: data-system
+description: Google Cloud Storage guidance for object semantics, transfers, concurrency control, lifecycle, versioning, retention, signed URLs, IAM, and security.
+
+skills:
+  include:
+    - packs/software-engineering/skills/data-systems/gcs/**
+
+agents:
+  include: []

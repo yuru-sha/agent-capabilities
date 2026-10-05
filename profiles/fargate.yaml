@@ -1,0 +1,12 @@
+schema: 1
+id: fargate
+kind: infrastructure
+description: AWS Fargate guidance shared across ECS and EKS for sizing, platform constraints, networking, ephemeral storage, scaling, Spot, cost, and operations.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/fargate/**
+
+agents:
+  include:
+    - infrastructure-reviewer

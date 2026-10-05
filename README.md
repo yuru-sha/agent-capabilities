@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 41 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 45 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 27 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `dynamodb.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, `redis.yaml`, `bullmq.yaml`, `sqs.yaml`, `kinesis.yaml`, and `github.yaml`
+- 31 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `dynamodb.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, `redis.yaml`, `bullmq.yaml`, `sqs.yaml`, `kinesis.yaml`, `eks.yaml`, `fargate.yaml`, `bigquery.yaml`, `gcs.yaml`, and `github.yaml`
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -94,6 +94,23 @@ stream-vs-queue selection, partitioning and ordering, consumers/checkpointing,
 replay, scaling, retention, backpressure, and Lambda integration. Compose it
 with `infrastructure` for broader AWS concerns and with `dynamodb` when KCL
 lease-table behavior or DynamoDB-backed sinks are also in scope.
+
+For Amazon EKS, select the `eks` Profile. It covers cluster/node lifecycle,
+Pod Identity/IRSA, VPC CNI and ingress integration, autoscaling, add-ons,
+upgrades, security, and operations. Compose it with `fargate` when EKS
+Fargate profiles are in scope.
+
+For AWS Fargate, select the `fargate` Profile. It covers the shared Fargate
+runtime model across ECS and EKS: sizing/platform constraints, workload ENIs,
+ephemeral storage, scaling, Fargate Spot, cost, and operations.
+
+For Google BigQuery, select the `bigquery` Profile. It covers analytical
+table design, partitioning/clustering, query performance and cost, ingestion,
+schema evolution, governance, and row/column-level security.
+
+For Google Cloud Storage, select the `gcs` Profile. It covers bucket/object
+semantics, resumable transfers, generation preconditions, lifecycle/versioning,
+retention, signed URLs, IAM, and public-access controls.
 
 The `cross-cutting` Profile includes `web-security-review` for evidence-driven,
 language-independent review of web applications and HTTP APIs. It maps attack
