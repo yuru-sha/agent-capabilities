@@ -1,9 +1,9 @@
 ---
-name: ecs
+name: aws-ecs
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon ECS task definitions, services, deployments, capacity providers, service discovery, autoscaling, IAM roles, or container workload reliability."
 ---
 
-# Amazon ECS
+# aws-ecs
 
 Use this skill for ECS orchestration semantics. Compose it with `fargate` for Fargate runtime concerns, `ecr` for image registry behavior, and `alb` for load balancing.
 
