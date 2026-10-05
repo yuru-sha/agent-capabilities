@@ -72,6 +72,33 @@ profiles:
   - infrastructure
 ```
 
+The `dynamodb` Profile installs the `dynamodb` Skill and the
+`database-reviewer` selector for DynamoDB-backed applications. It owns
+access-pattern-driven key/index design, conditional writes, transactions,
+capacity/hot-partition behavior, Streams/TTL, global tables, and recovery.
+Compose it with the target language and `infrastructure` Profiles as needed:
+
+```yaml
+profiles:
+  - go
+  - dynamodb
+  - infrastructure
+```
+
+The `kinesis` Profile installs the `kinesis` Skill for Amazon Kinesis Data
+Streams. It owns stream selection, partitioning/order, producer batching,
+consumer checkpoints/replay, scaling/retention/backpressure, and Lambda stream
+integration. Compose it with `dynamodb` when KCL lease-table behavior or a
+DynamoDB sink is part of the design:
+
+```yaml
+profiles:
+  - typescript
+  - kinesis
+  - dynamodb
+  - infrastructure
+```
+
 The `cross-cutting` Profile includes `technical-authoring` for document-type
 structure, technical evidence, executable examples, verification, and
 operational safety. Compose it with a language, database, OpenAPI, or
