@@ -1,0 +1,11 @@
+schema: 1
+id: kinesis
+kind: messaging
+description: Amazon Kinesis Data Streams guidance for event-stream selection, partitioning, ordering, consumers, checkpointing, replay, scaling, retention, and Lambda integrations.
+
+skills:
+  include:
+    - packs/software-engineering/skills/messaging/kinesis/**
+
+agents:
+  include: []

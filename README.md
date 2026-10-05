@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 39 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 41 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 25 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, `redis.yaml`, `bullmq.yaml`, `sqs.yaml`, and `github.yaml`
+- 27 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `dynamodb.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, `redis.yaml`, `bullmq.yaml`, `sqs.yaml`, `kinesis.yaml`, and `github.yaml`
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -79,6 +79,18 @@ For Amazon SQS messaging, select the `sqs` Profile. It covers Standard/FIFO
 selection, visibility/idempotency, polling and batching, DLQ recovery, and
 Lambda/SNS/EventBridge integration. Compose it with `infrastructure` when
 broader AWS implementation or infrastructure review is needed.
+
+For Amazon DynamoDB, select the `dynamodb` Profile. It covers access-pattern-
+driven key and index design, conditional writes, transactions, capacity and hot
+partitions, Streams, TTL, global tables, and recovery. Compose it with
+`infrastructure` when broader AWS implementation or infrastructure review is
+needed.
+
+For Amazon Kinesis Data Streams, select the `kinesis` Profile. It covers
+stream-vs-queue selection, partitioning and ordering, consumers/checkpointing,
+replay, scaling, retention, backpressure, and Lambda integration. Compose it
+with `infrastructure` for broader AWS concerns and with `dynamodb` when KCL
+lease-table behavior or DynamoDB-backed sinks are also in scope.
 
 The `cross-cutting` Profile includes `web-security-review` for evidence-driven,
 language-independent review of web applications and HTTP APIs. It maps attack
