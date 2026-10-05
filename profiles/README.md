@@ -108,9 +108,8 @@ infrastructure and policy-testing Skills.
 
 The `cross-cutting` Profile includes `technical-authoring` for document-type
 structure, technical evidence, executable examples, verification, and
-operational safety. Compose it with a language, database, OpenAPI, or
-infrastructure Profile when both document design and domain-specific behavior
-are in scope. Language-specific documentation Skills remain focused on their
+operational safety. Compose it with a language, database, OpenAPI, `terraform`, or provider-namespaced
+Cloud Profile when both document design and domain-specific behavior are in scope. Language-specific documentation Skills remain focused on their
 language's docstrings, examples, CLI help, and toolchain support.
 
 The `note-com` Profile installs the `note-com-unofficial-api` Skill for
