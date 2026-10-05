@@ -1,0 +1,8 @@
+schema: 1
+id: smartnews-marketing
+kind: integration
+description: Research and integrate the current SmartNews Marketing API across ad accounts, campaign delivery, media, targeting, audiences, catalogs, and Insights/reporting.
+
+skills:
+  include:
+    - packs/software-engineering/skills/integrations/smartnews-marketing-api
