@@ -1,9 +1,9 @@
 ---
-name: sns
+name: aws-sns
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon SNS topics, subscriptions, fan-out, filtering, FIFO topics, retries, DLQs, mobile or HTTP delivery, or cross-account access."
 ---
 
-# sns
+# aws-sns
 
 Use this skill for sns-specific AWS behavior. Compose it with adjacent service Skills when broader architecture is in scope.
 
