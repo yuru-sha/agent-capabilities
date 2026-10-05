@@ -1,9 +1,9 @@
 ---
-name: secrets-manager
+name: aws-secrets-manager
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting AWS Secrets Manager secrets, rotation, versions/staging labels, resource policies, caching, cross-account access, or secret delivery to workloads."
 ---
 
-# AWS Secrets Manager
+# aws-secrets-manager
 
 Use this skill for secret storage, retrieval, rotation, policy, and lifecycle.
 
