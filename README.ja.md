@@ -14,7 +14,7 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- `terraform.yaml`、`aws-ec2.yaml`、`aws-ecs.yaml`、`aws-rds.yaml`、`aws-s3.yaml`、`gcp-bigquery.yaml`、`gcp-gcs.yaml` を含む、組み合わせ可能な Profiles 60 個
+- `terraform.yaml`、`aws-ec2.yaml`、`aws-ecs.yaml`、`aws-rds.yaml`、`aws-s3.yaml`、`gcp-bigquery.yaml`、`gcp-gcs.yaml` を含む、組み合わせ可能な Profiles 59 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
