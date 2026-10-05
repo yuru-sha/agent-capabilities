@@ -1,6 +1,6 @@
 # Node.js on AWS Lambda
 
-Use this reference only when a Lambda function is implemented in Node.js/TypeScript. Compose it with the language-independent `lambda` Skill.
+Use this reference only when a Lambda function is implemented in Node.js/TypeScript. Compose it with the language-independent `aws-lambda` Skill.
 
 Align the configured Lambda runtime with local/CI Node.js versions, `package.json` engines, module format, handler path, architecture, and compiled output.
 
