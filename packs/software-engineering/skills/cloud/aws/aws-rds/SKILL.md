@@ -1,9 +1,9 @@
 ---
-name: rds
+name: aws-rds
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon RDS/Aurora instances or clusters, backups, Multi-AZ, read replicas, parameter groups, failover, RDS Proxy, IAM auth, or database connectivity."
 ---
 
-# Amazon RDS
+# aws-rds
 
 Use this skill for managed relational database infrastructure. Compose it with the engine-specific database Skill for SQL, transaction, schema, and engine behavior.
 
