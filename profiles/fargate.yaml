@@ -5,7 +5,7 @@ description: AWS Fargate guidance shared across ECS and EKS for sizing, platform
 
 skills:
   include:
-    - packs/software-engineering/skills/infrastructure/fargate/**
+    - packs/software-engineering/skills/infrastructure/aws/fargate/**
 
 agents:
   include:
