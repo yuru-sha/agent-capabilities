@@ -1,9 +1,9 @@
 ---
-name: kms
+name: aws-kms
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting AWS KMS keys, key policies, IAM integration, grants, aliases, envelope encryption, rotation, imported material, or multi-Region keys."
 ---
 
-# AWS KMS
+# aws-kms
 
 Use this skill for KMS key authorization and cryptographic key lifecycle. Service-specific encryption behavior remains in the corresponding service Skill.
 
