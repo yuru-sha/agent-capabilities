@@ -126,6 +126,18 @@ profiles:
   - infrastructure
 ```
 
+The second-wave AWS service Profiles remain independently composable:
+
+- `api-gateway` — REST/HTTP/WebSocket APIs, integrations, auth, throttling, deployment, and operations.
+- `eventbridge` — event buses, patterns, targets, retries, DLQs, archives/replay, and Scheduler boundary.
+- `sns` — topics, subscriptions, filters, Standard/FIFO fan-out, retries, and delivery recovery.
+- `step-functions` — Standard/Express workflow orchestration, retries/catches, integrations, and Map concurrency.
+- `cloudfront` — origins, cache/origin request policy, OAC, signed access, invalidation, and edge delivery.
+- `route53` — public/private DNS, records/aliases, routing policy, health checks, Resolver, and failover.
+- `acm` — certificate issuance, validation, renewal, export, Private CA, and service association.
+- `waf` — web ACLs, managed/custom rules, rate controls, safe rollout, logging, and false-positive handling.
+- `efs` — mount targets, access points, NFS/POSIX access, throughput/performance, lifecycle, backup, and operations.
+
 The `eks` Profile installs the `eks` Skill and the
 `infrastructure-reviewer` selector for Amazon EKS. It owns cluster/node
 lifecycle, workload identity, AWS networking/ingress integration, autoscaling,
