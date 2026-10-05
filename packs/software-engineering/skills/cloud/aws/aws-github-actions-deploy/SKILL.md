@@ -17,7 +17,7 @@ workflows, request reviews, mutate repositories, or deploy AWS resources.
   `id-token: write` only to jobs that assume AWS roles. Verify the configured
   issuer and audience, and scope the IAM trust policy's GitHub subject/claims to
   the intended repository, ref or protected environment. Use the separate
-  `iam` Skill for general IAM policy, trust, PassRole, and cross-account design.
+  `aws-iam` Skill for general IAM policy, trust, PassRole, and cross-account design.
 - Keep environment selection visible rather than inferring production authority
   from a branch name alone. Separate build/test jobs from the job that receives
   deployment identity.
