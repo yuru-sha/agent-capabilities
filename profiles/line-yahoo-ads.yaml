@@ -1,0 +1,8 @@
+schema: 1
+id: line-yahoo-ads
+kind: integration
+description: Plan, traffic, review, launch, and report LINE Yahoo Ads across Search Ads, Display Ads (Auction), and Display Ads (Guaranteed).
+
+skills:
+  include:
+    - packs/software-engineering/skills/integrations/line-yahoo-ads

@@ -136,6 +136,19 @@ profiles:
   - tiktok-business
 ```
 
+The `line-yahoo-ads` Profile installs the `line-yahoo-ads` Skill for projects
+that traffic, review, launch, or report LINE Yahoo advertising. It is
+language-independent and requires current official verification for product/UI
+migration, Search Ads, Display Ads (Auction), Display Ads (Guaranteed), creative
+and targeting rules, review/activation state, and report definitions. Compose it
+with the target language Profile as needed:
+
+```yaml
+profiles:
+  - typescript
+  - line-yahoo-ads
+```
+
 The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only `infrastructure-reviewer` specialist selector.
 It is intended to compose with a language or database Profile rather than
