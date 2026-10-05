@@ -1,0 +1,12 @@
+schema: 1
+id: aws-sns
+kind: cloud
+description: AWS sns guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-sns/**
+
+agents:
+  include:
+    - infrastructure-reviewer

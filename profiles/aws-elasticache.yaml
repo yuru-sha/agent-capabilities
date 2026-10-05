@@ -1,0 +1,13 @@
+schema: 1
+id: aws-elasticache
+kind: cloud
+description: AWS elasticache guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-elasticache/**
+
+agents:
+  include:
+    - infrastructure-reviewer
+    - database-reviewer

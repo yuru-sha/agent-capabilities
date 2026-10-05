@@ -1,0 +1,12 @@
+schema: 1
+id: aws-api-gateway
+kind: cloud
+description: AWS api-gateway guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-api-gateway/**
+
+agents:
+  include:
+    - infrastructure-reviewer

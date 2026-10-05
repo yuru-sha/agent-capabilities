@@ -1,6 +1,6 @@
 # Software Engineering Capability Pack
 
-Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Amazon DynamoDB、Redis、BigQuery、Google Cloud Storage、BullMQ、Amazon SQS、Amazon Kinesis Data Streams、OpenAPI、Terraform、AWS、フロントエンド向けの専門 Skills を配布します。
+Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ、OpenAPI、Terraform、AWS/GCP Cloud、フロントエンド向けの専門 Skills を配布します。
 
 一般的な開発ワークフローは OMP と oh-my-pstack が所有します。OMP は実行環境、Task、モデル、セッションを管理します。oh-my-pstack は計画、設計、TDD、レビュー、オーケストレーションを管理します。このリポジトリは、それらにない言語・データベース・API・インフラの専門知識と、固有の GitHub 操作を提供します。
 
@@ -9,159 +9,58 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Amazon DynamoD
 | 分類 | 内訳 | 数 |
 |---|---|---:|
 | Language | Go、TypeScript、Python 3、Rust | 4 |
-| Database | PostgreSQL、MySQL、SQLite、Amazon DynamoDB | 4 |
+| Database | PostgreSQL、MySQL、SQLite | 3 |
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 1 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
-| Infrastructure | Terraform、AWS architecture、IAM、Lambda、CloudWatch、GitHub Actions deploy、EKS、Fargate、VPC、EC2、ECS、ECR、ALB、S3、RDS、Secrets Manager、KMS、API Gateway、Step Functions、CloudFront、Route53、ACM、WAF | 24 |
+| Infrastructure | Terraform infrastructure、Terraform policy testing | 2 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
-| Data systems | Redis、BigQuery、Google Cloud Storage、Amazon EFS、Amazon ElastiCache、Amazon OpenSearch Service | 6 |
-| Messaging | BullMQ、Amazon SQS、Amazon Kinesis Data Streams、Amazon EventBridge、Amazon SNS、Amazon MSK | 6 |
+| Data systems | Redis | 1 |
+| Messaging | BullMQ | 1 |
+| Cloud | AWS 33、Google Cloud 2 | 35 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| Analytics | AWS Glue、Amazon Athena、Amazon EMR、Amazon Redshift | 4 |
-| **合計** | **専門 Skill** | **70** |
+| **合計** | **専門 Skill** | **68** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
-### Database additions
+### Generic data and messaging
 
-`dynamodb` covers access-pattern-driven key and index design, Query/pagination,
-conditional writes and optimistic concurrency, transactions and batch behavior,
-capacity modes and hot partitions, Streams/TTL, global tables, backup/recovery,
-and DynamoDB-specific operational correctness. Broader AWS infrastructure stays
-in the separate `infrastructure` Profile.
+`redis` owns provider-neutral Redis data structures, atomicity, memory,
+persistence, availability, observability, and security.
 
-### Data systems
+`bullmq` owns BullMQ queue/worker semantics. Compose it with `redis` when
+Redis topology or persistence is also in scope.
 
-`redis` covers workload-driven data-structure and key design, atomic
-operations/coordination, pipelining and memory behavior, RDB/AOF and
-replication/failover tradeoffs, plus production observability and security.
-It remains independent from BullMQ so Redis can be used for caching, sessions,
-coordination, Streams, and other workloads without pulling in queue semantics.
+### Cloud
 
-`bigquery` covers analytical table design, partitioning/clustering, query
-performance and cost, ingestion/streaming/export, schema evolution, nested and
-repeated fields, IAM, row-level security, and policy-tag/column-level controls.
+Cloud-provider-specific Skills live under a dedicated provider namespace and
+include the provider in their globally installed Skill name.
 
-`gcs` covers Google Cloud Storage bucket/object semantics, resumable transfers,
-generation/metageneration concurrency controls, lifecycle/storage classes,
-versioning/retention, signed URLs, IAM, and public-access prevention.
+AWS Skills live under `skills/cloud/aws/aws-*/`. They cover:
 
-### AWS compute
+- compute/runtime: `aws-ec2`, `aws-ecs`, `aws-eks`, `aws-lambda`
+- network/edge/API: `aws-vpc`, `aws-alb`, `aws-api-gateway`,
+  `aws-cloudfront`, `aws-route53`, `aws-acm`, `aws-waf`
+- identity/security/operations: `aws-iam`, `aws-kms`,
+  `aws-secrets-manager`, `aws-cloudwatch`, `aws-github-actions-deploy`
+- data/storage/search: `aws-s3`, `aws-efs`, `aws-dynamodb`, `aws-rds`,
+  `aws-elasticache`, `aws-opensearch`
+- messaging/workflow: `aws-sqs`, `aws-sns`, `aws-eventbridge`,
+  `aws-kinesis`, `aws-msk`, `aws-step-functions`
+- analytics/data platform: `aws-glue`, `aws-athena`, `aws-emr`,
+  `aws-redshift`
+- container registry: `aws-ecr`
 
-`eks` covers Amazon EKS cluster and node lifecycle, Pod Identity/IRSA, VPC CNI,
-ingress/load-balancer integration, autoscaling, add-ons, upgrades, security, and
-operations.
+Google Cloud Skills live under `skills/cloud/gcp/gcp-*/` and currently include
+`gcp-bigquery` and `gcp-gcs`.
 
- `fargate` covers the AWS Fargate runtime model shared by ECS and EKS:
-CPU/memory/platform selection, task/pod networking, ephemeral storage, scaling,
-Fargate Spot, cost, and operational failure modes. Orchestrator-specific rules
-remain in ECS/EKS Skills.
+There is intentionally no standalone `aws-architecture` Skill. Cross-service
+architecture is derived by composing the service Skills that match the actual
+system plus `infrastructure-reviewer`. There is also no standalone Fargate
+Skill: ECS Fargate behavior belongs to `aws-ecs`, while EKS Fargate behavior
+belongs to `aws-eks`.
 
-`vpc` covers AWS network topology, subnets, routing, internet/NAT egress,
-endpoints, security groups, DNS, IP/ENI capacity, and hybrid connectivity.
-
-`ec2` covers instance/AMI lifecycle, instance selection, EBS attachment,
-IMDSv2, fleet replacement, capacity models, and host-level operations.
-
-`ecs` covers task definitions, services, deployments, capacity providers,
-task/execution IAM roles, awsvpc networking, autoscaling, and deployment
-recovery. Fargate runtime details remain in `fargate`.
-
-`ecr` covers image registry identity, tag immutability, scanning, lifecycle
-policies, replication, registry permissions, and reliable image distribution.
-
-`alb` covers L7 listeners/rules, TLS, target groups, health/readiness,
-draining, stickiness/slow start, routing, and ALB observability.
-
-`s3` covers S3 object and multipart-transfer semantics, concurrency/versioning,
-lifecycle, replication, Object Lock, access control, events, and recovery.
-
-`rds` covers RDS/Aurora infrastructure topology, Multi-AZ, replicas,
-backups/PITR, failover, connectivity/authentication, parameter configuration,
-connection scaling, and operations. Engine-specific SQL stays in Database
-Skills.
-
-`secrets-manager` covers secret access/caching, versions/staging labels,
-rotation, resource policies, KMS integration, cross-account exposure, and
-recovery.
-
- `kms` covers key policies, IAM/grants, envelope encryption, key choice,
-rotation, multi-Region keys, and destructive key-lifecycle operations.
-
-`api-gateway` covers REST/HTTP/WebSocket API selection, routing, integrations,
-authorizers, throttling, stages/deployments, custom domains, and operations.
-
-`eventbridge` covers event buses, event patterns, targets, retry/DLQ behavior,
-archives/replay, schemas, cross-account policy, and Scheduler boundaries.
-
-`sns` covers topics/subscriptions, filtering, Standard/FIFO semantics, delivery
-retry/DLQ behavior, resource policies, and fan-out integrations.
-
-`step-functions` covers Standard/Express workflows, state design, service
-integrations, retry/catch behavior, Map concurrency, execution, and recovery.
-
-`cloudfront` covers distributions/origins, cache and origin request policies,
-OAC, signed access, invalidation/versioning strategy, edge behavior, and CDN
-operations.
-
-`route53` covers public/private hosted zones, records/aliases, routing
-policies, health checks, Resolver, delegation, and DNS failover boundaries.
-
-`acm` covers certificate issuance, validation, renewal, export/private-key
-handling, Private CA integration, and service/Region deployment constraints.
-
-`waf` covers web ACLs, managed/custom rules, rate controls, Count-to-Block
-rollout, logging, and false-positive operations.
-
- `efs` covers mount targets, access points, NFS/POSIX access, performance and
-throughput modes, lifecycle storage classes, encryption, backup, and operations.
-
-### Analytics
-
-`glue` covers the Glue Data Catalog, crawlers, schema/partition discovery,
-ETL jobs, job bookmarks, worker sizing, replay/backfill, and data-quality
-validation around Glue pipelines.
-
-`athena` covers table/partition/file layout, workgroups, result locations,
-query-cost controls, CTAS/UNLOAD, Glue Catalog integration, and query
-performance over S3-backed analytical data.
-
-`emr` covers EMR deployment-model selection, release/runtime configuration,
-Spark/Hadoop workload design, instance fleets, autoscaling, Spot behavior,
-shuffle/memory tuning, and distributed-job operations.
-
-`redshift` covers provisioned and Serverless warehouse selection, table
-distribution/sort/compression, COPY/UNLOAD, workload management, scaling,
-Spectrum, query diagnostics, snapshots, and recovery.
-
-`elasticache` covers Valkey, Redis OSS, and Memcached engine/topology
-selection, sharding/replication/failover, TTL/eviction, client behavior,
-scaling, security, and cache operations.
-
-`opensearch` covers managed domains and OpenSearch Serverless, mappings,
-shards/replicas, indexing/search behavior, bulk ingestion, lifecycle,
-security, scaling, and cluster/search observability.
-
-`msk` covers provisioned and Serverless Kafka, topic/partition design,
-replication/retention, producer/consumer behavior, IAM/SASL/TLS,
-networking, scaling, lag, and broker operations.
-
-### Messaging
-
-`bullmq` covers Redis-backed job contracts, retries/backoff, idempotency,
-stalled-job redelivery, worker concurrency, scheduling/flows, and BullMQ-specific
-connection/observability behavior. General Redis topology and operations stay in
-the separate `redis` Skill.
-
-`sqs` covers Standard/FIFO selection, visibility timeouts, idempotent
-consumers, long polling and batch operations, DLQ/redrive recovery,
-IAM/encryption/metrics, and Lambda/SNS/EventBridge/ECS-style integrations.
-
-`kinesis` covers Kinesis Data Streams selection, partition-key and shard
-design, per-key ordering, producer batching, at-least-once consumers,
-KCL leases/checkpoints, Enhanced Fan-Out, replay, resharding, retention,
-backpressure, poison-record recovery, and Lambda event source mappings.
-Amazon Data Firehose remains outside this Skill's ownership boundary.
+The `terraform` Profile is provider-neutral and installs only
+`terraform-infrastructure` and `terraform-policy-testing`.
 
 ### Integrations
 
@@ -246,14 +145,11 @@ ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実
 
 ## Provider namespace
 
-Cloud-provider-specific Skills keep their functional category and add a provider
-namespace beneath it. AWS infrastructure, database, and messaging Skills live
-under `infrastructure/aws/`, `databases/aws/`, and `messaging/aws/`.
-Google Cloud data-system Skills live under `data-systems/gcp/`.
-
-The Skill directory basename and frontmatter `name` stay unchanged, so
-Profiles and installed Skill names remain stable while the source tree can scale
-to additional AWS/GCP services.
+Cloud-provider-specific Skills live under one provider-first source tree:
+`cloud/aws/aws-*` and `cloud/gcp/gcp-*`. The provider prefix is part of the
+Skill directory basename, frontmatter `name`, and Profile ID. This makes the
+installed namespace self-describing and avoids collisions as more providers are
+added.
 
 ## ディレクトリ
 
@@ -261,7 +157,7 @@ to additional AWS/GCP services.
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,analytics,frontend,data-systems,messaging,integrations}/...
+│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,cloud,frontend,data-systems,messaging,integrations}/...
 │   │   └── agents/{database-reviewer,infrastructure-reviewer}.md
 │   └── operations/github/
 │       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,review-mode,
@@ -269,8 +165,8 @@ agent-capabilities/
 │       │           create-issue,clarify-issue,decompose-issue,security-alerts,
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
-├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,dynamodb,openapi,
-│             cross-cutting,infrastructure,frontend,redis,bigquery,gcs,bullmq,sqs,kinesis,eks,fargate,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
+├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
+│             cross-cutting,terraform,frontend,redis,bullmq,aws-*,gcp-*,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
@@ -288,7 +184,7 @@ oh-my-pstack TDD / caller-triggered `interrogate`
   + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
-Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱い、DynamoDBではaccess pattern、partition/index、conditional write、capacity、Streams/global tablesを扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availability、BigQueryの分析データ設計/コスト最適化、Google Cloud Storageのobject lifecycle/transfer/security、Amazon EFSの共有filesystem/network/performance/lifecycle、ElastiCacheのcache topology/failover、OpenSearchのindex/search運用を扱います。Messaging SkillsはBullMQ、SQS、Kinesis Data Streams、EventBridge、SNS、MSKのdelivery semantics、idempotency、ordering/concurrency、filter/routing、partitioning、retry、replay/recoveryを扱います。Analytics SkillsはGlue、Athena、EMR、Redshiftのcatalog/ETL/query/distributed-processing/data-warehouse運用を扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS横断architecture、IAM、GitHub Actions OIDC/deploy、言語非依存Lambda、CloudWatch、EKS、Fargate、VPC、EC2、ECS、ECR、ALB、S3、RDS、Secrets Manager、KMSに加え、API Gateway、Step Functions、CloudFront、Route53、ACM、WAFをサービス別に扱います。Node.js/TypeScript固有のLambda build/package知識はTypeScript Skillに置き、サービス固有設定は各AWSサービスSkillへ分離します。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
+Language Skillsは言語固有の型・並行処理・エラー処理・toolchainを扱います。Database Skillsはprovider非依存のPostgreSQL、MySQL、SQLiteを扱います。Data systemsはRedis、MessagingはBullMQを扱います。Cloud SkillsはAWS/GCP固有仕様をprovider prefix付きで所有し、Terraformはprovider非依存Infrastructureとして分離します。OpenAPI、Cross-cutting、Frontend、Integrationsは従来どおり各専門境界を所有します。
 
 ## GitHub操作
 

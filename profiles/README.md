@@ -60,128 +60,56 @@ jobs. It owns BullMQ queue/worker semantics and does not duplicate general Redis
 operations. Select `redis` separately when topology, persistence, memory, or
 Redis security are in scope.
 
-The `sqs` Profile installs the `sqs` Skill for Amazon SQS messaging. It owns
-Standard/FIFO selection, visibility/idempotency, polling/batching, and DLQ
-recovery. Compose it with `infrastructure` when broader AWS/IAM/Lambda/ECS or
-Terraform concerns are in scope:
+Cloud Profiles are provider-namespaced and map one-to-one to installed Cloud
+Skills. Use the exact service Profile instead of selecting a broad AWS bundle.
+
+Examples:
 
 ```yaml
 profiles:
-  - go
-  - sqs
-  - infrastructure
+  - terraform
+  - aws-vpc
+  - aws-ecs
+  - aws-ecr
+  - aws-alb
+  - aws-secrets-manager
 ```
-
-The `dynamodb` Profile installs the `dynamodb` Skill and the
-`database-reviewer` selector for DynamoDB-backed applications. It owns
-access-pattern-driven key/index design, conditional writes, transactions,
-capacity/hot-partition behavior, Streams/TTL, global tables, and recovery.
-Compose it with the target language and `infrastructure` Profiles as needed:
 
 ```yaml
 profiles:
-  - go
-  - dynamodb
-  - infrastructure
+  - gcp-bigquery
+  - gcp-gcs
 ```
 
-The `kinesis` Profile installs the `kinesis` Skill for Amazon Kinesis Data
-Streams. It owns stream selection, partitioning/order, producer batching,
-consumer checkpoints/replay, scaling/retention/backpressure, and Lambda stream
-integration. Compose it with `dynamodb` when KCL lease-table behavior or a
-DynamoDB sink is part of the design:
+AWS Profile IDs use `aws-*`; Google Cloud Profile IDs use `gcp-*`.
+The Profile ID, Skill directory basename, and Skill frontmatter `name` are
+identical.
 
-```yaml
-profiles:
-  - typescript
-  - kinesis
-  - dynamodb
-  - infrastructure
-```
+Representative AWS groups:
 
-The core AWS service Profiles are intentionally composable instead of bundled
-into `infrastructure`:
+- compute/runtime: `aws-ec2`, `aws-ecs`, `aws-eks`, `aws-lambda`
+- network/edge/API: `aws-vpc`, `aws-alb`, `aws-api-gateway`,
+  `aws-cloudfront`, `aws-route53`, `aws-acm`, `aws-waf`
+- identity/security/ops: `aws-iam`, `aws-kms`, `aws-secrets-manager`,
+  `aws-cloudwatch`, `aws-github-actions-deploy`
+- data: `aws-s3`, `aws-efs`, `aws-dynamodb`, `aws-rds`,
+  `aws-elasticache`, `aws-opensearch`
+- messaging/workflow: `aws-sqs`, `aws-sns`, `aws-eventbridge`,
+  `aws-kinesis`, `aws-msk`, `aws-step-functions`
+- analytics: `aws-glue`, `aws-athena`, `aws-emr`, `aws-redshift`
+- registry: `aws-ecr`
 
-- `vpc` — subnets, routes, egress, endpoints, security groups, DNS, and network capacity.
-- `ec2` — instance/AMI/EBS/IMDS lifecycle and fleet operations.
-- `ecs` — task definitions, services, deployments, capacity providers, IAM roles, and autoscaling.
-- `ecr` — image identity, scanning, lifecycle, replication, and pull/push permissions.
-- `alb` — listeners/rules/TLS, target groups, health checks, draining, and routing.
-- `s3` — object transfer, versioning/lifecycle/replication, Object Lock, events, and access control.
-- `rds` — RDS/Aurora topology, Multi-AZ, backups, replicas, failover, connectivity, and scaling.
-- `secrets-manager` — secret access, caching, rotation, resource policies, and recovery.
-- `kms` — key policies, IAM/grants, envelope encryption, rotation, and multi-Region keys.
+Fargate is intentionally not a separate Profile. Select `aws-ecs` for ECS
+Fargate or `aws-eks` for EKS Fargate. Cross-service AWS architecture is also
+not a separate Skill/Profile; compose the concrete service Profiles in use.
 
-A typical ECS service behind an ALB can compose, for example:
-
-```yaml
-profiles:
-  - vpc
-  - ecs
-  - fargate
-  - ecr
-  - alb
-  - secrets-manager
-  - kms
-  - infrastructure
-```
-
-The second-wave AWS service Profiles remain independently composable:
-
-- `api-gateway` — REST/HTTP/WebSocket APIs, integrations, auth, throttling, deployment, and operations.
-- `eventbridge` — event buses, patterns, targets, retries, DLQs, archives/replay, and Scheduler boundary.
-- `sns` — topics, subscriptions, filters, Standard/FIFO fan-out, retries, and delivery recovery.
-- `step-functions` — Standard/Express workflow orchestration, retries/catches, integrations, and Map concurrency.
-- `cloudfront` — origins, cache/origin request policy, OAC, signed access, invalidation, and edge delivery.
-- `route53` — public/private DNS, records/aliases, routing policy, health checks, Resolver, and failover.
-- `acm` — certificate issuance, validation, renewal, export, Private CA, and service association.
-- `waf` — web ACLs, managed/custom rules, rate controls, safe rollout, logging, and false-positive handling.
-- `efs` — mount targets, access points, NFS/POSIX access, throughput/performance, lifecycle, backup, and operations.
-
-The third-wave AWS data-platform Profiles are also independently composable:
-
-- `glue` — Data Catalog, crawlers, ETL jobs, bookmarks, schema/partition evolution, and pipeline recovery.
-- `athena` — S3-backed analytical SQL, partition/file layout, workgroups, result handling, and cost control.
-- `emr` — EMR deployment models, Spark/Hadoop runtime, fleets, scaling, Spot, and distributed-job operations.
-- `redshift` — provisioned/Serverless warehouse design, table layout, ingestion, WLM, scaling, Spectrum, and recovery.
-- `elasticache` — Valkey/Redis OSS/Memcached topology, replication/sharding, TTL/eviction, failover, and client behavior.
-- `opensearch` — managed domains/Serverless, mappings, shards, ingestion, search, scaling, security, and observability.
-- `msk` — provisioned/Serverless Kafka, topics/partitions, delivery semantics, consumers, authentication, networking, and lag operations.
-
-The `eks` Profile installs the `eks` Skill and the
-`infrastructure-reviewer` selector for Amazon EKS. It owns cluster/node
-lifecycle, workload identity, AWS networking/ingress integration, autoscaling,
-add-ons, upgrades, and EKS operational behavior. Compose it with `fargate`
-when EKS Fargate profiles are part of the design:
-
-```yaml
-profiles:
-  - eks
-  - fargate
-  - infrastructure
-```
-
-The `fargate` Profile installs the `fargate` Skill for the AWS Fargate
-runtime model shared by ECS and EKS. It owns sizing/platform constraints,
-workload networking, ephemeral storage, scaling, Spot interruption behavior,
-cost, and runtime operations. Keep ECS/EKS orchestrator semantics in their own
-service Skills.
-
-The `bigquery` Profile installs the `bigquery` Skill for analytical data
-workloads on Google BigQuery. It covers partitioning/clustering, SQL
-performance and cost, ingestion/streaming/export, schema evolution, governance,
-and fine-grained access controls.
-
-The `gcs` Profile installs the `gcs` Skill for Google Cloud Storage. It
-covers bucket/object semantics, resumable transfers, generation preconditions,
-lifecycle/storage classes, versioning/retention, signed URLs, IAM, and
-public-access prevention.
+The `terraform` Profile is provider-neutral and contains only Terraform
+infrastructure and policy-testing Skills.
 
 The `cross-cutting` Profile includes `technical-authoring` for document-type
 structure, technical evidence, executable examples, verification, and
-operational safety. Compose it with a language, database, OpenAPI, or
-infrastructure Profile when both document design and domain-specific behavior
-are in scope. Language-specific documentation Skills remain focused on their
+operational safety. Compose it with a language, database, OpenAPI, `terraform`, or provider-namespaced
+Cloud Profile when both document design and domain-specific behavior are in scope. Language-specific documentation Skills remain focused on their
 language's docstrings, examples, CLI help, and toolchain support.
 
 The `note-com` Profile installs the `note-com-unofficial-api` Skill for
@@ -296,20 +224,6 @@ profiles:
   - line-yahoo-ads
 ```
 
-The infrastructure Profile selects Terraform plus the AWS `aws-architecture`,
-`iam`, `lambda`, `cloudwatch`, and GitHub Actions deployment specialists,
-together with the read-only `infrastructure-reviewer` selector. Cross-service
-architecture stays thin; service-specific behavior belongs to each AWS service
-Skill. Compose the Profile with a language or database Profile rather than
-replacing one.
-
-Older installations may still contain the superseded Skill directories
-`aws-infrastructure`, `aws-iam-oidc-security`, `nodejs-lambda`, and
-`cloudwatch-operations`. Remove those generated directories before
-reinstalling the infrastructure Profile; the replacements are
-`aws-architecture`, `iam`, `lambda`, and `cloudwatch`. Node.js-specific
-Lambda build/package guidance now lives under the TypeScript Skill.
-
 The frontend Profile selects seven frontend Skills spanning framework-agnostic
 web quality, browser testing, form validation, and framework/styling mechanics.
 It composes with a language Profile and the TypeScript DOM, performance, or
@@ -320,15 +234,12 @@ review and TDD workflows are used directly.
 
 ## Provider namespaces
 
-Cloud-provider-specific source Skills are grouped beneath provider namespaces
-without changing Profile IDs or installed Skill names:
+Cloud-provider-specific source Skills use a provider-first namespace:
 
-- AWS: `infrastructure/aws/`, `databases/aws/`, and `messaging/aws/`
-- Google Cloud: `data-systems/gcp/`
+- AWS: `packs/software-engineering/skills/cloud/aws/aws-*`
+- Google Cloud: `packs/software-engineering/skills/cloud/gcp/gcp-*`
 
-This is a source-layout change only. Consumers should continue selecting
-Profiles such as `dynamodb`, `sqs`, `kinesis`, `eks`, `fargate`,
-`bigquery`, and `gcs` by the same IDs.
+The provider prefix is part of both the installed Skill name and Profile ID.
 
 ## Installation
 

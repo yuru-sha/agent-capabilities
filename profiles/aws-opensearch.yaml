@@ -1,0 +1,13 @@
+schema: 1
+id: aws-opensearch
+kind: cloud
+description: AWS opensearch guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-opensearch/**
+
+agents:
+  include:
+    - infrastructure-reviewer
+    - database-reviewer

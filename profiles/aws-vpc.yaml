@@ -1,0 +1,12 @@
+schema: 1
+id: aws-vpc
+kind: cloud
+description: AWS vpc guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-vpc/**
+
+agents:
+  include:
+    - infrastructure-reviewer

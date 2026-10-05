@@ -1,0 +1,12 @@
+schema: 1
+id: aws-ec2
+kind: cloud
+description: AWS ec2 guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/aws/aws-ec2/**
+
+agents:
+  include:
+    - infrastructure-reviewer

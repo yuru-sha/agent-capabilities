@@ -1,0 +1,13 @@
+schema: 1
+id: gcp-bigquery
+kind: cloud
+description: Google Cloud bigquery guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/cloud/gcp/gcp-bigquery/**
+
+agents:
+  include:
+    - infrastructure-reviewer
+    - database-reviewer
