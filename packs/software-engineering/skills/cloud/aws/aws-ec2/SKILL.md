@@ -1,9 +1,9 @@
 ---
-name: ec2
+name: aws-ec2
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon EC2 instances, AMIs, instance types, EBS, IMDS, placement, Auto Scaling integration, lifecycle, or host-level reliability."
 ---
 
-# Amazon EC2
+# aws-ec2
 
 Use this skill for EC2 instance and host lifecycle. Use VPC, EBS/storage, Auto Scaling, or load-balancer Skills for deeper service-specific behavior when available.
 
