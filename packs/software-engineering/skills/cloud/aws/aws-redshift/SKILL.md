@@ -1,9 +1,9 @@
 ---
-name: redshift
+name: aws-redshift
 description: "Use when designing, implementing, reviewing, operating, or optimizing Amazon Redshift provisioned or Serverless warehouses, table design, distribution/sort strategy, workload management, Spectrum, COPY/UNLOAD, scaling, security, or query performance."
 ---
 
-# redshift
+# aws-redshift
 
 Use this skill for redshift-specific AWS behavior. Compose it with adjacent service Skills when broader architecture or data-platform behavior is in scope.
 
