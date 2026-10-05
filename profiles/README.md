@@ -269,6 +269,18 @@ Profiles may declare `external_skills` requirements. The installer reports
 those requirements but does not copy external Skills. The installed oh-my-pstack
 review and TDD workflows are used directly.
 
+## Provider namespaces
+
+Cloud-provider-specific source Skills are grouped beneath provider namespaces
+without changing Profile IDs or installed Skill names:
+
+- AWS: `infrastructure/aws/`, `databases/aws/`, and `messaging/aws/`
+- Google Cloud: `data-systems/gcp/`
+
+This is a source-layout change only. Consumers should continue selecting
+Profiles such as `dynamodb`, `sqs`, `kinesis`, `eks`, `fargate`,
+`bigquery`, and `gcs` by the same IDs.
+
 ## Installation
 
 Run the installer from this repository checkout:
