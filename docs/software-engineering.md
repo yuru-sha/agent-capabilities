@@ -165,8 +165,8 @@ agent-capabilities/
 │       │           create-issue,clarify-issue,decompose-issue,security-alerts,
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
-├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,dynamodb,openapi,
-│             cross-cutting,infrastructure,frontend,redis,bigquery,gcs,bullmq,sqs,kinesis,eks,fargate,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
+├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
+│             cross-cutting,terraform,frontend,redis,bullmq,aws-*,gcp-*,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
