@@ -5,7 +5,7 @@ description: Amazon S3 guidance for object semantics, multipart transfer, concur
 
 skills:
   include:
-    - packs/software-engineering/skills/infrastructure/aws/s3/**
+    - packs/software-engineering/skills/data-systems/aws/s3/**
 
 agents:
   include: []
