@@ -5,7 +5,7 @@ description: Amazon Kinesis Data Streams guidance for event-stream selection, pa
 
 skills:
   include:
-    - packs/software-engineering/skills/messaging/kinesis/**
+    - packs/software-engineering/skills/messaging/aws/kinesis/**
 
 agents:
   include: []
