@@ -1,9 +1,9 @@
 ---
-name: step-functions
+name: aws-step-functions
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting AWS Step Functions state machines, Standard or Express workflows, retries, catches, Map states, service integrations, callbacks, executions, or workflow reliability."
 ---
 
-# step-functions
+# aws-step-functions
 
 Use this skill for step-functions-specific AWS behavior. Compose it with adjacent service Skills when broader architecture is in scope.
 
