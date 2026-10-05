@@ -1,9 +1,9 @@
 ---
-name: route53
+name: aws-route53
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon Route 53 public or private hosted zones, records, aliases, routing policies, health checks, Resolver, DNS failover, or domain delegation."
 ---
 
-# route53
+# aws-route53
 
 Use this skill for route53-specific AWS behavior. Compose it with adjacent service Skills when broader architecture is in scope.
 
