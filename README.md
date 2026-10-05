@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 36 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 39 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 22 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, and `github.yaml`
+- 25 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, `redis.yaml`, `bullmq.yaml`, `sqs.yaml`, and `github.yaml`
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -65,6 +65,20 @@ consumer repository needs those concerns too.
 For frontend work, select the `frontend` Profile. It provides the
 framework-agnostic web-quality, browser-testing, and form-validation Skills
 plus React 19, Next.js, Svelte 5, and Tailwind CSS v4+ specialists.
+
+For Redis-backed data, caching, coordination, streaming, and ephemeral state,
+select the `redis` Profile. It covers key/data-structure design, atomicity,
+memory and latency behavior, persistence/failover, and production security.
+
+For BullMQ background processing, select the `bullmq` Profile and compose it
+with `redis` when Redis topology or operations are also in scope. It covers
+job contracts, retries/idempotency, worker concurrency, scheduling/flows, and
+BullMQ-specific Redis connection behavior.
+
+For Amazon SQS messaging, select the `sqs` Profile. It covers Standard/FIFO
+selection, visibility/idempotency, polling and batching, DLQ recovery, and
+Lambda/SNS/EventBridge integration. Compose it with `infrastructure` when
+broader AWS implementation or infrastructure review is needed.
 
 The `cross-cutting` Profile includes `web-security-review` for evidence-driven,
 language-independent review of web applications and HTTP APIs. It maps attack
