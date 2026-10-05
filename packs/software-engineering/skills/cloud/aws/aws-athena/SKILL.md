@@ -1,9 +1,9 @@
 ---
-name: athena
+name: aws-athena
 description: "Use when designing, implementing, reviewing, operating, or optimizing Amazon Athena SQL queries, workgroups, result locations, partitioning, file formats, CTAS/UNLOAD, Glue Catalog integration, access control, or query cost."
 ---
 
-# athena
+# aws-athena
 
 Use this skill for athena-specific AWS behavior. Compose it with adjacent service Skills when broader architecture or data-platform behavior is in scope.
 
