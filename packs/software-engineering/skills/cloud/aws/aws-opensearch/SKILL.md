@@ -1,9 +1,9 @@
 ---
-name: opensearch
+name: aws-opensearch
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon OpenSearch Service domains or OpenSearch Serverless collections, indexes, mappings, shards, replicas, ingestion, query/search behavior, security, scaling, or observability."
 ---
 
-# opensearch
+# aws-opensearch
 
 Use this skill for opensearch-specific AWS behavior. Compose it with adjacent service Skills when broader architecture or data-platform behavior is in scope.
 
