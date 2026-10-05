@@ -5,7 +5,7 @@ description: AWS eventbridge service guidance.
 
 skills:
   include:
-    - packs/software-engineering/skills/infrastructure/aws/eventbridge/**
+    - packs/software-engineering/skills/messaging/aws/eventbridge/**
 
 agents:
   include:
