@@ -7,13 +7,46 @@ existing capability boundaries.
 ## Before contributing
 
 - Check the existing README, catalogs, Profiles, and related capabilities first.
-- Keep specialist Skills narrow and model-selectable; do not add umbrella
-  Skills for a language, database, OpenAPI, or GitHub workflow.
+- Model a Skill as an independently selectable capability or domain. Put
+  concern-level guidance that is useful only after selecting that capability
+  under the parent Skill's `references/` directory.
 - Keep engineering capabilities under `packs/software-engineering/` and GitHub
   operations under `packs/operations/github/`.
 - Use oh-my-pstack for generic TDD and code-review workflows; do not copy or
   redefine those workflows here.
 - Do not include secrets, credentials, or personal data.
+
+## Skill granularity
+
+Use this question as the default boundary test:
+
+> Does the agent need to select this capability independently?
+
+If yes, keep it as a Skill. If the material is detailed guidance that is
+normally needed only after a broader capability or domain has already been
+selected, make it a reference of that Skill.
+
+Examples:
+
+- Language domains such as Go, TypeScript, Python, and Rust are Skills;
+  concurrency, error handling, API clients, testing, and serialization are
+  references within the selected language Skill.
+- Database engines such as PostgreSQL, MySQL, and SQLite are Skills; locking,
+  indexes, migrations, transactions, performance, and backup/restore are
+  references within the selected database Skill.
+- OpenAPI is a Skill; design, linting, code generation, contract testing,
+  compatibility, and versioning are references within the OpenAPI Skill.
+- Frameworks, external APIs/integrations, security-review capabilities,
+  browser testing, infrastructure domains, and operational workflows may
+  remain separate Skills when they are useful to select on their own.
+
+Keep the parent `SKILL.md` thin: define when the capability applies, its core
+invariants, and how to route to the relevant references. Use progressive
+disclosure rather than eagerly loading every reference.
+
+Do not create compatibility alias Skills for a migrated concern unless a
+demonstrated consumer requires the old independently selectable name. Aliases
+reintroduce routing ambiguity and selection noise.
 
 ## Adding or changing capabilities
 
