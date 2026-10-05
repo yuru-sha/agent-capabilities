@@ -5,7 +5,7 @@ description: Amazon DynamoDB guidance for access-pattern-driven modeling, key/in
 
 skills:
   include:
-    - packs/software-engineering/skills/databases/dynamodb/**
+    - packs/software-engineering/skills/databases/aws/dynamodb/**
 
 agents:
   include:

@@ -5,7 +5,7 @@ description: Amazon EKS guidance for cluster lifecycle, node groups, identity, n
 
 skills:
   include:
-    - packs/software-engineering/skills/infrastructure/eks/**
+    - packs/software-engineering/skills/infrastructure/aws/eks/**
 
 agents:
   include:

@@ -5,7 +5,7 @@ description: Google Cloud Storage guidance for object semantics, transfers, conc
 
 skills:
   include:
-    - packs/software-engineering/skills/data-systems/gcs/**
+    - packs/software-engineering/skills/data-systems/gcp/gcs/**
 
 agents:
   include: []
