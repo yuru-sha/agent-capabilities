@@ -12,7 +12,7 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Amazon DynamoD
 | Database | PostgreSQL、MySQL、SQLite、Amazon DynamoDB | 4 |
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 1 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
-| Infrastructure | Terraform、AWS | 7 |
+| Infrastructure | Terraform、AWS architecture、IAM、Lambda、CloudWatch、GitHub Actions deploy | 7 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
 | Data systems | Redis | 1 |
 | Messaging | BullMQ、Amazon SQS、Amazon Kinesis Data Streams | 3 |
@@ -168,7 +168,7 @@ oh-my-pstack TDD / caller-triggered `interrogate`
   + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
-Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱い、DynamoDBではaccess pattern、partition/index、conditional write、capacity、Streams/global tablesを扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availabilityを扱います。Messaging SkillsはBullMQ、SQS、Kinesis Data Streamsのdelivery semantics、idempotency、ordering/concurrency、retry、replay/recoveryを扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS trust、deploy、Lambda、CloudWatchを扱います。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
+Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱い、DynamoDBではaccess pattern、partition/index、conditional write、capacity、Streams/global tablesを扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availabilityを扱います。Messaging SkillsはBullMQ、SQS、Kinesis Data Streamsのdelivery semantics、idempotency、ordering/concurrency、retry、replay/recoveryを扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS横断architecture、IAM、GitHub Actions OIDC/deploy、言語非依存Lambda、CloudWatchを扱います。Node.js/TypeScript固有のLambda build/package知識はTypeScript Skillに置き、サービス固有設定は各AWSサービスSkillへ分離します。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
 
 ## GitHub操作
 
