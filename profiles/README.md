@@ -123,6 +123,19 @@ profiles:
   - smartnews-marketing
 ```
 
+The `tiktok-business` Profile installs the `tiktok-api-for-business` Skill
+for projects that integrate with TikTok advertising and business APIs. It is
+language-independent and requires current official verification for API
+versions, advertiser authorization, Manual/Upgraded Smart+ schemas, identities
+and Spark Ads, reporting dimensions/metrics, event/webhook contracts, and rate
+limits. Compose it with the target language Profile as needed:
+
+```yaml
+profiles:
+  - typescript
+  - tiktok-business
+```
+
 The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only `infrastructure-reviewer` specialist selector.
 It is intended to compose with a language or database Profile rather than
