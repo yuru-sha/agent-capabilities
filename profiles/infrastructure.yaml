@@ -7,11 +7,11 @@ skills:
   include:
     - packs/software-engineering/skills/infrastructure/terraform-infrastructure/**
     - packs/software-engineering/skills/infrastructure/terraform-policy-testing/**
-    - packs/software-engineering/skills/infrastructure/aws-architecture/**
-    - packs/software-engineering/skills/infrastructure/iam/**
-    - packs/software-engineering/skills/infrastructure/lambda/**
-    - packs/software-engineering/skills/infrastructure/cloudwatch/**
-    - packs/software-engineering/skills/infrastructure/github-actions-aws-deploy/**
+    - packs/software-engineering/skills/infrastructure/aws/aws-architecture/**
+    - packs/software-engineering/skills/infrastructure/aws/iam/**
+    - packs/software-engineering/skills/infrastructure/aws/lambda/**
+    - packs/software-engineering/skills/infrastructure/aws/cloudwatch/**
+    - packs/software-engineering/skills/infrastructure/aws/github-actions-aws-deploy/**
 
 agents:
   include:
