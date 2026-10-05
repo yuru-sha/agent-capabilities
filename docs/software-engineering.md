@@ -54,7 +54,7 @@ Custom Audiences and conversion/catalog dependencies, Ads Insights sync/async
 reporting, cursor pagination/batching, rate-limit headers, structured errors,
 and ambiguous-write reconciliation without depending on a programming language.
 
- `smartnews-marketing-api` uses current official SmartNews Marketing API docs and
+`smartnews-marketing-api` uses current official SmartNews Marketing API docs and
 OpenAPI definitions with a 30-day freshness gate. It covers OAuth client
 credentials, Ad Account/Campaign/AdGroup/Ad planning, media upload, targeting,
 Custom Audiences, pixels, catalogs/ProductSets, Insights JSON/CSV pagination,
