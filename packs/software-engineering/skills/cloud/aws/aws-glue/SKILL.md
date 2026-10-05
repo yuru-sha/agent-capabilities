@@ -1,9 +1,9 @@
 ---
-name: glue
+name: aws-glue
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting AWS Glue Data Catalog, crawlers, ETL jobs, job bookmarks, connections, schema discovery, workflows, or data integration pipelines."
 ---
 
-# glue
+# aws-glue
 
 Use this skill for glue-specific AWS behavior. Compose it with adjacent service Skills when broader architecture or data-platform behavior is in scope.
 
