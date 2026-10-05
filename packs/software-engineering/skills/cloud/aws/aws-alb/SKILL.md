@@ -1,9 +1,9 @@
 ---
-name: alb
+name: aws-alb
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting AWS Application Load Balancers, listeners, rules, target groups, health checks, TLS, stickiness, slow start, routing, or draining."
 ---
 
-# AWS Application Load Balancer
+# aws-alb
 
 Use this skill for ALB L7 routing and target health behavior.
 
