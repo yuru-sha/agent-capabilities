@@ -1,9 +1,9 @@
 ---
-name: emr
+name: aws-emr
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon EMR clusters, EMR Serverless, Spark/Hadoop workloads, bootstrap actions, instance fleets, scaling, Spot usage, storage, or distributed-job reliability."
 ---
 
-# emr
+# aws-emr
 
 Use this skill for emr-specific AWS behavior. Compose it with adjacent service Skills when broader architecture or data-platform behavior is in scope.
 
