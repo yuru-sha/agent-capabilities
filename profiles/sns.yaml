@@ -5,7 +5,7 @@ description: AWS sns service guidance.
 
 skills:
   include:
-    - packs/software-engineering/skills/infrastructure/aws/sns/**
+    - packs/software-engineering/skills/messaging/aws/sns/**
 
 agents:
   include:
