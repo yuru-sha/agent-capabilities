@@ -1,0 +1,11 @@
+schema: 1
+id: msk
+kind: messaging
+description: AWS msk service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/messaging/aws/msk/**
+
+agents:
+  include: []

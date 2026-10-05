@@ -1,0 +1,12 @@
+schema: 1
+id: redshift
+kind: analytics
+description: AWS redshift service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/analytics/aws/redshift/**
+
+agents:
+  include:
+    - database-reviewer
