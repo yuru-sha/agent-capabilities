@@ -1,9 +1,9 @@
 ---
-name: kinesis
+name: aws-kinesis
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon Kinesis Data Streams producers, consumers, partitioning, shards, ordering, replay, scaling, retention, Lambda integrations, or stream-processing reliability."
 ---
 
-# Amazon Kinesis Data Streams
+# aws-kinesis
 
 Use this skill for Kinesis Data Streams-specific event-stream semantics and integrations. It does not cover Amazon Data Firehose as a separate delivery service. Compose it with the existing AWS/infrastructure profile when broader IAM, networking, Terraform, Lambda, ECS, or CloudWatch infrastructure is in scope.
 
