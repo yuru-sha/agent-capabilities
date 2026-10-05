@@ -5,7 +5,7 @@ description: Amazon SQS messaging guidance for Standard/FIFO selection, visibili
 
 skills:
   include:
-    - packs/software-engineering/skills/messaging/sqs/**
+    - packs/software-engineering/skills/messaging/aws/sqs/**
 
 agents:
   include: []
