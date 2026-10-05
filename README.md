@@ -59,8 +59,11 @@ families and external CLIs used by the Skills are listed in the
 
 For Terraform and AWS infrastructure work, select the infrastructure Profile.
 It provides seven narrow Skills and the read-only `infrastructure-reviewer`
-specialist selector; compose it with a language or database Profile when the
-consumer repository needs those concerns too.
+specialist selector. AWS guidance is split into cross-service architecture,
+IAM, language-independent Lambda, CloudWatch, and GitHub Actions deployment
+boundaries so service-specific Skills can be composed without an umbrella
+Skill duplicating their rules. Compose it with a language or database Profile
+when the consumer repository needs those concerns too.
 
 For frontend work, select the `frontend` Profile. It provides the
 framework-agnostic web-quality, browser-testing, and form-validation Skills
