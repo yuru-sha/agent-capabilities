@@ -1,9 +1,9 @@
 ---
-name: acm
+name: aws-acm
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting AWS Certificate Manager certificates, validation, renewal, exportable public certificates, Private CA integration, or certificate deployment."
 ---
 
-# acm
+# aws-acm
 
 Use this skill for acm-specific AWS behavior. Compose it with adjacent service Skills when broader architecture is in scope.
 
