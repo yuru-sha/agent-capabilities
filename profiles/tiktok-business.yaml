@@ -1,0 +1,8 @@
+schema: 1
+id: tiktok-business
+kind: integration
+description: Research and integrate the current TikTok API for Business across Marketing API, Business Center, Accounts API, Events API, creatives, audiences, catalogs, webhooks, and reporting.
+
+skills:
+  include:
+    - packs/software-engineering/skills/integrations/tiktok-api-for-business
