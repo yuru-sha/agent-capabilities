@@ -1,9 +1,9 @@
 ---
-name: eks
+name: aws-eks
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon EKS clusters, node groups, Pod Identity/IRSA, networking, ingress, autoscaling, add-ons, upgrades, or Kubernetes workload security on AWS."
 ---
 
-# Amazon EKS
+# aws-eks
 
 Use this skill for EKS-specific Kubernetes control-plane and AWS integration concerns. Compose it with Kubernetes- or language-specific guidance when application behavior is also in scope.
 
