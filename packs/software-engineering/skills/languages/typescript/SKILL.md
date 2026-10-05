@@ -21,6 +21,7 @@ Use this domain skill as the entry point for TypeScript work. Keep working conte
 - `error-handling` → `references/error-handling.md`
 - `idiomatic-code-check` → `references/idiomatic-code-check.md`
 - `logging` → `references/logging.md`
+- `lambda-nodejs` → `references/lambda-nodejs.md`
 - `module-build` → `references/module-build.md`
 - `networking` → `references/networking.md`
 - `observability` → `references/observability.md`

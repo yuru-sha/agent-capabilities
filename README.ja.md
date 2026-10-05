@@ -42,7 +42,7 @@ profiles:
 
 [Profiles](profiles/README.md) と [software-engineering カタログ](docs/software-engineering.md) を参照してください。Skills が使うコマンド群と外部 CLI は[コマンドリファレンス](docs/commands.md)に記載しています。
 
-Terraform と AWS のインフラ作業では infrastructure Profile を選択します。7 個の専門 Skills と、読み取り専用の `infrastructure-reviewer` 専門セレクタが含まれます。利用プロジェクトで言語やデータベースの機能も必要な場合は、それらの Profile と組み合わせてください。
+Terraform と AWS のインフラ作業では infrastructure Profile を選択します。7 個の専門 Skills と、読み取り専用の `infrastructure-reviewer` 専門セレクタが含まれます。AWS は横断 architecture、IAM、言語非依存 Lambda、CloudWatch、GitHub Actions deployment に責務を分割し、サービス固有 Skill と重複しない構成にしています。利用プロジェクトで言語やデータベースの機能も必要な場合は、それらの Profile と組み合わせてください。
 
 フロントエンド作業では `frontend` Profile を選択します。フレームワークに依存しない Web 品質、ブラウザーテスト、フォーム検証の Skills に加え、React 19、Next.js、Svelte 5、Tailwind CSS v4 以降の専門機能が含まれます。
 
