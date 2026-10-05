@@ -116,7 +116,7 @@ class InstallProfileTests(unittest.TestCase):
             "typescript",
             "postgresql",
             "sqlite",
-            "openapi-design",
+            "openapi",
             "frontend-browser-testing",
         ):
             self.assertIn(expected, skills)
