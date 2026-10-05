@@ -14,8 +14,8 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | Terraform、AWS | 7 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
-| Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads | 8 |
-| **合計** | **専門 Skill** | **35** |
+| Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
+| **合計** | **専門 Skill** | **36** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -68,6 +68,13 @@ Manual and Upgraded Smart+ delivery, creatives/Spark Ads, audiences/catalogs,
 webhooks, sync/async reporting, data latency, pagination, and resilient writes
 without depending on a programming language.
 
+`google-ads-api` uses current official Google Ads API release notes, versioned
+reference pages, field metadata, and guides with a 30-day freshness gate. It
+covers OAuth/developer-token and manager-account context, GAQL Search/SearchStream
+reporting, resource-specific and mixed mutations, update masks, validation,
+partial failure, BatchJobService, quotas, structured errors, concurrency, and
+ambiguous-write reconciliation without depending on a programming language.
+
 `line-yahoo-ads` uses current official LINEヤフー for Business product pages,
 manuals, notices, media sheets, and submission/reporting guidance with a 30-day
 freshness gate. It covers Search Ads, Display Ads (Auction), Display Ads
@@ -108,7 +115,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,infrastructure,frontend,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,workflows,github}.yaml
+│             cross-cutting,infrastructure,frontend,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```

@@ -1,0 +1,8 @@
+schema: 1
+id: google-ads
+kind: integration
+description: Integrate the current Google Ads API across account context, campaigns, ads/assets, GAQL reporting, mutations, batch jobs, quotas, and resilient error handling.
+
+skills:
+  include:
+    - packs/software-engineering/skills/integrations/google-ads-api

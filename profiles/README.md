@@ -136,6 +136,19 @@ profiles:
   - tiktok-business
 ```
 
+The `google-ads` Profile installs the `google-ads-api` Skill for projects
+that manage or report on Google advertising. It is language-independent and
+requires current official verification for API versions, OAuth/developer-token
+access, manager/customer context, GAQL field compatibility, mutation schemas,
+batch-job support, quotas, and retry behavior. Compose it with the target
+language Profile as needed:
+
+```yaml
+profiles:
+  - go
+  - google-ads
+```
+
 The `line-yahoo-ads` Profile installs the `line-yahoo-ads` Skill for projects
 that traffic, review, launch, or report LINE Yahoo advertising. It is
 language-independent and requires current official verification for product/UI

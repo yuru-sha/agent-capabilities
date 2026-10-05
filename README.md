@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 35 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 36 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 21 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, and `github.yaml`
+- 22 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, and `github.yaml`
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -101,6 +101,12 @@ For projects that integrate with TikTok API for Business, select the `tiktok-bus
 Profile. It adds freshness-gated, language-independent guidance across Marketing
 API, Business Center, Accounts API, Events API, Manual and Upgraded Smart+
 delivery, creatives/Spark Ads, audiences/catalogs, webhooks, and sync/async reporting.
+
+For projects that integrate with Google Ads API, select the `google-ads`
+Profile. It adds freshness-gated, language-independent guidance for OAuth and
+developer-token account context, GAQL reads/reporting, resource mutations,
+partial failure, BatchJobService, quotas, structured errors, and ambiguous-write
+reconciliation.
 
 For projects that traffic or report LINE Yahoo Ads, select the `line-yahoo-ads`
 Profile. It adds freshness-gated operational guidance for Search Ads, Display Ads
