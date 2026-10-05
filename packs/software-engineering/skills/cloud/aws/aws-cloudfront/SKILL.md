@@ -1,9 +1,9 @@
 ---
-name: cloudfront
+name: aws-cloudfront
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon CloudFront distributions, origins, cache policies, origin request policies, behaviors, OAC, signed access, invalidations, edge functions, or CDN security."
 ---
 
-# cloudfront
+# aws-cloudfront
 
 Use this skill for cloudfront-specific AWS behavior. Compose it with adjacent service Skills when broader architecture is in scope.
 
