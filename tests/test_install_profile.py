@@ -114,8 +114,8 @@ class InstallProfileTests(unittest.TestCase):
         for expected in (
             "go",
             "typescript",
-            "postgresql-design",
-            "sqlite-design",
+            "postgresql",
+            "sqlite",
             "openapi-design",
             "frontend-browser-testing",
         ):
