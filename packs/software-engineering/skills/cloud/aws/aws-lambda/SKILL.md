@@ -1,9 +1,9 @@
 ---
-name: lambda
+name: aws-lambda
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting AWS Lambda functions, invocation models, runtimes, concurrency, event source mappings, retries, destinations, versions/aliases, VPC configuration, or serverless reliability."
 ---
 
-# AWS Lambda
+# aws-lambda
 
 Use this skill for language-independent Lambda behavior. Compose it with the relevant language Skill for runtime-specific build, dependency, module, and packaging guidance.
 
