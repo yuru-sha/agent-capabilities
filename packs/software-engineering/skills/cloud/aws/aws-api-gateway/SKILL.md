@@ -1,9 +1,9 @@
 ---
-name: api-gateway
+name: aws-api-gateway
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon API Gateway REST, HTTP, or WebSocket APIs, routes, stages, integrations, authorizers, throttling, deployments, or observability."
 ---
 
-# api-gateway
+# aws-api-gateway
 
 Use this skill for api-gateway-specific AWS behavior. Compose it with adjacent service Skills when broader architecture is in scope.
 
