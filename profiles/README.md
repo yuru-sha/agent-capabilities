@@ -110,6 +110,19 @@ profiles:
   - meta-marketing
 ```
 
+The `smartnews-marketing` Profile installs the `smartnews-marketing-api` Skill
+for projects that manage or report on SmartNews advertising. It is
+language-independent and requires current official verification for Marketing
+API versions, OAuth, Campaign/AdGroup/Ad schemas, media, targeting, Insights,
+pagination, rate limits, and catalog allowlisting. Compose it with the target
+language Profile as needed:
+
+```yaml
+profiles:
+  - go
+  - smartnews-marketing
+```
+
 The infrastructure Profile selects the Terraform and AWS infrastructure
 specialists and the read-only `infrastructure-reviewer` specialist selector.
 It is intended to compose with a language or database Profile rather than
