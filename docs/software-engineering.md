@@ -12,12 +12,12 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Amazon DynamoD
 | Database | PostgreSQL、MySQL、SQLite、Amazon DynamoDB | 4 |
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 1 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
-| Infrastructure | Terraform、AWS architecture、IAM、Lambda、CloudWatch、GitHub Actions deploy、EKS、Fargate | 9 |
+| Infrastructure | Terraform、AWS architecture、IAM、Lambda、CloudWatch、GitHub Actions deploy、EKS、Fargate、VPC、EC2、ECS、ECR、ALB、S3、RDS、Secrets Manager、KMS | 18 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
 | Data systems | Redis、BigQuery、Google Cloud Storage | 3 |
 | Messaging | BullMQ、Amazon SQS、Amazon Kinesis Data Streams | 3 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **45** |
+| **合計** | **専門 Skill** | **54** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -51,10 +51,41 @@ versioning/retention, signed URLs, IAM, and public-access prevention.
 ingress/load-balancer integration, autoscaling, add-ons, upgrades, security, and
 operations.
 
-`fargate` covers the AWS Fargate runtime model shared by ECS and EKS:
+ `fargate` covers the AWS Fargate runtime model shared by ECS and EKS:
 CPU/memory/platform selection, task/pod networking, ephemeral storage, scaling,
 Fargate Spot, cost, and operational failure modes. Orchestrator-specific rules
 remain in ECS/EKS Skills.
+
+`vpc` covers AWS network topology, subnets, routing, internet/NAT egress,
+endpoints, security groups, DNS, IP/ENI capacity, and hybrid connectivity.
+
+`ec2` covers instance/AMI lifecycle, instance selection, EBS attachment,
+IMDSv2, fleet replacement, capacity models, and host-level operations.
+
+`ecs` covers task definitions, services, deployments, capacity providers,
+task/execution IAM roles, awsvpc networking, autoscaling, and deployment
+recovery. Fargate runtime details remain in `fargate`.
+
+`ecr` covers image registry identity, tag immutability, scanning, lifecycle
+policies, replication, registry permissions, and reliable image distribution.
+
+`alb` covers L7 listeners/rules, TLS, target groups, health/readiness,
+draining, stickiness/slow start, routing, and ALB observability.
+
+`s3` covers S3 object and multipart-transfer semantics, concurrency/versioning,
+lifecycle, replication, Object Lock, access control, events, and recovery.
+
+`rds` covers RDS/Aurora infrastructure topology, Multi-AZ, replicas,
+backups/PITR, failover, connectivity/authentication, parameter configuration,
+connection scaling, and operations. Engine-specific SQL stays in Database
+Skills.
+
+`secrets-manager` covers secret access/caching, versions/staging labels,
+rotation, resource policies, KMS integration, cross-account exposure, and
+recovery.
+
+`kms` covers key policies, IAM/grants, envelope encryption, key choice,
+rotation, multi-Region keys, and destructive key-lifecycle operations.
 
 ### Messaging
 
@@ -198,7 +229,7 @@ oh-my-pstack TDD / caller-triggered `interrogate`
   + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
-Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱い、DynamoDBではaccess pattern、partition/index、conditional write、capacity、Streams/global tablesを扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availabilityに加え、BigQueryの分析データ設計/コスト最適化とGoogle Cloud Storageのobject lifecycle/transfer/securityを扱います。Messaging SkillsはBullMQ、SQS、Kinesis Data Streamsのdelivery semantics、idempotency、ordering/concurrency、retry、replay/recoveryを扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS横断architecture、IAM、GitHub Actions OIDC/deploy、言語非依存Lambda、CloudWatch、EKS、Fargateを扱います。Node.js/TypeScript固有のLambda build/package知識はTypeScript Skillに置き、サービス固有設定は各AWSサービスSkillへ分離します。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
+Language Skillsは、Goのgoroutineとrace検出、TypeScriptの型設計とAbortSignal、Pythonの`Any`伝播とasyncio、Rustの所有権・`Result`・unsafe/FFIなど、言語ごとの規則を扱います。Database Skillsは各エンジンのtransaction、locking、migration、運用特性を扱い、DynamoDBではaccess pattern、partition/index、conditional write、capacity、Streams/global tablesを扱います。Data systems SkillsはRedisのデータ構造、atomicity、memory、persistence、availabilityに加え、BigQueryの分析データ設計/コスト最適化とGoogle Cloud Storageのobject lifecycle/transfer/securityを扱います。Messaging SkillsはBullMQ、SQS、Kinesis Data Streamsのdelivery semantics、idempotency、ordering/concurrency、retry、replay/recoveryを扱います。OpenAPI Skillsは契約、生成、breaking change、contract testingを扱います。Infrastructure SkillsはTerraform state/policy、AWS横断architecture、IAM、GitHub Actions OIDC/deploy、言語非依存Lambda、CloudWatch、EKS、Fargateに加え、VPC、EC2、ECS、ECR、ALB、S3、RDS、Secrets Manager、KMSをサービス別に扱います。Node.js/TypeScript固有のLambda build/package知識はTypeScript Skillに置き、サービス固有設定は各AWSサービスSkillへ分離します。Frontend Skillsはブラウザー挙動、form contract、React/Next.js/Svelte/Tailwindを扱います。
 
 ## GitHub操作
 
