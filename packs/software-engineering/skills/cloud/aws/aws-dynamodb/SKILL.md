@@ -1,9 +1,9 @@
 ---
-name: dynamodb
+name: aws-dynamodb
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon DynamoDB tables, access patterns, indexes, capacity, conditional writes, transactions, Streams, global tables, or DynamoDB-backed applications."
 ---
 
-# Amazon DynamoDB
+# aws-dynamodb
 
 Use this skill for DynamoDB-specific data modeling, correctness, performance, and operations. Compose it with the existing AWS/infrastructure profile when broader IAM, networking, Terraform, Lambda, CloudWatch, or deployment concerns are in scope.
 
