@@ -1,0 +1,12 @@
+schema: 1
+id: dynamodb
+kind: database
+description: Amazon DynamoDB guidance for access-pattern-driven modeling, key/index design, conditional writes, transactions, capacity, Streams, global tables, and operations.
+
+skills:
+  include:
+    - packs/software-engineering/skills/databases/dynamodb/**
+
+agents:
+  include:
+    - database-reviewer
