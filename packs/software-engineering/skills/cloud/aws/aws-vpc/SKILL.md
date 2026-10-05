@@ -1,9 +1,9 @@
 ---
-name: vpc
+name: aws-vpc
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon VPC networks, subnets, route tables, NAT/Internet gateways, VPC endpoints, security groups, NACLs, DNS, or hybrid connectivity."
 ---
 
-# Amazon VPC
+# aws-vpc
 
 Use this skill for AWS network topology and connectivity. Keep workload-specific behavior in the relevant compute or service Skill.
 
