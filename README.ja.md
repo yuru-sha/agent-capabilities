@@ -10,11 +10,11 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 
 ## 内容
 
-- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 70 個
+- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 68 個
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`dynamodb.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`dropbox.yaml`、`youtube.yaml`、`meta-marketing.yaml`、`smartnews-marketing.yaml`、`tiktok-business.yaml`、`line-yahoo-ads.yaml`、`google-ads.yaml`、`redis.yaml`、`bullmq.yaml`、`sqs.yaml`、`kinesis.yaml`、`eks.yaml`、`fargate.yaml`、`vpc.yaml`、`ec2.yaml`、`ecs.yaml`、`ecr.yaml`、`alb.yaml`、`s3.yaml`、`rds.yaml`、`secrets-manager.yaml`、`kms.yaml`、`api-gateway.yaml`、`eventbridge.yaml`、`sns.yaml`、`step-functions.yaml`、`cloudfront.yaml`、`route53.yaml`、`acm.yaml`、`waf.yaml`、`efs.yaml`、`glue.yaml`、`athena.yaml`、`emr.yaml`、`redshift.yaml`、`elasticache.yaml`、`opensearch.yaml`、`msk.yaml`、`bigquery.yaml`、`gcs.yaml`、`github.yaml` など、組み合わせ可能な Profiles 56 個
+- `terraform.yaml`、`aws-ec2.yaml`、`aws-ecs.yaml`、`aws-rds.yaml`、`aws-s3.yaml`、`gcp-bigquery.yaml`、`gcp-gcs.yaml` を含む、組み合わせ可能な Profiles 60 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
@@ -42,33 +42,30 @@ profiles:
 
 [Profiles](profiles/README.md) と [software-engineering カタログ](docs/software-engineering.md) を参照してください。Skills が使うコマンド群と外部 CLI は[コマンドリファレンス](docs/commands.md)に記載しています。
 
-Terraform と AWS のインフラ作業では infrastructure Profile を選択します。7 個の専門 Skills と、読み取り専用の `infrastructure-reviewer` 専門セレクタが含まれます。AWS は横断 architecture、IAM、言語非依存 Lambda、CloudWatch、GitHub Actions deployment に責務を分割し、サービス固有 Skill と重複しない構成にしています。利用プロジェクトで言語やデータベースの機能も必要な場合は、それらの Profile と組み合わせてください。
+Terraform 作業では `terraform` Profile を選択します。provider 非依存の
+Terraform infrastructure / policy-testing Skills だけを導入します。
 
-フロントエンド作業では `frontend` Profile を選択します。フレームワークに依存しない Web 品質、ブラウザーテスト、フォーム検証の Skills に加え、React 19、Next.js、Svelte 5、Tailwind CSS v4 以降の専門機能が含まれます。
+Cloud 固有 Skills は機能カテゴリへ分散させず、provider 名を含む Skill/Profile
+として直接選択します。
 
-Redis をデータ、キャッシュ、協調制御、ストリーム、一時状態に使うプロジェクトでは `redis` Profile を選択します。key/データ構造設計、atomicity、memory/latency、persistence/failover、本番運用とセキュリティを扱います。
+- AWS compute/runtime: `aws-ec2`、`aws-ecs`、`aws-eks`、`aws-lambda`
+- AWS network/edge/API: `aws-vpc`、`aws-alb`、`aws-api-gateway`、
+  `aws-cloudfront`、`aws-route53`、`aws-acm`、`aws-waf`
+- AWS identity/security/operations: `aws-iam`、`aws-kms`、
+  `aws-secrets-manager`、`aws-cloudwatch`、`aws-github-actions-deploy`
+- AWS data/storage/search: `aws-s3`、`aws-efs`、`aws-dynamodb`、
+  `aws-rds`、`aws-elasticache`、`aws-opensearch`
+- AWS messaging/workflow: `aws-sqs`、`aws-sns`、`aws-eventbridge`、
+  `aws-kinesis`、`aws-msk`、`aws-step-functions`
+- AWS analytics/data platform: `aws-glue`、`aws-athena`、`aws-emr`、
+  `aws-redshift`
+- AWS container registry: `aws-ecr`
+- Google Cloud: `gcp-bigquery`、`gcp-gcs`
 
-BullMQ のバックグラウンド処理では `bullmq` Profile を選択し、Redis トポロジや運用も対象なら `redis` と組み合わせます。job contract、retry/idempotency、worker concurrency、schedule/flow、BullMQ 固有の Redis connection behavior を扱います。
-
-Amazon SQS を使うプロジェクトでは `sqs` Profile を選択します。Standard/FIFO、visibility/idempotency、polling/batching、DLQ recovery、Lambda/SNS/EventBridge 連携を扱います。AWS 全体の実装・インフラレビューも対象なら `infrastructure` と組み合わせます。
-
-Amazon DynamoDB を使うプロジェクトでは `dynamodb` Profile を選択します。アクセスパターン起点の key/index 設計、conditional write、transaction、capacity/hot partition、Streams、TTL、global tables、recovery を扱います。AWS 全体の実装・インフラレビューも対象なら `infrastructure` と組み合わせます。
-
-Amazon Kinesis Data Streams を使うプロジェクトでは `kinesis` Profile を選択します。stream/queue の選択、partitioning/order、consumer/checkpoint、replay、scaling、retention、backpressure、Lambda 連携を扱います。AWS 全体の concern には `infrastructure`、KCL lease table や DynamoDB sink も対象なら `dynamodb` と組み合わせます。
-
-AWS の主要サービスは `vpc`、`ec2`、`ecs`、`ecr`、`alb`、`s3`、`rds`、`secrets-manager`、`kms` Profile を必要に応じて組み合わせます。base の `infrastructure` Profile に全サービスを含めず、network、compute、container、L7 load balancing、object storage、managed relational database、secret lifecycle、encryption key の責務をサービス別に分離します。
-
-AWS 第2群は `api-gateway`、`eventbridge`、`sns`、`step-functions`、`cloudfront`、`route53`、`acm`、`waf`、`efs` Profile を必要に応じて組み合わせます。messaging 系は messaging、EFS は data-systems、API/edge/DNS/security/orchestration 系は infrastructure に分類しています。
-
-AWS のデータ基盤・検索・ストリーミングでは `glue`、`athena`、`emr`、`redshift`、`elasticache`、`opensearch`、`msk` Profile を必要に応じて組み合わせます。分析系は `analytics/aws/`、cache/search は `data-systems/aws/`、MSK は `messaging/aws/` に分類しています。
-
-Amazon EKS を使うプロジェクトでは `eks` Profile を選択します。cluster/node lifecycle、Pod Identity/IRSA、VPC CNI/ingress、autoscaling、add-on、upgrade、security/operations を扱います。EKS Fargate を使う場合は `fargate` と組み合わせます。
-
-AWS Fargate を使うプロジェクトでは `fargate` Profile を選択します。ECS/EKS 共通の sizing/platform、workload network、ephemeral storage、scaling、Fargate Spot、cost/operations を扱います。
-
-Google BigQuery を使うプロジェクトでは `bigquery` Profile を選択します。table design、partitioning/clustering、query performance/cost、ingestion、schema evolution、governance、row/column-level security を扱います。
-
-Google Cloud Storage を使うプロジェクトでは `gcs` Profile を選択します。bucket/object semantics、resumable transfer、generation precondition、lifecycle/versioning、retention、signed URL、IAM/public access control を扱います。
+AWS architecture の独立 Skill は廃止しました。横断 architecture は実際に使う
+各 service Skill と `infrastructure-reviewer` の合成で扱います。Fargate も
+独立 Skill/Profile を廃止し、ECS Fargate は `aws-ecs`、EKS Fargate は
+`aws-eks` に吸収しています。
 
 `cross-cutting` Profile には `web-security-review` が含まれます。WebアプリケーションとHTTP APIを対象に、攻撃面の棚卸し、データ・主体/権限・状態の境界追跡、根拠に基づくFinding、修正後のセキュリティ系/正常系回帰テストを言語非依存で支援します。より広いcross-engine trust boundaryは `security-review` と組み合わせます。
 
