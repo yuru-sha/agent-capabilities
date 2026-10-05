@@ -138,6 +138,16 @@ The second-wave AWS service Profiles remain independently composable:
 - `waf` — web ACLs, managed/custom rules, rate controls, safe rollout, logging, and false-positive handling.
 - `efs` — mount targets, access points, NFS/POSIX access, throughput/performance, lifecycle, backup, and operations.
 
+The third-wave AWS data-platform Profiles are also independently composable:
+
+- `glue` — Data Catalog, crawlers, ETL jobs, bookmarks, schema/partition evolution, and pipeline recovery.
+- `athena` — S3-backed analytical SQL, partition/file layout, workgroups, result handling, and cost control.
+- `emr` — EMR deployment models, Spark/Hadoop runtime, fleets, scaling, Spot, and distributed-job operations.
+- `redshift` — provisioned/Serverless warehouse design, table layout, ingestion, WLM, scaling, Spectrum, and recovery.
+- `elasticache` — Valkey/Redis OSS/Memcached topology, replication/sharding, TTL/eviction, failover, and client behavior.
+- `opensearch` — managed domains/Serverless, mappings, shards, ingestion, search, scaling, security, and observability.
+- `msk` — provisioned/Serverless Kafka, topics/partitions, delivery semantics, consumers, authentication, networking, and lag operations.
+
 The `eks` Profile installs the `eks` Skill and the
 `infrastructure-reviewer` selector for Amazon EKS. It owns cluster/node
 lifecycle, workload identity, AWS networking/ingress integration, autoscaling,
