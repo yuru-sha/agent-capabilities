@@ -1,9 +1,9 @@
 ---
-name: cloudwatch
+name: aws-cloudwatch
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon CloudWatch metrics, logs, alarms, dashboards, Logs Insights queries, retention, anomaly detection, or alerting for AWS workloads."
 ---
 
-# Amazon CloudWatch
+# aws-cloudwatch
 
 Use this skill for CloudWatch-specific observability and operations. Service-specific metrics remain owned by the service Skill; CloudWatch owns collection, querying, alarming, dashboards, retention, and alert routing.
 
