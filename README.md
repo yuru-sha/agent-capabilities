@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 70 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 68 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 56 composable Profiles, including `frontend.yaml`, `go.yaml`, `sqlite.yaml`, `dynamodb.yaml`, `infrastructure.yaml`, `note-com.yaml`, `x-ads.yaml`, `dropbox.yaml`, `youtube.yaml`, `meta-marketing.yaml`, `smartnews-marketing.yaml`, `tiktok-business.yaml`, `line-yahoo-ads.yaml`, `google-ads.yaml`, `redis.yaml`, `bullmq.yaml`, `sqs.yaml`, `kinesis.yaml`, `eks.yaml`, `fargate.yaml`, `vpc.yaml`, `ec2.yaml`, `ecs.yaml`, `ecr.yaml`, `alb.yaml`, `s3.yaml`, `rds.yaml`, `secrets-manager.yaml`, `kms.yaml`, `api-gateway.yaml`, `eventbridge.yaml`, `sns.yaml`, `step-functions.yaml`, `cloudfront.yaml`, `route53.yaml`, `acm.yaml`, `waf.yaml`, `efs.yaml`, `glue.yaml`, `athena.yaml`, `emr.yaml`, `redshift.yaml`, `elasticache.yaml`, `opensearch.yaml`, `msk.yaml`, `bigquery.yaml`, `gcs.yaml`, and `github.yaml`
+- 60 composable Profiles, including provider-namespaced cloud Profiles such as `aws-ec2.yaml`, `aws-ecs.yaml`, `aws-rds.yaml`, `aws-s3.yaml`, `gcp-bigquery.yaml`, and `gcp-gcs.yaml`, plus `terraform.yaml`, language, database, frontend, integration, and workflow Profiles
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -57,77 +57,33 @@ See [Profiles](profiles/README.md) and the
 families and external CLIs used by the Skills are listed in the
 [command reference](docs/commands.md).
 
-For Terraform and AWS infrastructure work, select the infrastructure Profile.
-It provides seven narrow Skills and the read-only `infrastructure-reviewer`
-specialist selector. AWS guidance is split into cross-service architecture,
-IAM, language-independent Lambda, CloudWatch, and GitHub Actions deployment
-boundaries so service-specific Skills can be composed without an umbrella
-Skill duplicating their rules. Compose it with a language or database Profile
-when the consumer repository needs those concerns too.
+For Terraform work, select the `terraform` Profile. It installs only the
+provider-neutral Terraform infrastructure and policy-testing Skills.
 
-For frontend work, select the `frontend` Profile. It provides the
-framework-agnostic web-quality, browser-testing, and form-validation Skills
-plus React 19, Next.js, Svelte 5, and Tailwind CSS v4+ specialists.
+Cloud-provider Skills are intentionally grouped and named by provider rather than
+scattered across infrastructure, database, messaging, and analytics categories.
+Select the service Profiles directly:
 
-For Redis-backed data, caching, coordination, streaming, and ephemeral state,
-select the `redis` Profile. It covers key/data-structure design, atomicity,
-memory and latency behavior, persistence/failover, and production security.
+- AWS compute/runtime: `aws-ec2`, `aws-ecs`, `aws-eks`, `aws-lambda`
+- AWS network/edge/API: `aws-vpc`, `aws-alb`, `aws-api-gateway`,
+  `aws-cloudfront`, `aws-route53`, `aws-acm`, `aws-waf`
+- AWS identity/security/operations: `aws-iam`, `aws-kms`,
+  `aws-secrets-manager`, `aws-cloudwatch`, `aws-github-actions-deploy`
+- AWS data/storage/search: `aws-s3`, `aws-efs`, `aws-dynamodb`,
+  `aws-rds`, `aws-elasticache`, `aws-opensearch`
+- AWS messaging/workflow: `aws-sqs`, `aws-sns`, `aws-eventbridge`,
+  `aws-kinesis`, `aws-msk`, `aws-step-functions`
+- AWS analytics/data platform: `aws-glue`, `aws-athena`, `aws-emr`,
+  `aws-redshift`
+- AWS container registry: `aws-ecr`
+- Google Cloud: `gcp-bigquery`, `gcp-gcs`
 
-For BullMQ background processing, select the `bullmq` Profile and compose it
-with `redis` when Redis topology or operations are also in scope. It covers
-job contracts, retries/idempotency, worker concurrency, scheduling/flows, and
-BullMQ-specific Redis connection behavior.
-
-For Amazon SQS messaging, select the `sqs` Profile. It covers Standard/FIFO
-selection, visibility/idempotency, polling and batching, DLQ recovery, and
-Lambda/SNS/EventBridge integration. Compose it with `infrastructure` when
-broader AWS implementation or infrastructure review is needed.
-
-For Amazon DynamoDB, select the `dynamodb` Profile. It covers access-pattern-
-driven key and index design, conditional writes, transactions, capacity and hot
-partitions, Streams, TTL, global tables, and recovery. Compose it with
-`infrastructure` when broader AWS implementation or infrastructure review is
-needed.
-
-For Amazon Kinesis Data Streams, select the `kinesis` Profile. It covers
-stream-vs-queue selection, partitioning and ordering, consumers/checkpointing,
-replay, scaling, retention, backpressure, and Lambda integration. Compose it
-with `infrastructure` for broader AWS concerns and with `dynamodb` when KCL
-lease-table behavior or DynamoDB-backed sinks are also in scope.
-
-For the core AWS service set, compose service Profiles explicitly: `vpc`, `ec2`,
-`ecs`, `ecr`, `alb`, `s3`, `rds`, `secrets-manager`, and `kms`.
-These own service-specific networking, compute, container orchestration/registry,
-L7 load balancing, object storage, managed relational database, secret lifecycle,
-and encryption-key concerns without expanding the base `infrastructure` Profile.
-
-For the second-wave AWS services, compose `api-gateway`, `eventbridge`,
-`sns`, `step-functions`, `cloudfront`, `route53`, `acm`, `waf`,
-and `efs` as needed. Messaging services remain under the messaging category,
-EFS under data-systems, and edge/API/DNS/security orchestration services under
-infrastructure.
-
-For AWS data-platform and search/streaming workloads, compose `glue`,
-`athena`, `emr`, `redshift`, `elasticache`, `opensearch`, and `msk`
-as needed. Analytics services live under `analytics/aws/`, cache/search
-services under `data-systems/aws/`, and MSK under `messaging/aws/`.
-
-For Amazon EKS, select the `eks` Profile. It covers cluster/node lifecycle,
-Pod Identity/IRSA, VPC CNI and ingress integration, autoscaling, add-ons,
-upgrades, security, and operations. Compose it with `fargate` when EKS
-Fargate profiles are in scope.
-
-For AWS Fargate, select the `fargate` Profile. It covers the shared Fargate
-runtime model across ECS and EKS: sizing/platform constraints, workload ENIs,
-ephemeral storage, scaling, Fargate Spot, cost, and operations.
-
-For Google BigQuery, select the `bigquery` Profile. It covers analytical
-table design, partitioning/clustering, query performance and cost, ingestion,
-schema evolution, governance, and row/column-level security.
-
-For Google Cloud Storage, select the `gcs` Profile. It covers bucket/object
-semantics, resumable transfers, generation preconditions, lifecycle/versioning,
-retention, signed URLs, IAM, and public-access controls.
+There is no standalone AWS architecture Skill. Cross-service architecture is
+composed from the service Skills actually present in the system and the
+`infrastructure-reviewer`. Fargate is also not a standalone Skill: ECS Fargate
+guidance lives in `aws-ecs`, and EKS Fargate guidance lives in `aws-eks`.
+This keeps Skill selection aligned with concrete resources instead of abstract
+umbrella capabilities.
 
 The `cross-cutting` Profile includes `web-security-review` for evidence-driven,
 language-independent review of web applications and HTTP APIs. It maps attack
