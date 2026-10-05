@@ -14,8 +14,8 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、OpenAPI、Terr
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | Terraform、AWS | 7 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
-| Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API | 6 |
-| **合計** | **専門 Skill** | **33** |
+| Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business | 7 |
+| **合計** | **専門 Skill** | **34** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -61,6 +61,13 @@ Custom Audiences, pixels, catalogs/ProductSets, Insights JSON/CSV pagination,
 micro-currency handling, rate limits, retry/error behavior, and parent/child
 mutation serialization without depending on a programming language.
 
+`tiktok-api-for-business` uses current official TikTok API for Business
+documentation with a 30-day freshness gate and explicit v1.3/v2.0 migration
+checks. It covers Marketing API, Business Center, Accounts API, Events API,
+Manual and Upgraded Smart+ delivery, creatives/Spark Ads, audiences/catalogs,
+webhooks, sync/async reporting, data latency, pagination, and resilient writes
+without depending on a programming language.
+
 ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実行で Babysit → Shipping する契約は、それぞれ `packs/operations/github/automations/issue-omp-handoff.md` と `packs/operations/github/automations/issue-pr-lifecycle.md` にある。専門セレクタは `database-reviewer` と `infrastructure-reviewer` の2個である。
 
 ## ローカル検証 Skill
@@ -94,7 +101,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,infrastructure,frontend,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,workflows,github}.yaml
+│             cross-cutting,infrastructure,frontend,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
