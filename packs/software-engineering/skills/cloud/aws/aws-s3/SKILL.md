@@ -1,9 +1,9 @@
 ---
-name: s3
+name: aws-s3
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon S3 buckets, objects, multipart transfers, versioning, lifecycle, replication, Object Lock, access points, public access controls, or event integrations."
 ---
 
-# Amazon S3
+# aws-s3
 
 Use this skill for S3 object storage semantics, transfer, lifecycle, protection, and access.
 
