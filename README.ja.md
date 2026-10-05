@@ -10,11 +10,11 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 
 ## 内容
 
-- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 54 個
+- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 63 個
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`dynamodb.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`dropbox.yaml`、`youtube.yaml`、`meta-marketing.yaml`、`smartnews-marketing.yaml`、`tiktok-business.yaml`、`line-yahoo-ads.yaml`、`google-ads.yaml`、`redis.yaml`、`bullmq.yaml`、`sqs.yaml`、`kinesis.yaml`、`eks.yaml`、`fargate.yaml`、`vpc.yaml`、`ec2.yaml`、`ecs.yaml`、`ecr.yaml`、`alb.yaml`、`s3.yaml`、`rds.yaml`、`secrets-manager.yaml`、`kms.yaml`、`bigquery.yaml`、`gcs.yaml`、`github.yaml` など、組み合わせ可能な Profiles 40 個
+- `frontend.yaml`、`go.yaml`、`sqlite.yaml`、`dynamodb.yaml`、`infrastructure.yaml`、`note-com.yaml`、`x-ads.yaml`、`dropbox.yaml`、`youtube.yaml`、`meta-marketing.yaml`、`smartnews-marketing.yaml`、`tiktok-business.yaml`、`line-yahoo-ads.yaml`、`google-ads.yaml`、`redis.yaml`、`bullmq.yaml`、`sqs.yaml`、`kinesis.yaml`、`eks.yaml`、`fargate.yaml`、`vpc.yaml`、`ec2.yaml`、`ecs.yaml`、`ecr.yaml`、`alb.yaml`、`s3.yaml`、`rds.yaml`、`secrets-manager.yaml`、`kms.yaml`、`api-gateway.yaml`、`eventbridge.yaml`、`sns.yaml`、`step-functions.yaml`、`cloudfront.yaml`、`route53.yaml`、`acm.yaml`、`waf.yaml`、`efs.yaml`、`bigquery.yaml`、`gcs.yaml`、`github.yaml` など、組み合わせ可能な Profiles 49 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
@@ -57,6 +57,8 @@ Amazon DynamoDB を使うプロジェクトでは `dynamodb` Profile を選択�
 Amazon Kinesis Data Streams を使うプロジェクトでは `kinesis` Profile を選択します。stream/queue の選択、partitioning/order、consumer/checkpoint、replay、scaling、retention、backpressure、Lambda 連携を扱います。AWS 全体の concern には `infrastructure`、KCL lease table や DynamoDB sink も対象なら `dynamodb` と組み合わせます。
 
 AWS の主要サービスは `vpc`、`ec2`、`ecs`、`ecr`、`alb`、`s3`、`rds`、`secrets-manager`、`kms` Profile を必要に応じて組み合わせます。base の `infrastructure` Profile に全サービスを含めず、network、compute、container、L7 load balancing、object storage、managed relational database、secret lifecycle、encryption key の責務をサービス別に分離します。
+
+AWS 第2群は `api-gateway`、`eventbridge`、`sns`、`step-functions`、`cloudfront`、`route53`、`acm`、`waf`、`efs` Profile を必要に応じて組み合わせます。messaging 系は messaging、EFS は data-systems、API/edge/DNS/security/orchestration 系は infrastructure に分類しています。
 
 Amazon EKS を使うプロジェクトでは `eks` Profile を選択します。cluster/node lifecycle、Pod Identity/IRSA、VPC CNI/ingress、autoscaling、add-on、upgrade、security/operations を扱います。EKS Fargate を使う場合は `fargate` と組み合わせます。
 

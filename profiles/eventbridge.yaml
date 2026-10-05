@@ -1,0 +1,11 @@
+schema: 1
+id: eventbridge
+kind: messaging
+description: AWS eventbridge service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/messaging/aws/eventbridge/**
+
+agents:
+  include:

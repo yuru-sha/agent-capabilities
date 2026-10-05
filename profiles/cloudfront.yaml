@@ -1,0 +1,12 @@
+schema: 1
+id: cloudfront
+kind: infrastructure
+description: AWS cloudfront service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/aws/cloudfront/**
+
+agents:
+  include:
+    - infrastructure-reviewer

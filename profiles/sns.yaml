@@ -1,0 +1,11 @@
+schema: 1
+id: sns
+kind: messaging
+description: AWS sns service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/messaging/aws/sns/**
+
+agents:
+  include:

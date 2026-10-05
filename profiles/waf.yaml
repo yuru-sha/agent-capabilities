@@ -1,0 +1,12 @@
+schema: 1
+id: waf
+kind: infrastructure
+description: AWS waf service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/aws/waf/**
+
+agents:
+  include:
+    - infrastructure-reviewer

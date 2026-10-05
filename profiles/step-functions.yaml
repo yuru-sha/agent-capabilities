@@ -1,0 +1,12 @@
+schema: 1
+id: step-functions
+kind: infrastructure
+description: AWS step-functions service guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/infrastructure/aws/step-functions/**
+
+agents:
+  include:
+    - infrastructure-reviewer
