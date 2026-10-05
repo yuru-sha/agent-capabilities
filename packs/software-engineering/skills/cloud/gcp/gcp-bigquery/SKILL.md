@@ -1,9 +1,9 @@
 ---
-name: bigquery
+name: gcp-bigquery
 description: "Use when designing, implementing, reviewing, operating, or optimizing Google BigQuery datasets, tables, partitioning, clustering, SQL, slots/reservations, ingestion, exports, schema evolution, cost, or row/column-level security."
 ---
 
-# Google BigQuery
+# gcp-bigquery
 
 Use this skill for BigQuery-specific analytical data modeling, SQL execution, cost/performance, ingestion, and governance.
 
