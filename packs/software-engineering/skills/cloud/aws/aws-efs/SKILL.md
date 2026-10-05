@@ -1,9 +1,9 @@
 ---
-name: efs
+name: aws-efs
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon EFS file systems, mount targets, access points, performance or throughput modes, lifecycle storage classes, encryption, backups, NFS permissions, or shared filesystem reliability."
 ---
 
-# efs
+# aws-efs
 
 Use this skill for efs-specific AWS behavior. Compose it with adjacent service Skills when broader architecture is in scope.
 
