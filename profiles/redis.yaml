@@ -1,0 +1,11 @@
+schema: 1
+id: redis
+kind: data-system
+description: Redis data-system guidance for data modeling, atomicity, caching, performance, persistence, availability, operations, and security.
+
+skills:
+  include:
+    - packs/software-engineering/skills/data-systems/redis/**
+
+agents:
+  include: []
