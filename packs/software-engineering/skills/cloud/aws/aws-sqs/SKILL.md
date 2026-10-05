@@ -1,9 +1,9 @@
 ---
-name: sqs
+name: aws-sqs
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon SQS producers, consumers, FIFO/Standard queues, visibility, retries, DLQs, or AWS queue integrations."
 ---
 
-# Amazon SQS
+# aws-sqs
 
 Use this skill for SQS-specific messaging semantics and integrations. Compose it with the existing AWS/infrastructure profile when broader IAM, networking, Terraform, Lambda, ECS, or CloudWatch infrastructure is in scope.
 
