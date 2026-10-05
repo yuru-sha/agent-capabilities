@@ -1,9 +1,9 @@
 ---
-name: ecr
+name: aws-ecr
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon ECR repositories, image push/pull, tag immutability, scanning, lifecycle policies, replication, registry permissions, or container supply-chain controls."
 ---
 
-# Amazon ECR
+# aws-ecr
 
 Use this skill for container image registry behavior and lifecycle.
 
