@@ -1,9 +1,9 @@
 ---
-name: msk
+name: aws-msk
 description: "Use when designing, implementing, reviewing, operating, or troubleshooting Amazon MSK provisioned or Serverless Apache Kafka clusters, topics, partitions, replication, producers/consumers, IAM/SASL auth, networking, scaling, or broker reliability."
 ---
 
-# msk
+# aws-msk
 
 Use this skill for msk-specific AWS behavior. Compose it with adjacent service Skills when broader architecture or data-platform behavior is in scope.
 
