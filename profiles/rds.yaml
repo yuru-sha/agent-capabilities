@@ -5,7 +5,7 @@ description: Amazon RDS/Aurora infrastructure guidance for topology, Multi-AZ, b
 
 skills:
   include:
-    - packs/software-engineering/skills/infrastructure/aws/rds/**
+    - packs/software-engineering/skills/databases/aws/rds/**
 
 agents:
   include:
