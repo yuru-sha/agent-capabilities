@@ -218,10 +218,19 @@ profiles:
   - line-yahoo-ads
 ```
 
-The infrastructure Profile selects the Terraform and AWS infrastructure
-specialists and the read-only `infrastructure-reviewer` specialist selector.
-It is intended to compose with a language or database Profile rather than
+The infrastructure Profile selects Terraform plus the AWS `aws-architecture`,
+`iam`, `lambda`, `cloudwatch`, and GitHub Actions deployment specialists,
+together with the read-only `infrastructure-reviewer` selector. Cross-service
+architecture stays thin; service-specific behavior belongs to each AWS service
+Skill. Compose the Profile with a language or database Profile rather than
 replacing one.
+
+Older installations may still contain the superseded Skill directories
+`aws-infrastructure`, `aws-iam-oidc-security`, `nodejs-lambda`, and
+`cloudwatch-operations`. Remove those generated directories before
+reinstalling the infrastructure Profile; the replacements are
+`aws-architecture`, `iam`, `lambda`, and `cloudwatch`. Node.js-specific
+Lambda build/package guidance now lives under the TypeScript Skill.
 
 The frontend Profile selects seven frontend Skills spanning framework-agnostic
 web quality, browser testing, form validation, and framework/styling mechanics.
