@@ -74,9 +74,9 @@ guidance stays aligned with vendor-maintained documentation and evaluations.
 This repository remains focused on provider-neutral engineering knowledge,
 project workflows, and integrations not owned by those official repositories.
 
-Convex is handled the same way: select the `convex` Profile to record the
-external dependency, then install Convex's official `get-convex/agent-skills`
-upstream package. The official collection covers schema/design, auth,
+Convex is handled the same way: select the `convex` Profile to install
+Convex's official `get-convex/agent-skills` upstream package for project-scope
+Profile installs. The official collection covers schema/design, auth,
 migrations, testing, review, optimization, operations, and other Convex-specific
 workflows, so this repository does not vendor a competing copy.
 
