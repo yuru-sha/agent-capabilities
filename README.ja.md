@@ -6,7 +6,7 @@
 
 AI コーディングエージェント向けに、再利用可能な Skills、専門セレクタ、Profiles、ワークフロー機能を提供します。
 
-このリポジトリは [OMP](https://omp.sh/) と [oh-my-pstack](https://github.com/shrimpwtf/oh-my-pstack) を補完します。OMP は実行環境と独立レビュー担当を提供し、oh-my-pstack は一般的な開発 Playbook と、callerが明示した場合に使う adversarial multi-model panel `interrogate` を提供します。このリポジトリは専門知識と、両者が持たないPR固有のレビュー構成を提供します。
+このリポジトリは [OMP](https://omp.sh/) と [pstack-omp](https://github.com/negoro26/pstack-omp/) を補完します。OMP は実行環境と独立レビュー担当を提供し、pstack-omp は一般的な開発 Playbook と、callerが明示した場合に使う adversarial multi-model panel `interrogate` を提供します。このリポジトリは専門知識と、両者が持たないPR固有のレビュー構成を提供します。
 
 ## 内容
 
