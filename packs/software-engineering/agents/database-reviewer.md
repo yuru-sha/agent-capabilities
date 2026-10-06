@@ -6,7 +6,7 @@ description: Select the matching database specialist skills for a change touchin
 # Database specialist selector
 
 Route a database change to the matching engine specialists. OMP's independent
-`reviewer` role owns the review session. oh-my-pstack's `interrogate` is an
+`reviewer` role owns the review session. pstack-omp's `interrogate` is an
 explicit adversarial multi-model panel, invoked only when the caller requests
 it. This selector only chooses which specialist contracts to load.
 
