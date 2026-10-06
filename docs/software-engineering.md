@@ -2,7 +2,7 @@
 
 Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ、OpenAPI、Terraform、フロントエンド、外部サービス統合向けの専門 Skills を配布します。AWS / Google Cloud 固有知識は各 vendor の公式 Agent Skills を利用します。
 
-一般的な開発ワークフローは OMP と oh-my-pstack が所有します。OMP は実行環境、Task、モデル、セッションを管理します。oh-my-pstack は計画、設計、TDD、レビュー、オーケストレーションを管理します。このリポジトリは、それらにない言語・データベース・API・インフラの専門知識と、固有の GitHub 操作を提供します。
+一般的な開発ワークフローは OMP と pstack-omp が所有します。OMP は実行環境、Task、モデル、セッションを管理します。pstack-omp は計画、設計、TDD、レビュー、オーケストレーションを管理します。このリポジトリは、それらにない言語・データベース・API・インフラの専門知識と、固有の GitHub 操作を提供します。
 
 ## 構成
 
@@ -114,12 +114,12 @@ ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実
 ## 所有境界
 
 - OMP が Task 実行、モデル選択、セッション、runtime lifecycle と、独立レビュー担当を提供します。
-- oh-my-pstack は一般的な開発 Playbook を提供し、caller が明示的に起動した場合に `interrogate` で adversarial multi-model review を行います。
+- pstack-omp は一般的な開発 Playbook を提供し、caller が明示的に起動した場合に `interrogate` で adversarial multi-model review を行います。
 - `review-mode` はPR文脈、専門家選択、caller指定のseverity・投稿ポリシーを構成します。汎用レビューや `interrogate` のレビュー調整は再実装しません。
 - ORCA は Issue の選択、実行 state、worktree 準備、OMP の起動を所有します。
 - `issue-omp-handoff` は ORCA の coarse Issue state と OMP への最小 handoff を定義します。`issue-pr-lifecycle` は手動実行で PR stack の Babysit と Shipping を進めます。いずれも Orca Automation であり、Skill ではなく、Profile からインストールしません。
 - このPackは言語、データベース、OpenAPI、フロントエンド、インフラの専門知識と、technical-authoring の技術文書設計知識を所有します。
-- `technical-authoring` は文書種別に応じた構成、技術的根拠、実行可能な例、検証、安全性を扱います。一般的な文章作成 workflow は installed `technical-writing` と oh-my-pstack に委ねます。
+- `technical-authoring` は文書種別に応じた構成、技術的根拠、実行可能な例、検証、安全性を扱います。一般的な文章作成 workflow は installed `technical-writing` と pstack-omp に委ねます。
 - `database-reviewer` と `infrastructure-reviewer` は適切な専門 Skill を選択します。レビューの進行方法は定義しません。
 - `security-review` は既存の言語・データベース・インフラの専門知識で扱えない横断的な trust boundary を補います。WebアプリケーションとHTTP APIのレビュー方法、認証・セッション・認可、ブラウザ境界、状態遷移、診断証跡、Findingと回帰テストは `web-security-review` が担当します。
 
@@ -152,7 +152,7 @@ agent-capabilities/
 選択したProfileから必要な専門Skillを組み合わせます。例:
 
 ```text
-oh-my-pstack TDD / caller-triggered `interrogate`
+pstack-omp TDD / caller-triggered `interrogate`
   + go (concurrency / data-race / goroutine references)
   + postgresql (transactions / locking references)
   + openapi (contract-testing reference)
