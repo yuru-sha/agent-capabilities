@@ -122,7 +122,7 @@ ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実
 - `database-reviewer` と `infrastructure-reviewer` は適切な専門 Skill を選択します。レビューの進行方法は定義しません。
 - `security-review` は既存の言語・データベース・インフラの専門知識で扱えない横断的な trust boundary を補います。WebアプリケーションとHTTP APIのレビュー方法、認証・セッション・認可、ブラウザ境界、状態遷移、診断証跡、Findingと回帰テストは `web-security-review` が担当します。
 
-## Provider namespace
+## Cloud ownership
 
 Cloud-provider-specific Skills are not distributed from this repository. Use the official AWS and Google upstream Agent Skills directly.
 
