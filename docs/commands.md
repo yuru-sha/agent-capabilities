@@ -104,6 +104,14 @@ For Codex, Google also provides its plugin marketplace:
 codex plugin marketplace add google/skills
 ```
 
+Azure:
+
+```sh
+codex plugin marketplace add MicrosoftDocs/agent-skills
+```
+
+Then install **azure-agent-skills** from the Codex `/plugins` browser.
+
 Use each vendor's current upstream installation guidance as the source of truth.
 
 ## Database command families
