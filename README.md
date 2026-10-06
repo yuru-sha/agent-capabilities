@@ -20,7 +20,7 @@ OMP + pstack-omp do not supply.
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 25 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, external platform Skills, cross-cutting guidance, and GitHub workflows
+- 26 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, external Skills/platforms, cross-cutting guidance, and GitHub workflows
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -76,7 +76,11 @@ project workflows, and integrations not owned by those official repositories.
 
 Convex is handled the same way: select the `convex` Profile to install
 Convex's official `get-convex/agent-skills` upstream package for project-scope
-Profile installs. The official collection covers schema/design, auth,
+Profile installs.
+
+For Japanese business and technical writing, select the `tanteki` Profile. It
+installs the upstream `iwasa-kosui/tanteki` Agent Skill instead of vendoring a
+copy here. The official collection covers schema/design, auth,
 migrations, testing, review, optimization, operations, and other Convex-specific
 workflows, so this repository does not vendor a competing copy.
 
