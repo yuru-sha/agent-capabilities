@@ -55,8 +55,8 @@ Cloud Skills は各 vendor の upstream repository から直接導入し、仕�
 公式評価に追従させます。このリポジトリは provider 非依存の開発知識、
 プロジェクト固有 workflow、公式提供と重複しない integrations に集中します。
 
-Convex も同じ方針です。`convex` Profile は外部依存を記録し、実際の Skill は
-Convex 公式 `get-convex/agent-skills` から導入します。schema/design、auth、migration、
+Convex も同じ方針です。`convex` Profile を project scope で導入すると、
+Convex 公式 `get-convex/agent-skills` から Skill 一式をインストールします。schema/design、auth、migration、
 testing、review、optimization、operations などを公式側が継続的に保守しているため、
 このリポジトリでは重複する Convex Skill を vendoring しません。
 
