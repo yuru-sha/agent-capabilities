@@ -181,6 +181,20 @@ profiles:
   - line-yahoo-ads
 ```
 
+The `convex` Profile records Convex as an external platform Skill dependency rather
+than vendoring Convex-specific guidance here. Install the official
+`get-convex/agent-skills` collection in the consuming project so schema/design,
+auth, migrations, testing, review, optimization, and operational workflows stay
+aligned with Convex's maintained documentation and evaluations. Compose it with
+the target language/frontend Profiles as needed:
+
+```yaml
+profiles:
+  - typescript
+  - frontend
+  - convex
+```
+
 The frontend Profile selects seven frontend Skills spanning framework-agnostic
 web quality, browser testing, form validation, and framework/styling mechanics.
 It composes with a language Profile and the TypeScript DOM, performance, or
@@ -197,6 +211,7 @@ Use the official upstream repositories directly:
 - AWS Agent Toolkit: https://github.com/aws/agent-toolkit-for-aws
 - Google Agent Skills: https://github.com/google/skills
 - Azure Agent Skills: https://github.com/MicrosoftDocs/agent-skills
+- Convex Agent Skills: https://github.com/get-convex/agent-skills
 
 ## Installation
 
