@@ -60,14 +60,9 @@ jobs. It owns BullMQ queue/worker semantics and does not duplicate general Redis
 operations. Select `redis` separately when topology, persistence, memory, or
 Redis security are in scope.
 
-Cloud-provider Skills are not distributed through Profiles in this repository.
-Install the official provider Skills directly:
-
-- AWS: `aws/agent-toolkit-for-aws`
-- Google Cloud: `google/skills`
-
-The `terraform` Profile remains provider-neutral and contains only Terraform
-infrastructure and policy-testing Skills.
+The `terraform` Profile is provider-neutral and contains only Terraform
+infrastructure and policy-testing Skills. Cloud-provider Skills are installed
+directly from the official upstream repositories documented below.
 
 The `cross-cutting` Profile includes `technical-authoring` for document-type
 structure, technical evidence, executable examples, verification, and
