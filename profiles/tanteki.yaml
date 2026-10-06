@@ -1,0 +1,14 @@
+schema: 1
+id: tanteki
+kind: external-skill
+description: Japanese business and technical writing guidance from the upstream tanteki Agent Skill.
+
+skills:
+  include: []
+
+agents:
+  include: []
+
+external_skills:
+  - source: iwasa-kosui/tanteki
+    skills: all
