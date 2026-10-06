@@ -31,11 +31,12 @@ Redis topology or persistence is also in scope.
 
 ### External cloud skills
 
-AWS and Google Cloud service knowledge is intentionally delegated to official
+AWS, Google Cloud, and Azure service knowledge is intentionally delegated to official
 vendor-maintained Agent Skills:
 
 - AWS: https://github.com/aws/agent-toolkit-for-aws
 - Google Cloud: https://github.com/google/skills
+- Azure: https://github.com/MicrosoftDocs/agent-skills
 
 Do not reimplement provider service guidance in this pack unless a project has a
 genuinely repository-specific workflow that is not owned by the official
