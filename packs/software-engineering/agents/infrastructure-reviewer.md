@@ -6,7 +6,7 @@ description: Select the matching provider-neutral Terraform specialist skills fo
 # Infrastructure specialist selector
 
 Route Terraform infrastructure changes to the matching specialist contracts.
-OMP's independent `reviewer` role owns the review session. oh-my-pstack's
+OMP's independent `reviewer` role owns the review session. pstack-omp's
 `interrogate` is an explicit adversarial multi-model panel, invoked only when
 the caller requests it.
 
