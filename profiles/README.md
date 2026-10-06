@@ -195,6 +195,16 @@ profiles:
   - convex
 ```
 
+The `tanteki` Profile installs the upstream `iwasa-kosui/tanteki` Skill for
+Japanese business and technical writing. It is kept external so its writing
+rules, references, lint workflow, and evaluation work stay aligned with the
+upstream project:
+
+```yaml
+profiles:
+  - tanteki
+```
+
 The frontend Profile selects seven frontend Skills spanning framework-agnostic
 web quality, browser testing, form validation, and framework/styling mechanics.
 It composes with a language Profile and the TypeScript DOM, performance, or
@@ -214,6 +224,8 @@ Use the official upstream repositories directly:
 - Google Agent Skills: https://github.com/google/skills
 - Azure Agent Skills: https://github.com/MicrosoftDocs/agent-skills
 - Convex Agent Skills: https://github.com/get-convex/agent-skills
+- tanteki: https://github.com/iwasa-kosui/tanteki
+- Agent Skills CLI: https://github.com/vercel-labs/skills
 
 ## Installation
 
