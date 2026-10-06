@@ -57,6 +57,17 @@ Profiles for software engineering and GitHub workflows.
 - Run `git diff --check` before committing.
 - Do not claim checks passed unless they were actually run.
 
+## Code and comment guidance
+
+Use each artifact to communicate a different kind of intent:
+
+- Code should explain **How** the behavior is implemented.
+- Test code should explain **What** behavior is expected.
+- Commit messages should explain **Why** the change was made.
+- Code comments should explain **Why not**: document non-obvious constraints, rejected alternatives, trade-offs, or reasons the seemingly simpler approach is incorrect.
+
+Do not use comments to restate what the code already makes clear.
+
 ## Branch And Pull Request Workflow
 
 - Do not edit, commit, or push directly to `main`. Make changes on a feature branch and merge them through a pull request.
