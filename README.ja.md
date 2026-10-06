@@ -45,10 +45,11 @@ profiles:
 Terraform 作業では `terraform` Profile を選択します。provider 非依存の
 Terraform infrastructure / policy-testing Skills だけを導入します。
 
-AWS / Google Cloud 固有の知識は、このリポジトリでは配布しません。
+AWS / Google Cloud / Azure 固有の知識は、このリポジトリでは配布しません。
 
 - AWS は公式の [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws) を利用します。Codex / Claude / Cursor 向け plugin、AWS公式 Agent Skills、AWS MCP Server が提供されています。
 - Google Cloud は Google 公式の [Agent Skills](https://github.com/google/skills) を利用します。BigQuery、Cloud Storage、GKE、IAM、Cloud Run、observability などの Skills が提供されています。
+- Azure は MicrosoftDocs 公式の [Azure Agent Skills](https://github.com/MicrosoftDocs/agent-skills) を利用します。Microsoft Learn を元にした 193+ Skills があり、Codex / Claude Code / Copilot / Cursor などに対応しています。
 
 Cloud Skills は各 vendor の upstream repository から直接導入し、仕様変更や
 公式評価に追従させます。このリポジトリは provider 非依存の開発知識、
