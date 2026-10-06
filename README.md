@@ -8,11 +8,11 @@ Reusable Skills, specialist selectors, Profiles, and workflow capabilities
 for AI coding agents.
 
 This repository complements [OMP](https://omp.sh/) and
-[oh-my-pstack](https://github.com/shrimpwtf/oh-my-pstack): OMP owns the runtime
-and independent reviewer role; oh-my-pstack supplies generic development
+[pstack-omp](https://github.com/negoro26/pstack-omp/): OMP owns the runtime
+and independent reviewer role; pstack-omp supplies generic development
 playbooks and `interrogate` for adversarial multi-model review when the caller explicitly invokes it. This
 repository owns specialist knowledge and PR-specific review composition that
-OMP + oh-my-pstack do not supply.
+OMP + pstack-omp do not supply.
 
 ## Contents
 
@@ -40,7 +40,7 @@ profiles:
 
 The resolver takes the union of selected Skills and de-duplicates agents by
 ID. `review-mode` composes the OMP reviewer role with relevant specialists,
-caller policy, and optional GitHub publication. Use pstack `interrogate` only
+caller policy, and optional GitHub publication. Use pstack-omp `interrogate` only
 when the caller explicitly requests an adversarial multi-model panel.
 
 For a Rust + SQLite project that also needs the complete repository workflow:
