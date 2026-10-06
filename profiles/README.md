@@ -181,12 +181,47 @@ profiles:
   - line-yahoo-ads
 ```
 
+The `convex` Profile records Convex as an external platform Skill dependency rather
+than vendoring Convex-specific guidance here. Install the official
+`get-convex/agent-skills` collection in the consuming project so schema/design,
+auth, migrations, testing, review, optimization, and operational workflows stay
+aligned with Convex's maintained documentation and evaluations. Compose it with
+the target language/frontend Profiles as needed:
+
+```yaml
+profiles:
+  - typescript
+  - frontend
+  - convex
+```
+
+The `tanteki` Profile installs the upstream `iwasa-kosui/tanteki` Skill for
+Japanese business and technical writing. It is kept external so its writing
+rules, references, lint workflow, and evaluation work stay aligned with the
+upstream project:
+
+```yaml
+profiles:
+  - tanteki
+```
+
+The `vercel-agent-skills` Profile installs Vercel-maintained Agent Skills for
+React/Next.js performance, web design, writing, deployment, and Vercel
+optimization:
+
+```yaml
+profiles:
+  - vercel-agent-skills
+```
+
 The frontend Profile selects seven frontend Skills spanning framework-agnostic
 web quality, browser testing, form validation, and framework/styling mechanics.
 It composes with a language Profile and the TypeScript DOM, performance, or
 security specialists where those concerns apply.
-Profiles may declare `external_skills` requirements. The installer reports
-those requirements but does not copy external Skills. The installed pstack-omp
+Profiles may declare `external_skills` requirements. Structured entries with
+`source` and `skills: all` are installed for project scope with the upstream
+Skills CLI; legacy scalar entries and user-scope external dependencies are
+reported without automatic installation. The installed pstack-omp
 review and TDD workflows are used directly.
 
 ## External cloud skills
@@ -197,6 +232,10 @@ Use the official upstream repositories directly:
 - AWS Agent Toolkit: https://github.com/aws/agent-toolkit-for-aws
 - Google Agent Skills: https://github.com/google/skills
 - Azure Agent Skills: https://github.com/MicrosoftDocs/agent-skills
+- Convex Agent Skills: https://github.com/get-convex/agent-skills
+- tanteki: https://github.com/iwasa-kosui/tanteki
+- Vercel Agent Skills: https://github.com/vercel-labs/agent-skills
+- Agent Skills CLI: https://github.com/vercel-labs/skills
 
 ## Installation
 
@@ -227,8 +266,9 @@ If a later `gh skill install` fails, earlier successful Skill installations
 remain. The installer copies OMP Agent definitions after all Skill installs
 succeed.
 
-Profiles may declare `external_skills` requirements. The installer reports
-those requirements but does not install them. The installed pstack-omp
+Profiles may declare `external_skills` requirements. Project-scope structured
+entries are installed from their declared upstream source; legacy scalar entries
+and user-scope external dependencies are reported without automatic installation. The installed pstack-omp
 review and TDD workflows are used directly.
 
 

@@ -1,0 +1,14 @@
+schema: 1
+id: convex
+kind: external-platform
+description: Official Convex Agent Skills for Convex backend, database, functions, realtime, auth, scheduling, storage, search, testing, production, and operational workflows.
+
+skills:
+  include: []
+
+agents:
+  include: []
+
+external_skills:
+  - source: get-convex/agent-skills
+    skills: all

@@ -18,12 +18,18 @@ DEFAULT_REPOSITORY = "yuru-sha/agent-capabilities"
 NAME_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
 
 
+@dataclass(frozen=True, order=True)
+class ExternalSkill:
+    source: str
+    skills: str | None = None
+
+
 @dataclass(frozen=True)
 class InstallPlan:
     profile_ids: tuple[str, ...]
     skills: tuple[tuple[str, Path], ...]
     agents: tuple[tuple[str, Path], ...]
-    external_skills: tuple[str, ...]
+    external_skills: tuple[ExternalSkill, ...]
 
 
 def scalar(value: str) -> str:
@@ -37,16 +43,17 @@ def profile_id(profile_name: str) -> str:
     return profile_name.removesuffix(".yaml")
 
 
-def load_profile(profile_name: str) -> dict[str, list[str]]:
+def load_profile(profile_name: str) -> dict:
     profile_name = profile_id(profile_name)
     path = PROFILE_ROOT / f"{profile_name}.yaml"
     if not path.is_file():
         raise ValueError(f"unknown profile: {profile_name}")
 
-    values: dict[str, list[str]] = {"skills": [], "agents": [], "external_skills": []}
+    values = {"skills": [], "agents": [], "external_skills": []}
     declared_id = None
     section = None
     subsection = None
+    current_external: ExternalSkill | None = None
     for raw_line in path.read_text(encoding="utf-8").splitlines():
         if not raw_line.strip() or raw_line.lstrip().startswith("#"):
             continue
@@ -54,11 +61,34 @@ def load_profile(profile_name: str) -> dict[str, list[str]]:
         line = raw_line.strip()
         if indent == 0:
             subsection = None
+            current_external = None
             if line.endswith(":"):
                 section = line[:-1]
             elif line.startswith("id:"):
                 declared_id = scalar(line.split(":", 1)[1])
             continue
+        if section == "external_skills":
+            if indent == 2 and line.startswith("- "):
+                item = line[2:]
+                if item.startswith("source:"):
+                    source = scalar(item.split(":", 1)[1])
+                    if not source:
+                        raise ValueError(f"external Skill source is empty in {path}")
+                    current_external = ExternalSkill(source=source)
+                    values["external_skills"].append(current_external)
+                else:
+                    source = scalar(item)
+                    if source:
+                        values["external_skills"].append(ExternalSkill(source=source))
+                    current_external = None
+                continue
+            if indent == 4 and line.startswith("skills:") and current_external is not None:
+                skills = scalar(line.split(":", 1)[1])
+                if not skills:
+                    raise ValueError(f"external Skill selector is empty in {path}")
+                current_external = ExternalSkill(source=current_external.source, skills=skills)
+                values["external_skills"][-1] = current_external
+                continue
         if indent == 2 and line.endswith(":"):
             subsection = line[:-1]
             continue
@@ -69,8 +99,6 @@ def load_profile(profile_name: str) -> dict[str, list[str]]:
             values["skills"].append(value)
         elif section == "agents" and subsection == "include":
             values["agents"].append(value)
-        elif section == "external_skills" and indent == 2:
-            values["external_skills"].append(value)
     if declared_id != profile_name:
         raise ValueError(f"profile id mismatch in {path}: {declared_id!r}")
     return values
@@ -152,7 +180,7 @@ def build_install_plan(profile_names: list[str]) -> InstallPlan:
     profiles = resolve_profiles(profile_names)
     skills: dict[str, Path] = {}
     agents: dict[str, Path] = {}
-    external_skills = set()
+    external_skills: set[ExternalSkill] = set()
     for profile in profiles:
         for name, source in profile["skills"].items():
             previous = skills.get(name)
@@ -197,6 +225,14 @@ def gh_argv(repository: str, skill_name: str, skill_path: Path, *, from_local: b
 
 
 
+def external_skill_argv(external: ExternalSkill) -> list[str] | None:
+    if external.skills is None:
+        return None
+    if external.skills != "all":
+        raise ValueError(f"unsupported external Skill selector {external.skills!r} for {external.source}")
+    return ["npx", "skills", "add", external.source, "--all"]
+
+
 def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path | None, from_local: bool) -> int:
     destinations = agent_destinations(plan, scope, target)
     preflight_agents(destinations)
@@ -210,14 +246,30 @@ def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path 
         if result.returncode:
             print(f"gh skill install failed with status {result.returncode}", file=sys.stderr)
             return result.returncode
+    for external in plan.external_skills:
+        argv = external_skill_argv(external)
+        if argv is None:
+            print(f"External Skill required (not installed): {external.source}")
+            continue
+        if scope != "project":
+            print(
+                f"External Skill required for user scope (not installed automatically): {external.source}",
+                file=sys.stderr,
+            )
+            continue
+        result = subprocess.run(argv, cwd=cwd, check=False)
+        if result.returncode:
+            print(
+                f"external Skill install failed for {external.source} with status {result.returncode}",
+                file=sys.stderr,
+            )
+            return result.returncode
     for destination, source in destinations:
         if destination.is_file() and destination.read_bytes() == source.read_bytes():
             continue
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes(source.read_bytes())
     print(f"Profiles: {', '.join(plan.profile_ids)}")
-    if plan.external_skills:
-        print("External Skills required (not installed): " + ", ".join(f"${name}" for name in plan.external_skills))
     return 0
 
 

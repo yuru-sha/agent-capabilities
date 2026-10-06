@@ -14,7 +14,7 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- 言語、データベース、Terraform、フロントエンド、外部サービス統合、横断機能、GitHub ワークフロー向けの組み合わせ可能な Profiles 24 個
+- 言語、データベース、Terraform、フロントエンド、外部サービス統合、外部 Skills / platform、横断機能、GitHub ワークフロー向けの組み合わせ可能な Profiles 27 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
@@ -54,6 +54,18 @@ AWS / Google Cloud / Azure 固有の知識は、このリポジトリでは配�
 Cloud Skills は各 vendor の upstream repository から直接導入し、仕様変更や
 公式評価に追従させます。このリポジトリは provider 非依存の開発知識、
 プロジェクト固有 workflow、公式提供と重複しない integrations に集中します。
+
+Convex も同じ方針です。`convex` Profile を project scope で導入すると、
+Convex 公式 `get-convex/agent-skills` から Skill 一式をインストールします。
+
+日本語の業務・技術文書の執筆・推敲には `tanteki` Profile を選択します。
+独自実装は持たず、`iwasa-kosui/tanteki` の upstream Skill を導入します。
+
+Vercel が管理する Agent Skills には `vercel-agent-skills` Profile を使います。
+`vercel-labs/agent-skills` から React / Next.js、Web Design、Writing、Deploy、
+Vercel 最適化などの Skill を導入します。schema/design、auth、migration、
+testing、review、optimization、operations などを公式側が継続的に保守しているため、
+このリポジトリでは重複する Convex Skill を vendoring しません。
 
 `cross-cutting` Profile には `web-security-review` が含まれます。WebアプリケーションとHTTP APIを対象に、攻撃面の棚卸し、データ・主体/権限・状態の境界追跡、根拠に基づくFinding、修正後のセキュリティ系/正常系回帰テストを言語非依存で支援します。より広いcross-engine trust boundaryは `security-review` と組み合わせます。
 

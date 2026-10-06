@@ -42,6 +42,26 @@ Do not reimplement provider service guidance in this pack unless a project has a
 genuinely repository-specific workflow that is not owned by the official
 upstream Skills. Terraform remains provider-neutral and stays in this pack.
 
+### External Skills and platforms
+
+Convex-specific coding guidance is delegated to the official
+`get-convex/agent-skills` repository. The `convex` Profile declares that external
+dependency without increasing the bundled Skill count. Project-scope Profile
+installation installs the upstream collection in the consumer project so Convex schema/design, auth, migrations,
+testing, review, optimization, deployment safety, and operational guidance stay
+vendor-maintained.
+
+Japanese business and technical writing guidance is delegated to
+`iwasa-kosui/tanteki`. The `tanteki` Profile installs the upstream Skill and
+does not increase the bundled Skill count.
+
+Vercel-maintained coding guidance is delegated to `vercel-labs/agent-skills`.
+The `vercel-agent-skills` Profile installs those upstream Skills and does not
+increase the bundled Skill count.
+
+External Skill installation uses the `skills` CLI maintained in
+`vercel-labs/skills` for structured project-scope dependencies.
+
 ### Integrations
 
 `note-com-unofficial-api` records observed note.com REST v1/v2/v3 and GraphQL
@@ -125,7 +145,7 @@ ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実
 
 ## Cloud ownership
 
-Cloud-provider-specific Skills are not distributed from this repository. Use the official AWS and Google upstream Agent Skills directly.
+Cloud-provider-specific Skills and Convex-specific Skills are not distributed from this repository. Use the official AWS, Google, Azure, and Convex upstream Agent Skills directly.
 
 ## ディレクトリ
 
@@ -142,7 +162,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,terraform,frontend,redis,bullmq,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
+│             cross-cutting,terraform,frontend,redis,bullmq,convex,tanteki,vercel-agent-skills,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
@@ -160,7 +180,7 @@ pstack-omp TDD / caller-triggered `interrogate`
   + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
-Language Skillsは言語固有の型・並行処理・エラー処理・toolchainを扱います。Database Skillsはprovider非依存のPostgreSQL、MySQL、SQLiteを扱います。Data systemsはRedis、MessagingはBullMQを扱います。Terraformはprovider非依存Infrastructureとして分離します。AWS / Google Cloud固有仕様はvendor公式 Agent Skillsへ委譲し、OpenAPI、Cross-cutting、Frontend、Integrationsはこのリポジトリで各専門境界を所有します。
+Language Skillsは言語固有の型・並行処理・エラー処理・toolchainを扱います。Database Skillsはprovider非依存のPostgreSQL、MySQL、SQLiteを扱います。Data systemsはRedis、MessagingはBullMQを扱います。Terraformはprovider非依存Infrastructureとして分離します。AWS / Google Cloud / Azure固有仕様と Convex 固有仕様は vendor 公式 Agent Skills へ委譲し、OpenAPI、Cross-cutting、Frontend、Integrationsはこのリポジトリで各専門境界を所有します。
 
 ## GitHub操作
 

@@ -1,0 +1,14 @@
+schema: 1
+id: vercel-agent-skills
+kind: external-skill
+description: Vercel-maintained Agent Skills for React, Next.js, web design, writing, deployment, and Vercel optimization workflows.
+
+skills:
+  include: []
+
+agents:
+  include: []
+
+external_skills:
+  - source: vercel-labs/agent-skills
+    skills: all
