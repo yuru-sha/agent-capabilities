@@ -115,6 +115,13 @@ Then install **azure-agent-skills** from the Codex `/plugins` browser.
 
 Use each vendor's current upstream installation guidance as the source of truth.
 
+## External Skill installer
+
+Structured project-scope external Skill dependencies are installed with the
+open Agent Skills CLI maintained at https://github.com/vercel-labs/skills.
+The installer invokes it through `npx skills add <source> --all`, so no global
+CLI installation is required.
+
 ## External platform skills
 
 Convex:
@@ -134,6 +141,16 @@ specialist agents, MCP access, and runtime diagnostics:
 codex plugin marketplace add get-convex/convex-codex-plugin
 codex plugin add convex@convex-codex-plugin
 ```
+
+tanteki:
+
+```sh
+npx skills add iwasa-kosui/tanteki --all
+```
+
+The upstream project also documents direct installation with `gh skill install`;
+the Profile uses the shared external-Skill installer so all structured project
+dependencies follow one mechanism.
 
 The `convex` Profile declares `get-convex/agent-skills` with `skills: all`.
 For project scope, `install-profile` runs the official `npx skills add ... --all`
