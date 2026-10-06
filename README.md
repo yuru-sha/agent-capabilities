@@ -20,7 +20,7 @@ OMP + pstack-omp do not supply.
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 24 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, cross-cutting guidance, and GitHub workflows
+- 25 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, external platform Skills, cross-cutting guidance, and GitHub workflows
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -73,6 +73,12 @@ Install those provider Skills directly from their upstream repositories so cloud
 guidance stays aligned with vendor-maintained documentation and evaluations.
 This repository remains focused on provider-neutral engineering knowledge,
 project workflows, and integrations not owned by those official repositories.
+
+Convex is handled the same way: select the `convex` Profile to record the
+external dependency, then install Convex's official `get-convex/agent-skills`
+upstream package. The official collection covers schema/design, auth,
+migrations, testing, review, optimization, operations, and other Convex-specific
+workflows, so this repository does not vendor a competing copy.
 
 The `cross-cutting` Profile includes `web-security-review` for evidence-driven,
 language-independent review of web applications and HTTP APIs. It maps attack
