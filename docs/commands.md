@@ -35,8 +35,9 @@ select a project when running the installer from elsewhere.
 If a later `gh skill install` fails, earlier successful Skill installations
 remain. OMP Agent definitions are copied after all Skill installs succeed.
 
-External Skills declared by Profiles are reported but are not installed by the
-installer. Legacy link-and-copy installs and their manifests are not modified;
+Structured external Skills declared by Profiles are installed for project scope
+through their upstream installer. Legacy scalar entries and user-scope external
+dependencies are reported without automatic installation. Legacy link-and-copy installs and their manifests are not modified;
 inspect their recorded paths before removing them manually.
 
 The workflow Skills contain the exact operation-specific forms, including
@@ -134,8 +135,10 @@ codex plugin marketplace add get-convex/convex-codex-plugin
 codex plugin add convex@convex-codex-plugin
 ```
 
-The `convex` Profile only reports the external dependency; this repository's
-installer does not install or update the upstream Convex package.
+The `convex` Profile declares `get-convex/agent-skills` with `skills: all`.
+For project scope, `install-profile` runs the official `npx skills add ... --all`
+flow in the target repository. User-scope installs remain explicit because the
+upstream CLI's project-local behavior should not be silently changed.
 
 ## Database command families
 
