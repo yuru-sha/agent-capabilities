@@ -45,9 +45,9 @@ upstream Skills. Terraform remains provider-neutral and stays in this pack.
 ### External platform skills
 
 Convex-specific coding guidance is delegated to the official
-`get-convex/agent-skills` repository. The `convex` Profile records that external
-dependency without increasing the bundled Skill count. Install the upstream
-collection in the consumer project so Convex schema/design, auth, migrations,
+`get-convex/agent-skills` repository. The `convex` Profile declares that external
+dependency without increasing the bundled Skill count. Project-scope Profile
+installation installs the upstream collection in the consumer project so Convex schema/design, auth, migrations,
 testing, review, optimization, deployment safety, and operational guidance stay
 vendor-maintained.
 
