@@ -20,7 +20,7 @@ OMP + pstack-omp do not supply.
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 24 composable Profiles spanning languages, databases, Terraform, frontend, integrations, cross-cutting guidance, and GitHub workflows
+- 24 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, cross-cutting guidance, and GitHub workflows
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
