@@ -114,6 +114,29 @@ Then install **azure-agent-skills** from the Codex `/plugins` browser.
 
 Use each vendor's current upstream installation guidance as the source of truth.
 
+## External platform skills
+
+Convex:
+
+```sh
+# Choose individual official Skills interactively.
+npx skills add get-convex/agent-skills
+
+# Or install the complete official collection.
+npx skills add get-convex/agent-skills --all
+```
+
+For Codex, Convex also provides an official plugin that bundles Skills,
+specialist agents, MCP access, and runtime diagnostics:
+
+```sh
+codex plugin marketplace add get-convex/convex-codex-plugin
+codex plugin add convex@convex-codex-plugin
+```
+
+The `convex` Profile only reports the external dependency; this repository's
+installer does not install or update the upstream Convex package.
+
 ## Database command families
 
 Database Skills describe engine behavior and review evidence. They do not force
