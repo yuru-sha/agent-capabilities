@@ -20,7 +20,7 @@ The `workflows` Profile contains every Skill in the
 review requests, releases, security alerts, issue creation, clarification,
 decomposition, post-merge cleanup, and Orca Automation lock recovery.
 
-The `review-mode` Skill is included in both `github` and `workflows`. It uses the OMP `reviewer` role for an independent session and composes relevant specialists. Invoke oh-my-pstack `interrogate` only when the caller explicitly requests an adversarial panel. Report-only is the default; explicit caller policy is required for GitHub comments. Review never fixes the PR.
+The `review-mode` Skill is included in both `github` and `workflows`. It uses the OMP `reviewer` role for an independent session and composes relevant specialists. Invoke pstack-omp `interrogate` only when the caller explicitly requests an adversarial panel. Report-only is the default; explicit caller policy is required for GitHub comments. Review never fixes the PR.
 
 The `github` and `workflows` Profiles do not install an Issue implementation
 Skill. The two Orca Automation prompts are
@@ -186,7 +186,7 @@ web quality, browser testing, form validation, and framework/styling mechanics.
 It composes with a language Profile and the TypeScript DOM, performance, or
 security specialists where those concerns apply.
 Profiles may declare `external_skills` requirements. The installer reports
-those requirements but does not copy external Skills. The installed oh-my-pstack
+those requirements but does not copy external Skills. The installed pstack-omp
 review and TDD workflows are used directly.
 
 ## External cloud skills
@@ -228,7 +228,7 @@ remain. The installer copies OMP Agent definitions after all Skill installs
 succeed.
 
 Profiles may declare `external_skills` requirements. The installer reports
-those requirements but does not install them. The installed oh-my-pstack
+those requirements but does not install them. The installed pstack-omp
 review and TDD workflows are used directly.
 
 
