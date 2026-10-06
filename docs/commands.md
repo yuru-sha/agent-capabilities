@@ -68,12 +68,51 @@ wrappers. Common command families include:
 
 | Profile | Representative commands | Typical concerns |
 |---|---|---|
-| infrastructure | terraform, tflint, tfsec, Trivy, Checkov, AWS CLI, ecspresso, npm, and zip | module validation, provider locks, plans, AWS topology, policy tests, Lambda packaging, and deployment review |
+| `terraform` | `terraform`, `tflint`, `tfsec`, Trivy, Checkov | module validation, provider locks, plans, policy tests, and provider-neutral infrastructure review |
 
 These commands are review and verification inputs, not automatic permission to
-run Terraform apply/destroy or mutate an AWS, IAM, GitHub, or notification
-system. Record exact versions and repository-specific commands in the
-consumer repository when they affect evidence.
+run Terraform apply/destroy, mutate remote state, or change external systems.
+Record exact versions and repository-specific commands in the consumer
+repository when they affect evidence.
+
+## External cloud skills
+
+Cloud-provider service Skills are installed from their official upstream
+repositories rather than from this repository.
+
+AWS:
+
+```sh
+npx skills add aws/agent-toolkit-for-aws/skills
+```
+
+For Codex, the AWS Agent Toolkit also supports the official plugin marketplace:
+
+```sh
+codex plugin marketplace add aws/agent-toolkit-for-aws
+```
+
+Google Cloud:
+
+```sh
+npx skills add google/skills
+```
+
+For Codex, Google also provides its plugin marketplace:
+
+```sh
+codex plugin marketplace add google/skills
+```
+
+Azure:
+
+```sh
+codex plugin marketplace add MicrosoftDocs/agent-skills
+```
+
+Then install **azure-agent-skills** from the Codex `/plugins` browser.
+
+Use each vendor's current upstream installation guidance as the source of truth.
 
 ## Database command families
 

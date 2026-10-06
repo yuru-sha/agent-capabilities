@@ -6,15 +6,15 @@
 
 AI コーディングエージェント向けに、再利用可能な Skills、専門セレクタ、Profiles、ワークフロー機能を提供します。
 
-このリポジトリは [OMP](https://omp.sh/) と [oh-my-pstack](https://github.com/shrimpwtf/oh-my-pstack) を補完します。OMP は実行環境と独立レビュー担当を提供し、oh-my-pstack は一般的な開発 Playbook と、callerが明示した場合に使う adversarial multi-model panel `interrogate` を提供します。このリポジトリは専門知識と、両者が持たないPR固有のレビュー構成を提供します。
+このリポジトリは [OMP](https://omp.sh/) と [pstack-omp](https://github.com/negoro26/pstack-omp/) を補完します。OMP は実行環境と独立レビュー担当を提供し、pstack-omp は一般的な開発 Playbook と、callerが明示した場合に使う adversarial multi-model panel `interrogate` を提供します。このリポジトリは専門知識と、両者が持たないPR固有のレビュー構成を提供します。
 
 ## 内容
 
-- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 68 個
+- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 33 個
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- `terraform.yaml`、`aws-ec2.yaml`、`aws-ecs.yaml`、`aws-rds.yaml`、`aws-s3.yaml`、`gcp-bigquery.yaml`、`gcp-gcs.yaml` を含む、組み合わせ可能な Profiles 59 個
+- 言語、データベース、Terraform、フロントエンド、外部サービス統合、横断機能、GitHub ワークフロー向けの組み合わせ可能な Profiles 24 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
@@ -45,27 +45,15 @@ profiles:
 Terraform 作業では `terraform` Profile を選択します。provider 非依存の
 Terraform infrastructure / policy-testing Skills だけを導入します。
 
-Cloud 固有 Skills は機能カテゴリへ分散させず、provider 名を含む Skill/Profile
-として直接選択します。
+AWS / Google Cloud / Azure 固有の知識は、このリポジトリでは配布しません。
 
-- AWS compute/runtime: `aws-ec2`、`aws-ecs`、`aws-eks`、`aws-lambda`
-- AWS network/edge/API: `aws-vpc`、`aws-alb`、`aws-api-gateway`、
-  `aws-cloudfront`、`aws-route53`、`aws-acm`、`aws-waf`
-- AWS identity/security/operations: `aws-iam`、`aws-kms`、
-  `aws-secrets-manager`、`aws-cloudwatch`、`aws-github-actions-deploy`
-- AWS data/storage/search: `aws-s3`、`aws-efs`、`aws-dynamodb`、
-  `aws-rds`、`aws-elasticache`、`aws-opensearch`
-- AWS messaging/workflow: `aws-sqs`、`aws-sns`、`aws-eventbridge`、
-  `aws-kinesis`、`aws-msk`、`aws-step-functions`
-- AWS analytics/data platform: `aws-glue`、`aws-athena`、`aws-emr`、
-  `aws-redshift`
-- AWS container registry: `aws-ecr`
-- Google Cloud: `gcp-bigquery`、`gcp-gcs`
+- AWS は公式の [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws) を利用します。Codex / Claude / Cursor 向け plugin、AWS公式 Agent Skills、AWS MCP Server が提供されています。
+- Google Cloud は Google 公式の [Agent Skills](https://github.com/google/skills) を利用します。BigQuery、Cloud Storage、GKE、IAM、Cloud Run、observability などの Skills が提供されています。
+- Azure は MicrosoftDocs 公式の [Azure Agent Skills](https://github.com/MicrosoftDocs/agent-skills) を利用します。Microsoft Learn を元にした 193+ Skills があり、Codex / Claude Code / Copilot / Cursor などに対応しています。
 
-AWS architecture の独立 Skill は廃止しました。横断 architecture は実際に使う
-各 service Skill と `infrastructure-reviewer` の合成で扱います。Fargate も
-独立 Skill/Profile を廃止し、ECS Fargate は `aws-ecs`、EKS Fargate は
-`aws-eks` に吸収しています。
+Cloud Skills は各 vendor の upstream repository から直接導入し、仕様変更や
+公式評価に追従させます。このリポジトリは provider 非依存の開発知識、
+プロジェクト固有 workflow、公式提供と重複しない integrations に集中します。
 
 `cross-cutting` Profile には `web-security-review` が含まれます。WebアプリケーションとHTTP APIを対象に、攻撃面の棚卸し、データ・主体/権限・状態の境界追跡、根拠に基づくFinding、修正後のセキュリティ系/正常系回帰テストを言語非依存で支援します。より広いcross-engine trust boundaryは `security-review` と組み合わせます。
 
