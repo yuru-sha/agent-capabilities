@@ -199,8 +199,10 @@ The frontend Profile selects seven frontend Skills spanning framework-agnostic
 web quality, browser testing, form validation, and framework/styling mechanics.
 It composes with a language Profile and the TypeScript DOM, performance, or
 security specialists where those concerns apply.
-Profiles may declare `external_skills` requirements. The installer reports
-those requirements but does not copy external Skills. The installed pstack-omp
+Profiles may declare `external_skills` requirements. Structured entries with
+`source` and `skills: all` are installed for project scope with the upstream
+Skills CLI; legacy scalar entries and user-scope external dependencies are
+reported without automatic installation. The installed pstack-omp
 review and TDD workflows are used directly.
 
 ## External cloud skills
@@ -242,8 +244,9 @@ If a later `gh skill install` fails, earlier successful Skill installations
 remain. The installer copies OMP Agent definitions after all Skill installs
 succeed.
 
-Profiles may declare `external_skills` requirements. The installer reports
-those requirements but does not install them. The installed pstack-omp
+Profiles may declare `external_skills` requirements. Project-scope structured
+entries are installed from their declared upstream source; legacy scalar entries
+and user-scope external dependencies are reported without automatic installation. The installed pstack-omp
 review and TDD workflows are used directly.
 
 
