@@ -42,7 +42,7 @@ Do not reimplement provider service guidance in this pack unless a project has a
 genuinely repository-specific workflow that is not owned by the official
 upstream Skills. Terraform remains provider-neutral and stays in this pack.
 
-### External platform skills
+### External Skills and platforms
 
 Convex-specific coding guidance is delegated to the official
 `get-convex/agent-skills` repository. The `convex` Profile declares that external
@@ -50,6 +50,13 @@ dependency without increasing the bundled Skill count. Project-scope Profile
 installation installs the upstream collection in the consumer project so Convex schema/design, auth, migrations,
 testing, review, optimization, deployment safety, and operational guidance stay
 vendor-maintained.
+
+Japanese business and technical writing guidance is delegated to
+`iwasa-kosui/tanteki`. The `tanteki` Profile installs the upstream Skill and
+does not increase the bundled Skill count.
+
+External Skill installation uses the `skills` CLI maintained in
+`vercel-labs/skills` for structured project-scope dependencies.
 
 ### Integrations
 
@@ -151,7 +158,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,terraform,frontend,redis,bullmq,convex,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
+│             cross-cutting,terraform,frontend,redis,bullmq,convex,tanteki,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
