@@ -88,7 +88,54 @@ class InstallProfileTests(unittest.TestCase):
         self.assertEqual(plan.profile_ids, ("one", "two"))
         self.assertEqual([name for name, _ in plan.skills], ["alpha"])
         self.assertEqual([agent_id for agent_id, _ in plan.agents], ["planner"])
-        self.assertEqual(plan.external_skills, ("other-vendor", "vendor-skill"))
+        self.assertEqual(
+            plan.external_skills,
+            (
+                INSTALLER["ExternalSkill"]("other-vendor"),
+                INSTALLER["ExternalSkill"]("vendor-skill"),
+            ),
+        )
+
+    def test_structured_external_skill_installs_all_from_upstream(self):
+        profile = self.profiles / "convex.yaml"
+        profile.write_text(
+            "id: convex\n"
+            "skills:\n"
+            "  include:\n"
+            "agents:\n"
+            "  include:\n"
+            "external_skills:\n"
+            "  - source: get-convex/agent-skills\n"
+            "    skills: all\n",
+            encoding="utf-8",
+        )
+        target = self.root / "target"
+        target.mkdir()
+        plan = INSTALLER["build_install_plan"](["convex"])
+
+        self.assertEqual(
+            plan.external_skills,
+            (INSTALLER["ExternalSkill"]("get-convex/agent-skills", "all"),),
+        )
+        with patch.object(
+            INSTALLER["subprocess"],
+            "run",
+            return_value=type("Result", (), {"returncode": 0})(),
+        ) as command:
+            result = INSTALLER["install_profiles"](
+                plan,
+                agent="codex",
+                scope="project",
+                target=target,
+                from_local=False,
+            )
+
+        self.assertEqual(result, 0)
+        command.assert_called_once_with(
+            ["npx", "skills", "add", "get-convex/agent-skills", "--all"],
+            cwd=target,
+            check=False,
+        )
 
     def test_skill_directory_must_match_frontmatter_name(self):
         self.add_skill("skills/api-client", "go-api-client")
