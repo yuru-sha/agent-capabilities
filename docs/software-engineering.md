@@ -1,6 +1,6 @@
 # Software Engineering Capability Pack
 
-Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ、OpenAPI、Terraform、AWS/GCP Cloud、フロントエンド向けの専門 Skills を配布します。
+Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ、OpenAPI、Terraform、フロントエンド、外部サービス統合向けの専門 Skills を配布します。AWS / Google Cloud 固有知識は各 vendor の公式 Agent Skills を利用します。
 
 一般的な開発ワークフローは OMP と oh-my-pstack が所有します。OMP は実行環境、Task、モデル、セッションを管理します。oh-my-pstack は計画、設計、TDD、レビュー、オーケストレーションを管理します。このリポジトリは、それらにない言語・データベース・API・インフラの専門知識と、固有の GitHub 操作を提供します。
 
@@ -16,9 +16,8 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
 | Data systems | Redis | 1 |
 | Messaging | BullMQ | 1 |
-| Cloud | AWS 33、Google Cloud 2 | 35 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **68** |
+| **合計** | **専門 Skill** | **33** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -30,37 +29,17 @@ persistence, availability, observability, and security.
 `bullmq` owns BullMQ queue/worker semantics. Compose it with `redis` when
 Redis topology or persistence is also in scope.
 
-### Cloud
+### External cloud skills
 
-Cloud-provider-specific Skills live under a dedicated provider namespace and
-include the provider in their globally installed Skill name.
+AWS and Google Cloud service knowledge is intentionally delegated to official
+vendor-maintained Agent Skills:
 
-AWS Skills live under `skills/cloud/aws/aws-*/`. They cover:
+- AWS: https://github.com/aws/agent-toolkit-for-aws
+- Google Cloud: https://github.com/google/skills
 
-- compute/runtime: `aws-ec2`, `aws-ecs`, `aws-eks`, `aws-lambda`
-- network/edge/API: `aws-vpc`, `aws-alb`, `aws-api-gateway`,
-  `aws-cloudfront`, `aws-route53`, `aws-acm`, `aws-waf`
-- identity/security/operations: `aws-iam`, `aws-kms`,
-  `aws-secrets-manager`, `aws-cloudwatch`, `aws-github-actions-deploy`
-- data/storage/search: `aws-s3`, `aws-efs`, `aws-dynamodb`, `aws-rds`,
-  `aws-elasticache`, `aws-opensearch`
-- messaging/workflow: `aws-sqs`, `aws-sns`, `aws-eventbridge`,
-  `aws-kinesis`, `aws-msk`, `aws-step-functions`
-- analytics/data platform: `aws-glue`, `aws-athena`, `aws-emr`,
-  `aws-redshift`
-- container registry: `aws-ecr`
-
-Google Cloud Skills live under `skills/cloud/gcp/gcp-*/` and currently include
-`gcp-bigquery` and `gcp-gcs`.
-
-There is intentionally no standalone `aws-architecture` Skill. Cross-service
-architecture is derived by composing the service Skills that match the actual
-system plus `infrastructure-reviewer`. There is also no standalone Fargate
-Skill: ECS Fargate behavior belongs to `aws-ecs`, while EKS Fargate behavior
-belongs to `aws-eks`.
-
-The `terraform` Profile is provider-neutral and installs only
-`terraform-infrastructure` and `terraform-policy-testing`.
+Do not reimplement provider service guidance in this pack unless a project has a
+genuinely repository-specific workflow that is not owned by the official
+upstream Skills. Terraform remains provider-neutral and stays in this pack.
 
 ### Integrations
 
@@ -145,11 +124,7 @@ ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実
 
 ## Provider namespace
 
-Cloud-provider-specific Skills live under one provider-first source tree:
-`cloud/aws/aws-*` and `cloud/gcp/gcp-*`. The provider prefix is part of the
-Skill directory basename, frontmatter `name`, and Profile ID. This makes the
-installed namespace self-describing and avoids collisions as more providers are
-added.
+Cloud-provider-specific Skills are not distributed from this repository. Use the official AWS and Google upstream Agent Skills directly.
 
 ## ディレクトリ
 
@@ -157,7 +132,7 @@ added.
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,cloud,frontend,data-systems,messaging,integrations}/...
+│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,frontend,data-systems,messaging,integrations}/...
 │   │   └── agents/{database-reviewer,infrastructure-reviewer}.md
 │   └── operations/github/
 │       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,review-mode,
@@ -166,7 +141,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,terraform,frontend,redis,bullmq,aws-*,gcp-*,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
+│             cross-cutting,terraform,frontend,redis,bullmq,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
@@ -184,7 +159,7 @@ oh-my-pstack TDD / caller-triggered `interrogate`
   + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
-Language Skillsは言語固有の型・並行処理・エラー処理・toolchainを扱います。Database Skillsはprovider非依存のPostgreSQL、MySQL、SQLiteを扱います。Data systemsはRedis、MessagingはBullMQを扱います。Cloud SkillsはAWS/GCP固有仕様をprovider prefix付きで所有し、Terraformはprovider非依存Infrastructureとして分離します。OpenAPI、Cross-cutting、Frontend、Integrationsは従来どおり各専門境界を所有します。
+Language Skillsは言語固有の型・並行処理・エラー処理・toolchainを扱います。Database Skillsはprovider非依存のPostgreSQL、MySQL、SQLiteを扱います。Data systemsはRedis、MessagingはBullMQを扱います。Terraformはprovider非依存Infrastructureとして分離します。AWS / Google Cloud固有仕様はvendor公式 Agent Skillsへ委譲し、OpenAPI、Cross-cutting、Frontend、Integrationsはこのリポジトリで各専門境界を所有します。
 
 ## GitHub操作
 
