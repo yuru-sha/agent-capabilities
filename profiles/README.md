@@ -205,6 +205,15 @@ profiles:
   - tanteki
 ```
 
+The `vercel-agent-skills` Profile installs Vercel-maintained Agent Skills for
+React/Next.js performance, web design, writing, deployment, and Vercel
+optimization:
+
+```yaml
+profiles:
+  - vercel-agent-skills
+```
+
 The frontend Profile selects seven frontend Skills spanning framework-agnostic
 web quality, browser testing, form validation, and framework/styling mechanics.
 It composes with a language Profile and the TypeScript DOM, performance, or
@@ -225,6 +234,7 @@ Use the official upstream repositories directly:
 - Azure Agent Skills: https://github.com/MicrosoftDocs/agent-skills
 - Convex Agent Skills: https://github.com/get-convex/agent-skills
 - tanteki: https://github.com/iwasa-kosui/tanteki
+- Vercel Agent Skills: https://github.com/vercel-labs/agent-skills
 - Agent Skills CLI: https://github.com/vercel-labs/skills
 
 ## Installation
