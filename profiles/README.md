@@ -60,56 +60,18 @@ jobs. It owns BullMQ queue/worker semantics and does not duplicate general Redis
 operations. Select `redis` separately when topology, persistence, memory, or
 Redis security are in scope.
 
-Cloud Profiles are provider-namespaced and map one-to-one to installed Cloud
-Skills. Use the exact service Profile instead of selecting a broad AWS bundle.
+Cloud-provider Skills are not distributed through Profiles in this repository.
+Install the official provider Skills directly:
 
-Examples:
+- AWS: `aws/agent-toolkit-for-aws`
+- Google Cloud: `google/skills`
 
-```yaml
-profiles:
-  - terraform
-  - aws-vpc
-  - aws-ecs
-  - aws-ecr
-  - aws-alb
-  - aws-secrets-manager
-```
-
-```yaml
-profiles:
-  - gcp-bigquery
-  - gcp-gcs
-```
-
-AWS Profile IDs use `aws-*`; Google Cloud Profile IDs use `gcp-*`.
-The Profile ID, Skill directory basename, and Skill frontmatter `name` are
-identical.
-
-Representative AWS groups:
-
-- compute/runtime: `aws-ec2`, `aws-ecs`, `aws-eks`, `aws-lambda`
-- network/edge/API: `aws-vpc`, `aws-alb`, `aws-api-gateway`,
-  `aws-cloudfront`, `aws-route53`, `aws-acm`, `aws-waf`
-- identity/security/ops: `aws-iam`, `aws-kms`, `aws-secrets-manager`,
-  `aws-cloudwatch`, `aws-github-actions-deploy`
-- data: `aws-s3`, `aws-efs`, `aws-dynamodb`, `aws-rds`,
-  `aws-elasticache`, `aws-opensearch`
-- messaging/workflow: `aws-sqs`, `aws-sns`, `aws-eventbridge`,
-  `aws-kinesis`, `aws-msk`, `aws-step-functions`
-- analytics: `aws-glue`, `aws-athena`, `aws-emr`, `aws-redshift`
-- registry: `aws-ecr`
-
-Fargate is intentionally not a separate Profile. Select `aws-ecs` for ECS
-Fargate or `aws-eks` for EKS Fargate. Cross-service AWS architecture is also
-not a separate Skill/Profile; compose the concrete service Profiles in use.
-
-The `terraform` Profile is provider-neutral and contains only Terraform
+The `terraform` Profile remains provider-neutral and contains only Terraform
 infrastructure and policy-testing Skills.
 
 The `cross-cutting` Profile includes `technical-authoring` for document-type
 structure, technical evidence, executable examples, verification, and
-operational safety. Compose it with a language, database, OpenAPI, `terraform`, or provider-namespaced
-Cloud Profile when both document design and domain-specific behavior are in scope. Language-specific documentation Skills remain focused on their
+operational safety. Compose it with a language, database, OpenAPI, or `terraform` Profile when both document design and domain-specific behavior are in scope. Install official cloud-provider Skills separately when needed. Language-specific documentation Skills remain focused on their
 language's docstrings, examples, CLI help, and toolchain support.
 
 The `note-com` Profile installs the `note-com-unofficial-api` Skill for
@@ -232,14 +194,13 @@ Profiles may declare `external_skills` requirements. The installer reports
 those requirements but does not copy external Skills. The installed oh-my-pstack
 review and TDD workflows are used directly.
 
-## Provider namespaces
+## External cloud skills
 
-Cloud-provider-specific source Skills use a provider-first namespace:
+AWS and Google Cloud Skills are intentionally external to this repository.
+Use the official upstream repositories directly:
 
-- AWS: `packs/software-engineering/skills/cloud/aws/aws-*`
-- Google Cloud: `packs/software-engineering/skills/cloud/gcp/gcp-*`
-
-The provider prefix is part of both the installed Skill name and Profile ID.
+- AWS Agent Toolkit: https://github.com/aws/agent-toolkit-for-aws
+- Google Agent Skills: https://github.com/google/skills
 
 ## Installation
 
