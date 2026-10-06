@@ -148,6 +148,12 @@ tanteki:
 npx skills add iwasa-kosui/tanteki --all
 ```
 
+Vercel Agent Skills:
+
+```sh
+npx skills add vercel-labs/agent-skills --all
+```
+
 The upstream project also documents direct installation with `gh skill install`;
 the Profile uses the shared external-Skill installer so all structured project
 dependencies follow one mechanism.
