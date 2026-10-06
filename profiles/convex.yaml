@@ -10,4 +10,5 @@ agents:
   include: []
 
 external_skills:
-  - convex
+  - source: get-convex/agent-skills
+    skills: all
