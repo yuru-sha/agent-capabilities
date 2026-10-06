@@ -191,11 +191,12 @@ review and TDD workflows are used directly.
 
 ## External cloud skills
 
-AWS and Google Cloud Skills are intentionally external to this repository.
+AWS, Google Cloud, and Azure Skills are intentionally external to this repository.
 Use the official upstream repositories directly:
 
 - AWS Agent Toolkit: https://github.com/aws/agent-toolkit-for-aws
 - Google Agent Skills: https://github.com/google/skills
+- Azure Agent Skills: https://github.com/MicrosoftDocs/agent-skills
 
 ## Installation
 
