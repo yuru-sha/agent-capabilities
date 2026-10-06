@@ -206,8 +206,20 @@ def validate_profile_shape(path: Path) -> list[Problem]:
             continue
 
         if section == "external_skills" and indent == 2 and line.startswith("- "):
-            if not scalar(line[2:]):
+            item = line[2:]
+            if item.startswith("source:"):
+                if not scalar(item.split(":", 1)[1]):
+                    problems.append(Problem(path, f"line {number}: empty external Skill source"))
+            elif not scalar(item):
                 problems.append(Problem(path, f"line {number}: empty external Skill"))
+            continue
+
+        if section == "external_skills" and indent == 4 and line.startswith("skills:"):
+            selector = scalar(line.split(":", 1)[1])
+            if not selector:
+                problems.append(Problem(path, f"line {number}: empty external Skill selector"))
+            elif selector != "all":
+                problems.append(Problem(path, f"line {number}: unsupported external Skill selector {selector!r}"))
             continue
 
         problems.append(Problem(path, f"line {number}: unsupported Profile YAML structure"))
