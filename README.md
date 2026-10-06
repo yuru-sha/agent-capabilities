@@ -16,11 +16,11 @@ OMP + oh-my-pstack do not supply.
 
 ## Contents
 
-- 68 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 33 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 59 composable Profiles, including provider-namespaced cloud Profiles such as `aws-ec2.yaml`, `aws-ecs.yaml`, `aws-rds.yaml`, `aws-s3.yaml`, `gcp-bigquery.yaml`, and `gcp-gcs.yaml`, plus `terraform.yaml`, language, database, frontend, integration, and workflow Profiles
+- 24 composable Profiles spanning languages, databases, Terraform, frontend, integrations, cross-cutting guidance, and GitHub workflows
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -60,30 +60,17 @@ families and external CLIs used by the Skills are listed in the
 For Terraform work, select the `terraform` Profile. It installs only the
 provider-neutral Terraform infrastructure and policy-testing Skills.
 
-Cloud-provider Skills are intentionally grouped and named by provider rather than
-scattered across infrastructure, database, messaging, and analytics categories.
-Select the service Profiles directly:
+AWS and Google Cloud provider knowledge is intentionally not vendored here.
 
-- AWS compute/runtime: `aws-ec2`, `aws-ecs`, `aws-eks`, `aws-lambda`
-- AWS network/edge/API: `aws-vpc`, `aws-alb`, `aws-api-gateway`,
-  `aws-cloudfront`, `aws-route53`, `aws-acm`, `aws-waf`
-- AWS identity/security/operations: `aws-iam`, `aws-kms`,
-  `aws-secrets-manager`, `aws-cloudwatch`, `aws-github-actions-deploy`
-- AWS data/storage/search: `aws-s3`, `aws-efs`, `aws-dynamodb`,
-  `aws-rds`, `aws-elasticache`, `aws-opensearch`
-- AWS messaging/workflow: `aws-sqs`, `aws-sns`, `aws-eventbridge`,
-  `aws-kinesis`, `aws-msk`, `aws-step-functions`
-- AWS analytics/data platform: `aws-glue`, `aws-athena`, `aws-emr`,
-  `aws-redshift`
-- AWS container registry: `aws-ecr`
-- Google Cloud: `gcp-bigquery`, `gcp-gcs`
+- AWS: use the official [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws).
+  It provides Codex/Claude/Cursor plugins, AWS-maintained Agent Skills, and the AWS MCP Server.
+- Google Cloud: use Google's official [Agent Skills](https://github.com/google/skills).
+  It includes BigQuery, Cloud Storage, GKE, IAM, Cloud Run, observability, and other Google Cloud skills.
 
-There is no standalone AWS architecture Skill. Cross-service architecture is
-composed from the service Skills actually present in the system and the
-`infrastructure-reviewer`. Fargate is also not a standalone Skill: ECS Fargate
-guidance lives in `aws-ecs`, and EKS Fargate guidance lives in `aws-eks`.
-This keeps Skill selection aligned with concrete resources instead of abstract
-umbrella capabilities.
+Install those provider Skills directly from their upstream repositories so cloud
+guidance stays aligned with vendor-maintained documentation and evaluations.
+This repository remains focused on provider-neutral engineering knowledge,
+project workflows, and integrations not owned by those official repositories.
 
 The `cross-cutting` Profile includes `web-security-review` for evidence-driven,
 language-independent review of web applications and HTTP APIs. It maps attack
