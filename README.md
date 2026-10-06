@@ -60,12 +60,14 @@ families and external CLIs used by the Skills are listed in the
 For Terraform work, select the `terraform` Profile. It installs only the
 provider-neutral Terraform infrastructure and policy-testing Skills.
 
-AWS and Google Cloud provider knowledge is intentionally not vendored here.
+AWS, Google Cloud, and Azure provider knowledge is intentionally not vendored here.
 
 - AWS: use the official [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws).
   It provides Codex/Claude/Cursor plugins, AWS-maintained Agent Skills, and the AWS MCP Server.
 - Google Cloud: use Google's official [Agent Skills](https://github.com/google/skills).
   It includes BigQuery, Cloud Storage, GKE, IAM, Cloud Run, observability, and other Google Cloud skills.
+- Azure: use Microsoft's official [Azure Agent Skills](https://github.com/MicrosoftDocs/agent-skills).
+  It includes 193+ skills sourced from Microsoft Learn and supports Codex, Claude Code, Copilot, Cursor, and other Agent Skills hosts.
 
 Install those provider Skills directly from their upstream repositories so cloud
 guidance stays aligned with vendor-maintained documentation and evaluations.
