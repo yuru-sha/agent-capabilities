@@ -55,6 +55,10 @@ Japanese business and technical writing guidance is delegated to
 `iwasa-kosui/tanteki`. The `tanteki` Profile installs the upstream Skill and
 does not increase the bundled Skill count.
 
+Vercel-maintained coding guidance is delegated to `vercel-labs/agent-skills`.
+The `vercel-agent-skills` Profile installs those upstream Skills and does not
+increase the bundled Skill count.
+
 External Skill installation uses the `skills` CLI maintained in
 `vercel-labs/skills` for structured project-scope dependencies.
 
@@ -158,7 +162,7 @@ agent-capabilities/
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
 ├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
-│             cross-cutting,terraform,frontend,redis,bullmq,convex,tanteki,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
+│             cross-cutting,terraform,frontend,redis,bullmq,convex,tanteki,vercel-agent-skills,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
 ```
