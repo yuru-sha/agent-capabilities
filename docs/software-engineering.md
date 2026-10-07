@@ -145,7 +145,7 @@ ORCA から OMP への Issue 引き渡しと、`orca:pr-open` Issue を手動実
 
 ## Cloud ownership
 
-Cloud-provider-specific Skills and Convex-specific Skills are not distributed from this repository. Use the official AWS, Google, Azure, and Convex upstream Agent Skills directly.
+Terraform, cloud-provider-specific, and Convex-specific Skills are not distributed from this repository. Use the official HashiCorp, AWS, Google, Azure, and Convex upstream Agent Skills directly.
 
 ## ディレクトリ
 
