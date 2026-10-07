@@ -1,6 +1,6 @@
 # Software Engineering Capability Pack
 
-Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ、OpenAPI、Terraform、フロントエンド、外部サービス統合向けの専門 Skills を配布します。AWS / Google Cloud 固有知識は各 vendor の公式 Agent Skills を利用します。
+Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ、OpenAPI、フロントエンド、外部サービス統合向けの専門 Skills を配布します。Terraform / AWS / Google Cloud / Azure 固有知識は各 vendor の公式 Agent Skills を利用します。
 
 一般的な開発ワークフローは OMP と pstack-omp が所有します。OMP は実行環境、Task、モデル、セッションを管理します。pstack-omp は計画、設計、TDD、レビュー、オーケストレーションを管理します。このリポジトリは、それらにない言語・データベース・API・インフラの専門知識と、固有の GitHub 操作を提供します。
 
@@ -12,12 +12,12 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ
 | Database | PostgreSQL、MySQL、SQLite | 3 |
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 1 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
-| Infrastructure | Terraform infrastructure、Terraform policy testing | 2 |
+| Infrastructure | — | 0 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
 | Data systems | Redis | 1 |
 | Messaging | BullMQ | 1 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **33** |
+| **合計** | **専門 Skill** | **31** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -40,7 +40,7 @@ vendor-maintained Agent Skills:
 
 Do not reimplement provider service guidance in this pack unless a project has a
 genuinely repository-specific workflow that is not owned by the official
-upstream Skills. Terraform remains provider-neutral and stays in this pack.
+upstream Skills. Terraform guidance is delegated to HashiCorp's official Agent Skills; the local `terraform` Profile keeps only the infrastructure reviewer selector and external dependency metadata.
 
 ### External Skills and platforms
 
@@ -180,7 +180,7 @@ pstack-omp TDD / caller-triggered `interrogate`
   + security-review (追加の横断的なtrust boundaryがある場合)
 ```
 
-Language Skillsは言語固有の型・並行処理・エラー処理・toolchainを扱います。Database Skillsはprovider非依存のPostgreSQL、MySQL、SQLiteを扱います。Data systemsはRedis、MessagingはBullMQを扱います。Terraformはprovider非依存Infrastructureとして分離します。AWS / Google Cloud / Azure固有仕様と Convex 固有仕様は vendor 公式 Agent Skills へ委譲し、OpenAPI、Cross-cutting、Frontend、Integrationsはこのリポジトリで各専門境界を所有します。
+Language Skillsは言語固有の型・並行処理・エラー処理・toolchainを扱います。Database Skillsはprovider非依存のPostgreSQL、MySQL、SQLiteを扱います。Data systemsはRedis、MessagingはBullMQを扱います。Terraform / AWS / Google Cloud / Azure固有仕様と Convex 固有仕様は vendor 公式 Agent Skills へ委譲し、OpenAPI、Cross-cutting、Frontend、Integrationsはこのリポジトリで各専門境界を所有します。
 
 ## GitHub操作
 
