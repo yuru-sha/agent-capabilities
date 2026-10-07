@@ -1,13 +1,14 @@
 schema: 1
 id: terraform
 kind: infrastructure
-description: Terraform infrastructure and policy-testing guidance.
+description: Official HashiCorp Terraform Agent Skills with the local infrastructure reviewer.
 
 skills:
-  include:
-    - packs/software-engineering/skills/infrastructure/terraform-infrastructure/**
-    - packs/software-engineering/skills/infrastructure/terraform-policy-testing/**
+  include: []
 
 agents:
   include:
     - infrastructure-reviewer
+
+external_skills:
+  - hashicorp/agent-skills#terraform

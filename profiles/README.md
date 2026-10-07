@@ -60,9 +60,12 @@ jobs. It owns BullMQ queue/worker semantics and does not duplicate general Redis
 operations. Select `redis` separately when topology, persistence, memory, or
 Redis security are in scope.
 
-The `terraform` Profile is provider-neutral and contains only Terraform
-infrastructure and policy-testing Skills. Cloud-provider Skills are installed
-directly from the official upstream repositories documented below.
+The `terraform` Profile keeps the local `infrastructure-reviewer` selector while Terraform product guidance comes from HashiCorp's official `hashicorp/agent-skills` Terraform bundle. Until selective external bundle installation is implemented, the Profile records that dependency and the bundle must be installed explicitly.
+
+Previously bundled Terraform infrastructure and policy-testing Skills were removed to avoid duplicating HashiCorp-maintained guidance.
+
+Cloud-provider Skills are installed directly from the official upstream
+repositories documented below.
 
 The `cross-cutting` Profile includes `technical-authoring` for document-type
 structure, technical evidence, executable examples, verification, and

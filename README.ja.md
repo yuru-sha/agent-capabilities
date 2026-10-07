@@ -10,7 +10,7 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 
 ## 内容
 
-- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 33 個
+- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 31 個
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
@@ -42,11 +42,13 @@ profiles:
 
 [Profiles](profiles/README.md) と [software-engineering カタログ](docs/software-engineering.md) を参照してください。Skills が使うコマンド群と外部 CLI は[コマンドリファレンス](docs/commands.md)に記載しています。
 
-Terraform 作業では `terraform` Profile を選択します。provider 非依存の
-Terraform infrastructure / policy-testing Skills だけを導入します。
+Terraform 作業では `terraform` Profile を選択します。Terraform 固有の知識は
+HashiCorp 公式 `hashicorp/agent-skills` の `terraform` bundle に委譲し、
+このリポジトリでは `infrastructure-reviewer` のみを保持します。
 
-AWS / Google Cloud / Azure 固有の知識は、このリポジトリでは配布しません。
+Terraform 固有の知識と AWS / Google Cloud / Azure 固有の知識は、このリポジトリでは配布しません。
 
+- Terraform は HashiCorp 公式の [Agent Skills](https://github.com/hashicorp/agent-skills) の `terraform` product bundle を利用します。
 - AWS は公式の [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws) を利用します。Codex / Claude / Cursor 向け plugin、AWS公式 Agent Skills、AWS MCP Server が提供されています。
 - Google Cloud は Google 公式の [Agent Skills](https://github.com/google/skills) を利用します。BigQuery、Cloud Storage、GKE、IAM、Cloud Run、observability などの Skills が提供されています。
 - Azure は MicrosoftDocs 公式の [Azure Agent Skills](https://github.com/MicrosoftDocs/agent-skills) を利用します。Microsoft Learn を元にした 193+ Skills があり、Codex / Claude Code / Copilot / Cursor などに対応しています。

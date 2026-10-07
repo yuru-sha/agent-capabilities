@@ -69,12 +69,34 @@ wrappers. Common command families include:
 
 | Profile | Representative commands | Typical concerns |
 |---|---|---|
-| `terraform` | `terraform`, `tflint`, `tfsec`, Trivy, Checkov | module validation, provider locks, plans, policy tests, and provider-neutral infrastructure review |
+| `terraform` | upstream HashiCorp Terraform Skills and the repository's configured Terraform toolchain | module/configuration review, tests, policy, providers, import, stacks, and operational safety |
 
 These commands are review and verification inputs, not automatic permission to
 run Terraform apply/destroy, mutate remote state, or change external systems.
 Record exact versions and repository-specific commands in the consumer
 repository when they affect evidence.
+
+## External Terraform skills
+
+Terraform guidance comes from HashiCorp's official Agent Skills repository:
+
+```sh
+npx skills add hashicorp/agent-skills
+```
+
+Install individual Terraform Skills with their canonical paths, for example:
+
+```sh
+npx skills add hashicorp/agent-skills/plugins/terraform/skills/terraform-style-guide
+npx skills add hashicorp/agent-skills/plugins/terraform/skills/terraform-test
+npx skills add hashicorp/agent-skills/plugins/terraform/skills/terraform-policy
+```
+
+HashiCorp also publishes a `terraform` product plugin bundle for Claude Code and
+Codex. The `terraform` Profile records this dependency as
+`hashicorp/agent-skills#terraform` for now; automatic bundle installation is
+tracked separately because the current external Skill schema only supports
+whole-repository installation.
 
 ## External cloud skills
 
