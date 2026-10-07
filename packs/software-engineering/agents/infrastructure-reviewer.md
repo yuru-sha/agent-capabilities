@@ -1,6 +1,6 @@
 ---
 name: infrastructure-reviewer
-description: Select the matching provider-neutral Terraform specialist skills for infrastructure changes; route to the right specialists without owning the review lifecycle.
+description: Route Terraform infrastructure changes to the matching official HashiCorp Agent Skills without owning the review lifecycle.
 ---
 
 # Infrastructure specialist selector
@@ -13,12 +13,15 @@ the caller requests it.
 ## Select
 
 1. Identify the Terraform change surface from the diff or spec.
-2. Load only the matching specialist:
-   - module/provider/state/plan/lifecycle concerns:
-     `terraform-infrastructure`
-   - policy-as-code, static checks, and infrastructure test concerns:
-     `terraform-policy-testing`
-3. Hand the specialist bundle to the OMP `reviewer` role. Invoke pstack
+2. Load only the matching official HashiCorp Terraform Skills. Typical routing:
+   - style, modules, configuration, and refactoring: `terraform-style-guide` or
+     `refactor-module`
+   - Terraform tests: `terraform-test`
+   - policy-as-code: `terraform-policy`
+   - provider implementation: the matching `provider-*` Skill
+   - import/discovery or Stacks: `terraform-search-import` or
+     `terraform-stacks`
+3. Hand the selected HashiCorp Skill bundle to the OMP `reviewer` role. Invoke pstack
    `interrogate` only if the caller explicitly asks for adversarial or
    multi-model review.
 
@@ -27,6 +30,7 @@ the official provider Agent Skills directly:
 
 - AWS: `aws/agent-toolkit-for-aws`
 - Google Cloud: `google/skills`
+- Azure: `MicrosoftDocs/agent-skills`
 
 Do not run Terraform apply or destroy, mutate cloud resources, alter remote
 state, change GitHub state, or print secret values. Report each finding with
