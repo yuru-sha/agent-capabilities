@@ -64,9 +64,8 @@ The `terraform` Profile keeps the local `infrastructure-reviewer` selector while
 
 Previously bundled Terraform infrastructure and policy-testing Skills were removed to avoid duplicating HashiCorp-maintained guidance.
 
-The frontend Profile is provider-neutral and contains only frontend
-infrastructure and policy-testing Skills. Cloud-provider Skills are installed
-directly from the official upstream repositories documented below.
+Cloud-provider Skills are installed directly from the official upstream
+repositories documented below.
 
 The `cross-cutting` Profile includes `technical-authoring` for document-type
 structure, technical evidence, executable examples, verification, and
