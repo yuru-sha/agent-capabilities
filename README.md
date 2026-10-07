@@ -16,7 +16,7 @@ OMP + pstack-omp do not supply.
 
 ## Contents
 
-- 33 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 31 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
@@ -57,11 +57,13 @@ See [Profiles](profiles/README.md) and the
 families and external CLIs used by the Skills are listed in the
 [command reference](docs/commands.md).
 
-For Terraform work, select the `terraform` Profile. It installs only the
-provider-neutral Terraform infrastructure and policy-testing Skills.
+For Terraform work, select the `terraform` Profile. Terraform guidance is delegated
+to HashiCorp's official `hashicorp/agent-skills` Terraform bundle; this repository
+keeps only the local `infrastructure-reviewer` selector.
 
-AWS, Google Cloud, and Azure provider knowledge is intentionally not vendored here.
+Terraform product guidance and AWS, Google Cloud, and Azure provider knowledge are intentionally not vendored here.
 
+- Terraform: use HashiCorp's official [Agent Skills](https://github.com/hashicorp/agent-skills) `terraform` product bundle.
 - AWS: use the official [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws).
   It provides Codex/Claude/Cursor plugins, AWS-maintained Agent Skills, and the AWS MCP Server.
 - Google Cloud: use Google's official [Agent Skills](https://github.com/google/skills).
