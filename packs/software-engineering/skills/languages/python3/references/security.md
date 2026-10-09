@@ -5,7 +5,7 @@ description: "Use when Python 3 code involves unsafe deserialization, subprocess
 
 # Python 3 Security
 
-Use oh-my-pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
+Use the project's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
 
 ## Rules
 

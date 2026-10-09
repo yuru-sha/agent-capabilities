@@ -5,7 +5,7 @@ description: "Use when SQLite work involves transaction scope, isolation, and co
 
 # SQLite Transactions
 
-Use this specialist with the primary language skill and oh-my-pstack's review workflow when reviewing a change. It owns only engine-specific decisions for this concern.
+Use this specialist with the primary language skill and the project's review workflow when reviewing a change. It owns only engine-specific decisions for this concern.
 
 ## Rules
 

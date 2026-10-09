@@ -5,7 +5,7 @@ description: "Use when Rust code involves database pools, SQL, transactions, Dro
 
 # Rust Database access review
 
-Use this specialist with oh-my-pstack's TDD workflow for implementation and oh-my-pstack's review workflow for review. It owns only Rust-specific decisions for this concern.
+Use this specialist with the project's TDD workflow for implementation and the project's review workflow for review. It owns only Rust-specific decisions for this concern.
 
 ## Rules
 

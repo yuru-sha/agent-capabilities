@@ -5,7 +5,7 @@ description: "Use when checking whether Rust code follows repository idioms for 
 
 # Rust idiomatic-code check
 
-Use this specialist with oh-my-pstack's TDD workflow for implementation work and oh-my-pstack's review workflow for review work. It owns only this language-specific concern.
+Use this specialist with the project's TDD workflow for implementation work and the project's review workflow for review work. It owns only this language-specific concern.
 
 ## Rules
 

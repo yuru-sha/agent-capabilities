@@ -5,7 +5,7 @@ description: "Use when Go code involves tests, table-driven cases, subtests, rac
 
 # Go Testing
 
-Use this specialist with oh-my-pstack's TDD workflow for implementation and its review workflow for reviews. It owns only Go-specific decisions for this concern.
+Use this specialist with the project's TDD workflow for implementation and its review workflow for reviews. It owns only Go-specific decisions for this concern.
 
 ## Rules
 
