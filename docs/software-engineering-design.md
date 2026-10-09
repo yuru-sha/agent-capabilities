@@ -2,7 +2,7 @@
 
 ## Goal
 
-Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS infrastructure, frontend, and selected platform integrations. Each Skill owns one concrete domain concern. OMP and pstack (`negoro26/pstack-omp`) own the generic runtime and development workflow.
+Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS infrastructure, frontend, and selected platform integrations. Each Skill owns one concrete domain concern. Skills are reusable independently; references to OMP or pstack describe optional integrations, not prerequisites for using this catalog. Here, pstack means `negoro26/pstack-omp`.
 
 ## Ownership boundaries
 

@@ -7,12 +7,10 @@
 Reusable Skills, specialist selectors, Profiles, and workflow capabilities
 for AI coding agents.
 
-This repository complements [OMP](https://omp.sh/) and
-[pstack-omp](https://github.com/negoro26/pstack-omp/): OMP owns the runtime
-and independent reviewer role; pstack-omp supplies generic development
-playbooks and `interrogate` for adversarial multi-model review when the caller explicitly invokes it. This
-repository owns specialist knowledge and PR-specific review composition that
-OMP + pstack-omp do not supply.
+Skills, selectors, and Profiles in this repository are reusable capabilities for
+AI coding agents and can be selected independently or composed as needed. Some
+capabilities describe an optional integration with OMP or pstack; in those
+references, pstack means [negoro26/pstack-omp](https://github.com/negoro26/pstack-omp/).
 
 ## Contents
 

@@ -6,7 +6,7 @@
 
 AI コーディングエージェント向けに、再利用可能な Skills、専門セレクタ、Profiles、ワークフロー機能を提供します。
 
-このリポジトリは [OMP](https://omp.sh/) と [pstack-omp](https://github.com/negoro26/pstack-omp/) を補完します。OMP は実行環境と独立レビュー担当を提供し、pstack-omp は一般的な開発 Playbook と、callerが明示した場合に使う adversarial multi-model panel `interrogate` を提供します。このリポジトリは専門知識と、両者が持たないPR固有のレビュー構成を提供します。
+このリポジトリの Skills、セレクタ、Profiles は、AI コーディングエージェント向けに再利用可能な機能を提供し、必要に応じて個別に選択・合成できます。一部の機能は OMP や pstack との任意の連携を説明します。その場合の pstack は [negoro26/pstack-omp](https://github.com/negoro26/pstack-omp/) を指します。
 
 ## 内容
 
