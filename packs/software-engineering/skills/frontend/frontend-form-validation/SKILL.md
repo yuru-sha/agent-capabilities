@@ -5,7 +5,7 @@ description: "Use when building or reviewing cross-framework web forms involving
 
 # Frontend Form Validation
 
-Use with `frontend-web-quality` and oh-my-pstack's TDD workflow. Compose
+Use with `frontend-web-quality` and pstack's TDD workflow. Compose
 `typescript-dom-accessibility` or a framework specialist when those concerns
 are independently in scope. Keep this Skill focused on the form contract
 across browsers, renderers, and frameworks.

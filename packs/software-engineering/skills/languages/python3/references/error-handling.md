@@ -5,7 +5,7 @@ description: "Use when Python 3 code involves exceptions, exception translation,
 
 # Python 3 Error handling
 
-Use oh-my-pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
+Use pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
 
 ## Rules
 

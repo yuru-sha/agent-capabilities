@@ -1,11 +1,11 @@
 ---
 name: review-mode
-description: Independently review an existing GitHub pull request from a fresh OMP session, combining the OMP reviewer role with relevant specialist capabilities and oh-my-pstack adversarial review only when explicitly invoked by the caller. Use when asked to review a PR; do not implement findings or publish unless requested.
+description: Independently review an existing GitHub pull request from a fresh OMP session, combining the OMP reviewer role with relevant specialist capabilities and pstack adversarial review only when explicitly invoked by the caller. Use when asked to review a PR; do not implement findings or publish unless requested.
 ---
 
 # Independent pull request review
 
-Own PR-specific composition: resolve the target and context, select relevant review perspectives, normalize findings, apply caller policy, and optionally publish. OMP provides the independent `reviewer` role. oh-my-pstack provides `interrogate` for an explicit adversarial multi-model panel; it owns panel setup, prompts, and synthesis when used. This checkout does not define a general fixed-point review or Standards/Spec workflow. Do not recreate one here. The caller chooses the PR, threshold, and publication mode.
+Own PR-specific composition: resolve the target and context, select relevant review perspectives, normalize findings, apply caller policy, and optionally publish. OMP provides the independent `reviewer` role. pstack provides `interrogate` for an explicit adversarial multi-model panel; it owns panel setup, prompts, and synthesis when used. This checkout does not define a general fixed-point review or Standards/Spec workflow. Do not recreate one here. The caller chooses the PR, threshold, and publication mode.
 
 This capability is read-only by default. Never modify files, commit, push, approve, request changes, merge, close, or alter PR state. Do not depend on an implementation-session transcript or assume the change is correct because its author says so.
 

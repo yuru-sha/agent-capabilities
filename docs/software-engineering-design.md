@@ -2,12 +2,12 @@
 
 ## Goal
 
-Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS infrastructure, frontend, and selected platform integrations. Each Skill owns one concrete domain concern. OMP and oh-my-pstack own the generic runtime and development workflow.
+Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, PostgreSQL, MySQL, SQLite, OpenAPI, Terraform, AWS infrastructure, frontend, and selected platform integrations. Each Skill owns one concrete domain concern. OMP and pstack (`negoro26/pstack-omp`) own the generic runtime and development workflow.
 
 ## Ownership boundaries
 
 - OMP owns task execution, model routing, session persistence, and runtime lifecycle.
-- oh-my-pstack provides general development playbooks, including TDD, architecture, orchestration, and the explicitly invoked `interrogate` adversarial review panel.
+- pstack provides general development playbooks, including TDD, architecture, orchestration, and the explicitly invoked `interrogate` adversarial review panel.
 - Language Skills own language-specific mechanics for one concern.
 - Database Skills own one engine and one database concern.
 - OpenAPI Skills own one contract concern.
@@ -16,8 +16,8 @@ Provide installable specialist Skills for Go, TypeScript, Python 3, Rust, Postgr
 - Platform integration Skills own narrow service-specific API knowledge, such as note.com's undocumented web API behavior.
 - `database-reviewer` and `infrastructure-reviewer` select specialist Skills. They do not own review workflow.
 - `security-review` adds cross-cutting trust-boundary checks not already owned by engine-specific security Skills.
-- oh-my-pstack provides `interrogate` for adversarial multi-model review only when the caller explicitly invokes it. OMP's `reviewer` role owns independent review sessions; neither defines a PR-specific publication policy.
-- oh-my-pstack owns TDD. This repository does not define a second TDD workflow.
+- pstack provides `interrogate` for adversarial multi-model review only when the caller explicitly invokes it. OMP's `reviewer` role owns independent review sessions; neither defines a PR-specific publication policy.
+- pstack owns TDD. This repository does not define a second TDD workflow.
 
 There are no language, database, OpenAPI, or infrastructure umbrella `SKILL.md` files. Skill descriptions provide the selection boundary. README and this design document are the human-facing catalog.
 
@@ -34,7 +34,7 @@ There are no language, database, OpenAPI, or infrastructure umbrella `SKILL.md` 
 | Integrations | 1 | `note-com-unofficial-api` |
 | **Total** | **172** | specialist Skills |
 
-The repository ships 13 GitHub operation Skills, including `review-mode` for independent PR review composition. Generic development playbooks remain owned by oh-my-pstack, while OMP's `reviewer` role conducts independent review sessions. `review-mode` resolves PR context, selects relevant specialists, applies caller-controlled reporting/publication policy, and never fixes the PR. The `implement-issue` Skill was removed because OMP with oh-my-pstack owns Issue implementation.
+The repository ships 13 GitHub operation Skills, including `review-mode` for independent PR review composition. Generic development playbooks remain owned by pstack, while OMP's `reviewer` role conducts independent review sessions. `review-mode` resolves PR context, selects relevant specialists, applies caller-controlled reporting/publication policy, and never fixes the PR. The `implement-issue` Skill was removed because OMP with pstack owns Issue implementation.
 
 Each specialist has a `SKILL.md` with a discriminating description. Profiles compose Skill sets; they are distribution metadata, not another instruction layer.
 
@@ -82,7 +82,7 @@ Seven Skills keep Terraform state and policy testing separate from AWS topology,
 
 ### Frontend
 
-`frontend-web-quality` covers platform-first HTML/CSS/JS, responsive behavior, explicit UI states, URL state, progressive enhancement, Core Web Vitals, compatibility, and user flows. `frontend-browser-testing` covers public browser flows. `frontend-form-validation` covers form contracts. `frontend-react`, `frontend-nextjs`, `frontend-svelte`, and `frontend-tailwind` own their framework and styling mechanics. These do not replace TypeScript mechanics or oh-my-pstack workflow.
+`frontend-web-quality` covers platform-first HTML/CSS/JS, responsive behavior, explicit UI states, URL state, progressive enhancement, Core Web Vitals, compatibility, and user flows. `frontend-browser-testing` covers public browser flows. `frontend-form-validation` covers form contracts. `frontend-react`, `frontend-nextjs`, `frontend-svelte`, and `frontend-tailwind` own their framework and styling mechanics. These do not replace TypeScript mechanics or pstack workflow.
 
 ### Cross-cutting and GitHub operations
 
@@ -95,7 +95,7 @@ GitHub operation Skills each own a narrow operation. `review-mode` composes the 
 - `database-reviewer`: identify the engine and relevant engine/primary-language Skills, then return that bundle to the OMP reviewer.
 - `infrastructure-reviewer`: select Terraform/AWS Skills for the changed surface and return that bundle to the OMP reviewer.
 
-These selectors choose domain specialists only. OMP's `reviewer` role owns the independent review session; oh-my-pstack's `interrogate` supplies an adversarial panel and synthesis only when explicitly invoked. `review-mode` owns PR-specific target, severity, and publication policy.
+These selectors choose domain specialists only. OMP's `reviewer` role owns the independent review session; pstack's `interrogate` supplies an adversarial panel and synthesis only when explicitly invoked. `review-mode` owns PR-specific target, severity, and publication policy.
 
 ## Validation
 

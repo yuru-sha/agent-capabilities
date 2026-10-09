@@ -5,7 +5,7 @@ description: "Use when Rust code involves tests, integration seams, async tests,
 
 # Rust Testing
 
-Use this specialist with oh-my-pstack's TDD workflow and oh-my-pstack's review workflow. It owns only Rust-specific decisions for this concern.
+Use this specialist with pstack's TDD workflow and pstack's review workflow. It owns only Rust-specific decisions for this concern.
 
 ## Rules
 

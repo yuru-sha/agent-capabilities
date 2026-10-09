@@ -5,7 +5,7 @@ description: "Use when MySQL work involves schema, InnoDB data modeling, charact
 
 # MySQL Design
 
-Use with the primary-language skill and oh-my-pstack's review workflow when
+Use with the primary-language skill and pstack's review workflow when
 reviewing a change. It owns MySQL-specific design decisions for this concern.
 
 ## Rules

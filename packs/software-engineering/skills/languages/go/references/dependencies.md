@@ -5,7 +5,7 @@ description: "Use when Go code involves go.mod, go.sum, module selection, or dep
 
 # Go Dependencies
 
-Use this specialist with oh-my-pstack's TDD workflow for implementation and oh-my-pstack's review workflow for review. It owns only Go-specific decisions for this concern.
+Use this specialist with pstack's TDD workflow for implementation and pstack's review workflow for review. It owns only Go-specific decisions for this concern.
 
 ## Rules
 

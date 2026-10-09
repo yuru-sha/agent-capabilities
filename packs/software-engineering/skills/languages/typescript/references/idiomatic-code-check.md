@@ -5,7 +5,7 @@ description: "Use when checking whether TypeScript code follows repository idiom
 
 # TypeScript idiomatic-code check
 
-Use this specialist with oh-my-pstack's TDD workflow for implementation work and oh-my-pstack's review workflow for review work. It owns only this language-specific concern.
+Use this specialist with pstack's TDD workflow for implementation work and pstack's review workflow for review work. It owns only this language-specific concern.
 
 ## Rules
 

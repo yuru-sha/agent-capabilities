@@ -5,7 +5,7 @@ description: "Use when checking Python 3 for thread races, asyncio ordering bugs
 
 # Python 3 data-race check
 
-Use oh-my-pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only this language-specific concern.
+Use pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only this language-specific concern.
 
 ## Rules
 

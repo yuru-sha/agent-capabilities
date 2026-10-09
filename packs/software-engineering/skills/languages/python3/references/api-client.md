@@ -5,7 +5,7 @@ description: "Use when Python 3 code involves HTTP clients, sessions, response v
 
 # Python 3 API clients
 
-Use oh-my-pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
+Use pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
 
 ## Rules
 

@@ -5,7 +5,7 @@ description: "Use when Rust code involves RAII, Drop, guards, tasks, locks, tran
 
 # Rust Resource management
 
-Use this specialist with oh-my-pstack's TDD workflow for implementation and oh-my-pstack's review workflow for review. It owns only Rust-specific decisions for this concern.
+Use this specialist with pstack's TDD workflow for implementation and pstack's review workflow for review. It owns only Rust-specific decisions for this concern.
 
 ## Rules
 

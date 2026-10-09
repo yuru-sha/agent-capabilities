@@ -5,7 +5,7 @@ description: "Use when SQLite work involves index design and query plans."
 
 # SQLite Indexes
 
-Use this specialist with the primary language skill and oh-my-pstack's review workflow when reviewing a change. It owns only engine-specific decisions for this concern.
+Use this specialist with the primary language skill and pstack's review workflow when reviewing a change. It owns only engine-specific decisions for this concern.
 
 ## Rules
 
