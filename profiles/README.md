@@ -224,8 +224,9 @@ security specialists where those concerns apply.
 Profiles may declare `external_skills` requirements. Structured entries with
 `source` and `skills: all` are installed for project scope with the upstream
 Skills CLI; legacy scalar entries and user-scope external dependencies are
-reported without automatic installation. The installed pstack-omp
-review and TDD workflows are used directly.
+reported without automatic installation. Profiles do not require or provide
+generic implementation or review workflows; use the workflow configured for
+the project.
 
 ## External cloud skills
 
@@ -271,8 +272,9 @@ succeed.
 
 Profiles may declare `external_skills` requirements. Project-scope structured
 entries are installed from their declared upstream source; legacy scalar entries
-and user-scope external dependencies are reported without automatic installation. The installed pstack-omp
-review and TDD workflows are used directly.
+and user-scope external dependencies are reported without automatic installation.
+Profiles do not require or provide generic implementation or review workflows;
+use the workflow configured for the project.
 
 
 ## Monorepos and Skill directory names

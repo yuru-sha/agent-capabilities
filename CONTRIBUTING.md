@@ -70,7 +70,7 @@ This repository distributes reusable Codex Skills, Agents, and composable Profil
 - Check the existing README, catalogs, Profiles, and related capabilities first.
 - Model a Skill as an independently selectable capability or domain. Put concern-level guidance that is useful only after selecting that capability under the parent Skill's `references/` directory.
 - Keep engineering capabilities under `packs/software-engineering/` and GitHub operations under `packs/operations/github/`.
-- Use pstack for generic TDD and code-review workflows; do not copy or redefine those workflows here.
+- Keep generic implementation and review workflows out of this repository; specialist Skills supply domain-specific guidance.
 - Do not include secrets, credentials, or personal data.
 
 ### Skill granularity

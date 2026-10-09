@@ -5,7 +5,7 @@ description: "Use when changing an exported Go package, public method, error con
 
 # Go API Compatibility
 
-Use with pstack's review workflow, `go-serialization`, `go-error-handling`, and the
+Use with the project's review workflow, `go-serialization`, `go-error-handling`, and the
 relevant OpenAPI compatibility skills when the API crosses a process boundary.
 
 ## Check

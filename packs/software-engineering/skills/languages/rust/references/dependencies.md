@@ -5,7 +5,7 @@ description: "Use when Rust code involves Cargo.toml, Cargo.lock, toolchains, fe
 
 # Rust Dependencies
 
-Use this specialist with pstack's TDD workflow for implementation and pstack's review workflow for review. It owns only Rust-specific decisions for this concern.
+Use this specialist with the project's TDD workflow for implementation and the project's review workflow for review. It owns only Rust-specific decisions for this concern.
 
 ## Rules
 

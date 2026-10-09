@@ -5,7 +5,7 @@ description: "Use when Rust code, dependencies, language features, targets, or C
 
 # Rust MSRV
 
-Use with pstack's review workflow, `rust-features-workspaces`, and the repository's
+Use with the project's review workflow, `rust-features-workspaces`, and the repository's
 toolchain/CI definition.
 
 ## Check

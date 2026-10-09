@@ -7,7 +7,7 @@ description: "Use when implementing, reviewing, debugging, or maintaining Go cod
 
 Use this domain skill as the entry point for Go work. Keep working context small: load only the reference files needed for the task instead of reading every reference eagerly.
 
-Use this skill with pstack's TDD workflow for implementation and its review workflow for review where applicable. Independently selectable cross-cutting capabilities should be combined with this skill when required.
+Use this skill with the project's TDD workflow for implementation and its review workflow for review where applicable. Independently selectable cross-cutting capabilities should be combined with this skill when required.
 
 ## Reference routing
 

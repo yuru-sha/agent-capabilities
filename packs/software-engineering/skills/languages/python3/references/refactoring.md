@@ -5,7 +5,7 @@ description: "Use when Python 3 code involves module boundaries, imports, decora
 
 # Python 3 Refactoring
 
-Use pstack's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
+Use the project's TDD workflow for implementation and its review workflow for review. This specialist owns only Python 3-specific decisions for this concern.
 
 ## Rules
 

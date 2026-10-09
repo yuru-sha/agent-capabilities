@@ -5,7 +5,7 @@ description: "Use when MySQL transaction scope, autocommit, isolation, commit be
 
 # MySQL Transactions
 
-Use with the primary-language database skill, `mysql-locking`, and pstack's review workflow.
+Use with the primary-language database skill, `mysql-locking`, and the project's review workflow.
 
 ## Rules
 

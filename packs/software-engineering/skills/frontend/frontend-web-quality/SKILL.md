@@ -5,8 +5,8 @@ description: "Use when building or reviewing framework-agnostic, user-facing web
 
 # Frontend Web Quality
 
-Use this specialist with pstack's TDD workflow for implementation and
-pstack's review workflow for review. It owns cross-framework web UI decisions; compose
+Use this specialist with the project's TDD workflow for implementation and
+the project's review workflow for review. It owns cross-framework web UI decisions; compose
 `frontend-react`, `frontend-nextjs`, `frontend-svelte`, or `frontend-tailwind`
 when those technologies are in scope. Use language specialists for syntax and
 framework specialists for framework mechanics.

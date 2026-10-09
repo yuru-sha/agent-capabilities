@@ -5,7 +5,7 @@ description: "Use when Go code involves package boundaries, interfaces, exported
 
 # Go Refactoring
 
-Use this specialist with pstack's TDD workflow for implementation and pstack's review workflow for review. It owns only Go-specific decisions for this concern.
+Use this specialist with the project's TDD workflow for implementation and the project's review workflow for review. It owns only Go-specific decisions for this concern.
 
 ## Rules
 
