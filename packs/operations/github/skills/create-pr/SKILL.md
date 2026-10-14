@@ -27,9 +27,13 @@ files. Use `create-draft-pr` when review should start later.
    Create the PR with `gh pr create` without `--draft` (or the repository's
    existing GitHub tooling), linking the requested issue as `Closes #N` when
    an issue is known. Pass a multi-line PR body through a temporary file, not
-   a shell argument. After creation, run `gh pr view --json body` and confirm
-   the returned body preserves the intended line breaks. Keep the title, body,
-   and logs free of secrets and private session data.
+   a shell argument. After creation, run `gh pr view --json body` and verify
+   the returned body preserves the intended line breaks and, when an issue is
+   known, contains `Closes #N` (or an equivalent GitHub closing keyword and
+   issue reference). If the closing reference is missing, update the PR body
+   before proceeding, then fetch it again and verify both the reference and
+   line breaks. Keep the title, body, and logs free of secrets and private
+   session data.
 5. Immediately re-fetch the PR URL, head/base, commit, changed files, CI/check
    state, and mergeability. Report pending or missing external checks as such;
    do not merge the PR.
