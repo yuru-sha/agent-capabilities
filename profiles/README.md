@@ -60,7 +60,7 @@ jobs. It owns BullMQ queue/worker semantics and does not duplicate general Redis
 operations. Select `redis` separately when topology, persistence, memory, or
 Redis security are in scope.
 
-The `terraform` Profile keeps the local `infrastructure-reviewer` selector while Terraform product guidance comes from HashiCorp's official `hashicorp/agent-skills` Terraform bundle. Until selective external bundle installation is implemented, the Profile records that dependency and the bundle must be installed explicitly.
+The `terraform` Profile keeps the local `infrastructure-reviewer` selector and selects HashiCorp's official Terraform Skills by their repository paths. It installs only Skills under `plugins/terraform/skills/`; it does not install Packer Skills.
 
 Previously bundled Terraform infrastructure and policy-testing Skills were removed to avoid duplicating HashiCorp-maintained guidance.
 
@@ -221,12 +221,16 @@ The frontend Profile selects seven frontend Skills spanning framework-agnostic
 web quality, browser testing, form validation, and framework/styling mechanics.
 It composes with a language Profile and the TypeScript DOM, performance, or
 security specialists where those concerns apply.
-Profiles may declare `external_skills` requirements. Structured entries with
-`source` and `skills: all` are installed for project scope with the upstream
-Skills CLI; legacy scalar entries and user-scope external dependencies are
-reported without automatic installation. Profiles do not require or provide
-generic implementation or review workflows; use the workflow configured for
-the project.
+Profiles may declare `external_skills` requirements. A structured entry uses
+`source` with either `skills: all` or a list of repository-relative Skill
+paths. `skills: all` retains the upstream CLI's all-Skills behavior. For each
+listed path, the installer runs `npx skills add SOURCE/PATH --agent '*' --yes`
+in the project directory. For HTTPS GitHub sources, it uses the equivalent
+`/tree/main/PATH` URL. Legacy scalar entries and user-scope external dependencies
+are reported without automatic installation. The Terraform Profile lists only
+paths under `plugins/terraform/skills/`, so it does not install Packer Skills.
+Profiles do not require or provide generic implementation or review workflows;
+use the workflow configured for the project.
 
 ## External cloud skills
 
@@ -270,11 +274,11 @@ If a later `gh skill install` fails, earlier successful Skill installations
 remain. The installer copies OMP Agent definitions after all Skill installs
 succeed.
 
-Profiles may declare `external_skills` requirements. Project-scope structured
-entries are installed from their declared upstream source; legacy scalar entries
-and user-scope external dependencies are reported without automatic installation.
-Profiles do not require or provide generic implementation or review workflows;
-use the workflow configured for the project.
+The external Skill selector accepts `skills: all` or a list of repository-relative
+Skill paths. The installer runs selected external Skills only for project scope.
+Legacy scalar entries and user-scope external dependencies are reported without
+automatic installation. The Terraform Profile selects paths under
+`plugins/terraform/skills/` and does not install Packer Skills.
 
 
 ## Monorepos and Skill directory names

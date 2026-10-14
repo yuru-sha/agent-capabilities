@@ -8,6 +8,8 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import urlparse
+
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -16,12 +18,13 @@ SOURCE_ROOT = REPO_ROOT
 AGENT_ROOT = REPO_ROOT / "packs" / "software-engineering" / "agents"
 DEFAULT_REPOSITORY = "yuru-sha/agent-capabilities"
 NAME_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
+EXTERNAL_SKILL_AGENT = "*"
 
 
-@dataclass(frozen=True, order=True)
+@dataclass(frozen=True)
 class ExternalSkill:
     source: str
-    skills: str | None = None
+    skills: str | tuple[str, ...] | None = None
 
 
 @dataclass(frozen=True)
@@ -82,11 +85,22 @@ def load_profile(profile_name: str) -> dict:
                         values["external_skills"].append(ExternalSkill(source=source))
                     current_external = None
                 continue
+            if indent == 4 and line.startswith("skills:") and current_external is None:
+                raise ValueError(f"external Skill selectors require a structured source in {path}")
             if indent == 4 and line.startswith("skills:") and current_external is not None:
                 skills = scalar(line.split(":", 1)[1])
-                if not skills:
-                    raise ValueError(f"external Skill selector is empty in {path}")
-                current_external = ExternalSkill(source=current_external.source, skills=skills)
+                selector: str | tuple[str, ...] = skills if skills else ()
+                current_external = ExternalSkill(source=current_external.source, skills=selector)
+                values["external_skills"][-1] = current_external
+                continue
+            if indent == 6 and line.startswith("- ") and current_external is not None:
+                if not isinstance(current_external.skills, tuple):
+                    raise ValueError(f"external Skill paths require a skills list in {path}")
+                skill_path = scalar(line[2:])
+                if not valid_external_skill_path(skill_path):
+                    raise ValueError(f"invalid external Skill path {skill_path!r} in {path}")
+                paths = current_external.skills + (skill_path,)
+                current_external = ExternalSkill(source=current_external.source, skills=paths)
                 values["external_skills"][-1] = current_external
                 continue
         if indent == 2 and line.endswith(":"):
@@ -99,6 +113,8 @@ def load_profile(profile_name: str) -> dict:
             values["skills"].append(value)
         elif section == "agents" and subsection == "include":
             values["agents"].append(value)
+    if any(external.skills == () for external in values["external_skills"]):
+        raise ValueError(f"external Skill selector is empty in {path}")
     if declared_id != profile_name:
         raise ValueError(f"profile id mismatch in {path}: {declared_id!r}")
     return values
@@ -197,7 +213,7 @@ def build_install_plan(profile_names: list[str]) -> InstallPlan:
         profile_ids=tuple(profile["id"] for profile in profiles),
         skills=tuple(sorted(skills.items())),
         agents=tuple(sorted(agents.items())),
-        external_skills=tuple(sorted(external_skills)),
+        external_skills=tuple(sorted(external_skills, key=lambda external: (external.source, repr(external.skills)))),
     )
 
 
@@ -223,19 +239,57 @@ def gh_argv(repository: str, skill_name: str, skill_path: Path, *, from_local: b
     return ["gh", "skill", "install", repository, relative_skill, "--agent", gh_agent, "--scope", scope]
 
 
+def valid_external_skill_path(skill_path: str) -> bool:
+    parts = skill_path.split("/")
+    return bool(skill_path) and not skill_path.startswith("/") and "\\" not in skill_path and all(
+        part not in {"", ".", ".."} for part in parts
+    )
 
 
-def external_skill_argv(external: ExternalSkill) -> list[str] | None:
+def external_skill_source(source: str, skill_path: str) -> str:
+    parsed = urlparse(source)
+    if parsed.scheme:
+        if parsed.scheme != "https" or parsed.netloc != "github.com":
+            raise ValueError(f"selective external Skills require a GitHub shorthand or HTTPS URL: {source}")
+        parts = [part for part in parsed.path.split("/") if part]
+        if len(parts) != 2:
+            raise ValueError(f"selective external Skills require a GitHub repository URL: {source}")
+        return f"https://github.com/{parts[0]}/{parts[1]}/tree/main/{skill_path}"
+    if "/" not in source:
+        raise ValueError(f"selective external Skills require a GitHub shorthand or HTTPS URL: {source}")
+    return f"{source}/{skill_path}"
+
+
+
+
+def external_skill_argv(external: ExternalSkill) -> list[list[str]] | None:
     if external.skills is None:
         return None
-    if external.skills != "all":
-        raise ValueError(f"unsupported external Skill selector {external.skills!r} for {external.source}")
-    return ["npx", "skills", "add", external.source, "--all"]
+    if external.skills == "all":
+        return [["npx", "skills", "add", external.source, "--all"]]
+    if isinstance(external.skills, tuple):
+        return [
+            [
+                "npx",
+                "skills",
+                "add",
+                external_skill_source(external.source, skill_path),
+                "--agent",
+                EXTERNAL_SKILL_AGENT,
+                "--yes",
+            ]
+            for skill_path in external.skills
+        ]
+    raise ValueError(f"unsupported external Skill selector {external.skills!r} for {external.source}")
 
 
 def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path | None, from_local: bool) -> int:
     destinations = agent_destinations(plan, scope, target)
     preflight_agents(destinations)
+    external_commands = tuple(
+        (external, external_skill_argv(external))
+        for external in plan.external_skills
+    )
     cwd = target if scope == "project" else None
     for skill_name, skill_path in plan.skills:
         result = subprocess.run(
@@ -246,9 +300,8 @@ def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path 
         if result.returncode:
             print(f"gh skill install failed with status {result.returncode}", file=sys.stderr)
             return result.returncode
-    for external in plan.external_skills:
-        argv = external_skill_argv(external)
-        if argv is None:
+    for external, commands in external_commands:
+        if commands is None:
             print(f"External Skill required (not installed): {external.source}")
             continue
         if scope != "project":
@@ -257,13 +310,14 @@ def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path 
                 file=sys.stderr,
             )
             continue
-        result = subprocess.run(argv, cwd=cwd, check=False)
-        if result.returncode:
-            print(
-                f"external Skill install failed for {external.source} with status {result.returncode}",
-                file=sys.stderr,
-            )
-            return result.returncode
+        for argv in commands:
+            result = subprocess.run(argv, cwd=cwd, check=False)
+            if result.returncode:
+                print(
+                    f"external Skill install failed for {external.source} with status {result.returncode}",
+                    file=sys.stderr,
+                )
+                return result.returncode
     for destination, source in destinations:
         if destination.is_file() and destination.read_bytes() == source.read_bytes():
             continue

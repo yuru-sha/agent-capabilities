@@ -11,4 +11,21 @@ agents:
     - infrastructure-reviewer
 
 external_skills:
-  - hashicorp/agent-skills#terraform
+  - source: hashicorp/agent-skills
+    skills:
+      - plugins/terraform/skills/azure-verified-modules
+      - plugins/terraform/skills/new-terraform-provider
+      - plugins/terraform/skills/provider-actions
+      - plugins/terraform/skills/provider-configuration
+      - plugins/terraform/skills/provider-docs
+      - plugins/terraform/skills/provider-ephemeral-resources
+      - plugins/terraform/skills/provider-framework-migration
+      - plugins/terraform/skills/provider-resources
+      - plugins/terraform/skills/provider-test-patterns
+      - plugins/terraform/skills/refactor-module
+      - plugins/terraform/skills/run-acceptance-tests
+      - plugins/terraform/skills/terraform-policy
+      - plugins/terraform/skills/terraform-search-import
+      - plugins/terraform/skills/terraform-stacks
+      - plugins/terraform/skills/terraform-style-guide
+      - plugins/terraform/skills/terraform-test
