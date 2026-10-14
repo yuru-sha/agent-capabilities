@@ -223,13 +223,14 @@ It composes with a language Profile and the TypeScript DOM, performance, or
 security specialists where those concerns apply.
 Profiles may declare `external_skills` requirements. A structured entry uses
 `source` with either `skills: all` or a list of repository-relative Skill
-paths. `skills: all` retains the upstream CLI's all-Skills behavior. A path
-list runs `npx skills add SOURCE/PATH` once for each selected Skill. Legacy
-scalar entries and user-scope external dependencies are reported without
-automatic installation. For example, the Terraform Profile lists only paths
-under `plugins/terraform/skills/`. Profiles do not require or provide generic
-implementation or review workflows; use the workflow configured for the
-project.
+paths. `skills: all` retains the upstream CLI's all-Skills behavior. For each
+listed path, the installer runs `npx skills add SOURCE/PATH --agent '*' --yes`
+in the project directory. For HTTPS GitHub sources, it uses the equivalent
+`/tree/main/PATH` URL. Legacy scalar entries and user-scope external dependencies
+are reported without automatic installation. The Terraform Profile lists only
+paths under `plugins/terraform/skills/`, so it does not install Packer Skills.
+Profiles do not require or provide generic implementation or review workflows;
+use the workflow configured for the project.
 
 ## External cloud skills
 
@@ -273,13 +274,11 @@ If a later `gh skill install` fails, earlier successful Skill installations
 remain. The installer copies OMP Agent definitions after all Skill installs
 succeed.
 
-Profiles may declare `external_skills` requirements. Structured entries accept
-`skills: all` or a list of repository-relative Skill paths. The installer runs
-selected external Skills only for project scope. Legacy scalar entries and
-user-scope external dependencies are reported without automatic installation.
-The Terraform Profile selects paths under `plugins/terraform/skills/` and does
-not install Packer Skills. Profiles do not require or provide generic
-implementation or review workflows; use the workflow configured for the project.
+The external Skill selector accepts `skills: all` or a list of repository-relative
+Skill paths. The installer runs selected external Skills only for project scope.
+Legacy scalar entries and user-scope external dependencies are reported without
+automatic installation. The Terraform Profile selects paths under
+`plugins/terraform/skills/` and does not install Packer Skills.
 
 
 ## Monorepos and Skill directory names
