@@ -137,6 +137,84 @@ class InstallProfileTests(unittest.TestCase):
             check=False,
         )
 
+    def test_external_skill_paths_install_only_selected_upstream_skills(self):
+        profile = self.profiles / "terraform.yaml"
+        profile.write_text(
+            "id: terraform\n"
+            "skills:\n"
+            "  include:\n"
+            "agents:\n"
+            "  include:\n"
+            "external_skills:\n"
+            "  - source: hashicorp/agent-skills\n"
+            "    skills:\n"
+            "      - plugins/terraform/skills/terraform-style-guide\n"
+            "      - plugins/terraform/skills/terraform-test\n",
+            encoding="utf-8",
+        )
+        target = self.root / "target"
+        target.mkdir()
+        plan = INSTALLER["build_install_plan"](["terraform"])
+
+        with patch.object(
+            INSTALLER["subprocess"],
+            "run",
+            return_value=type("Result", (), {"returncode": 0})(),
+        ) as command:
+            result = INSTALLER["install_profiles"](
+                plan,
+                agent="codex",
+                scope="project",
+                target=target,
+                from_local=False,
+            )
+
+        self.assertEqual(result, 0)
+        self.assertEqual(
+            [entry.args[0] for entry in command.call_args_list],
+            [
+                [
+                    "npx",
+                    "skills",
+                    "add",
+                    "hashicorp/agent-skills/plugins/terraform/skills/terraform-style-guide",
+                    "--agent",
+                    "*",
+                    "--yes",
+                ],
+                [
+                    "npx",
+                    "skills",
+                    "add",
+                    "hashicorp/agent-skills/plugins/terraform/skills/terraform-test",
+                    "--agent",
+                    "*",
+                    "--yes",
+                ],
+            ],
+        )
+        self.assertFalse(any("plugins/packer/" in entry.args[0][3] for entry in command.call_args_list))
+
+
+    def test_external_skill_github_url_keeps_selected_path(self):
+        external = INSTALLER["ExternalSkill"](
+            "https://github.com/hashicorp/agent-skills",
+            ("plugins/terraform/skills/terraform-test",),
+        )
+
+        self.assertEqual(
+            INSTALLER["external_skill_argv"](external),
+            [[
+                "npx",
+                "skills",
+                "add",
+                "https://github.com/hashicorp/agent-skills/tree/main/plugins/terraform/skills/terraform-test",
+                "--agent",
+                "*",
+                "--yes",
+            ]],
+        )
+
     def test_skill_directory_must_match_frontmatter_name(self):
         self.add_skill("skills/api-client", "go-api-client")
         self.add_profile("go", ["skills/api-client"])

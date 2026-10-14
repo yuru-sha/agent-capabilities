@@ -158,9 +158,12 @@ def validate_profile_shape(path: Path) -> list[Problem]:
     top_scalars: dict[str, str] = {}
     section: str | None = None
     subsection: str | None = None
+    external_skill_list = False
+    external_skill_paths = 0
+    external_skill_entry_is_structured = False
     allowed_scalars = {"schema", "id", "kind", "description"}
-    allowed_sections = {"skills", "agents", "external_skills"}
 
+    allowed_sections = {"skills", "agents", "external_skills"}
     for number, raw_line in enumerate(lines, start=1):
         if "\t" in raw_line:
             problems.append(Problem(path, f"line {number}: tabs are not allowed in Profile YAML"))
@@ -172,6 +175,8 @@ def validate_profile_shape(path: Path) -> list[Problem]:
         line = raw_line.strip()
 
         if indent == 0:
+            if section == "external_skills" and external_skill_list and external_skill_paths == 0:
+                problems.append(Problem(path, f"line {number}: external Skill paths list is empty"))
             subsection = None
             if ":" not in line:
                 problems.append(Problem(path, f"line {number}: expected top-level key"))
@@ -206,7 +211,12 @@ def validate_profile_shape(path: Path) -> list[Problem]:
             continue
 
         if section == "external_skills" and indent == 2 and line.startswith("- "):
+            if external_skill_list and external_skill_paths == 0:
+                problems.append(Problem(path, f"line {number}: external Skill paths list is empty"))
             item = line[2:]
+            external_skill_list = False
+            external_skill_paths = 0
+            external_skill_entry_is_structured = item.startswith("source:")
             if item.startswith("source:"):
                 if not scalar(item.split(":", 1)[1]):
                     problems.append(Problem(path, f"line {number}: empty external Skill source"))
@@ -216,14 +226,32 @@ def validate_profile_shape(path: Path) -> list[Problem]:
 
         if section == "external_skills" and indent == 4 and line.startswith("skills:"):
             selector = scalar(line.split(":", 1)[1])
-            if not selector:
-                problems.append(Problem(path, f"line {number}: empty external Skill selector"))
-            elif selector != "all":
+            if not external_skill_entry_is_structured:
+                problems.append(Problem(path, f"line {number}: external Skill selectors require a structured source"))
+            external_skill_list = not selector
+            if selector and selector != "all":
                 problems.append(Problem(path, f"line {number}: unsupported external Skill selector {selector!r}"))
             continue
 
+        if section == "external_skills" and indent == 6 and line.startswith("- "):
+            skill_path = scalar(line[2:])
+            parts = skill_path.split("/")
+            if not external_skill_list:
+                problems.append(Problem(path, f"line {number}: Skill paths require a skills list"))
+            elif not skill_path or skill_path.startswith("/") or "\\" in skill_path or any(part in {"", ".", ".."} for part in parts):
+                problems.append(Problem(path, f"line {number}: invalid external Skill path {skill_path!r}"))
+            else:
+                external_skill_paths += 1
+            continue
+        if section == "external_skills" and indent == 4 and external_skill_list:
+            if external_skill_paths == 0:
+                problems.append(Problem(path, f"line {number}: external Skill paths list is empty"))
+            external_skill_list = False
+
         problems.append(Problem(path, f"line {number}: unsupported Profile YAML structure"))
 
+    if section == "external_skills" and external_skill_list and external_skill_paths == 0:
+        problems.append(Problem(path, "external Skill paths list is empty"))
     for key in ("schema", "id", "kind", "description"):
         if not top_scalars.get(key):
             problems.append(Problem(path, f"missing required Profile field {key!r}"))

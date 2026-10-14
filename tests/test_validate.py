@@ -121,5 +121,47 @@ class ValidateTests(unittest.TestCase):
         self.assertEqual(VALIDATOR["validate_profile_shape"](profile), [])
 
 
+    def test_profile_shape_accepts_external_skill_path_list_and_rejects_traversal(self):
+        profile = self.root / "terraform.yaml"
+        profile.write_text(
+            "schema: 1\n"
+            "id: terraform\n"
+            "kind: infrastructure\n"
+            "description: Terraform profile.\n"
+            "external_skills:\n"
+            "  - source: hashicorp/agent-skills\n"
+            "    skills:\n"
+            "      - plugins/terraform/skills/terraform-test\n",
+            encoding="utf-8",
+        )
+
+        self.assertEqual(VALIDATOR["validate_profile_shape"](profile), [])
+
+        profile.write_text(
+            profile.read_text(encoding="utf-8").replace(
+                "plugins/terraform/skills/terraform-test",
+                "../plugins/packer/skills/aws-ami-builder",
+            ),
+            encoding="utf-8",
+        )
+        problems = VALIDATOR["validate_profile_shape"](profile)
+
+        self.assertTrue(any("invalid external Skill path" in problem.message for problem in problems))
+
+        profile.write_text(
+            "schema: 1\n"
+            "id: terraform\n"
+            "kind: infrastructure\n"
+            "description: Terraform profile.\n"
+            "external_skills:\n"
+            "  - hashicorp/agent-skills\n"
+            "    skills:\n"
+            "      - plugins/terraform/skills/terraform-test\n",
+            encoding="utf-8",
+        )
+        problems = VALIDATOR["validate_profile_shape"](profile)
+
+        self.assertTrue(any("require a structured source" in problem.message for problem in problems))
+
 if __name__ == "__main__":
     unittest.main()
