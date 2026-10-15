@@ -61,8 +61,6 @@ Use a scope when it adds useful context, for example `fix(forecast): handle miss
 
 Mark a breaking change with `!` after the type or scope, or with a `BREAKING CHANGE:` footer.
 
-Commit messages (**Why**) must explain why the change was necessary; use the description and, when useful, the body to provide that rationale.
-
 ## Repository-specific guidelines
 
 This repository distributes reusable Codex Skills, Agents, and composable Profiles. Keep contributions portable and consistent with the existing capability boundaries.
