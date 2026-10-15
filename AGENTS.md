@@ -1,93 +1,69 @@
-# agent-capabilities
+# Repository Guidelines
 
-This repository distributes reusable Codex Skills, Agents, and composable
-Profiles for software engineering and GitHub workflows.
+## Project Overview
 
-## Language and documentation
+This repository distributes reusable capabilities for AI coding agents: Skills, specialist Agent selectors, composable Profiles, and workflow instructions. Keep capabilities portable and independently selectable where useful; generic implementation workflow belongs to the consumer/OMP, not this repository.
 
-- Communicate with the maintainer in Japanese unless another language is requested.
-- Keep `SKILL.md`, Agent definitions, and Profile instruction text in English so
-  they remain portable across projects and human languages.
-- README and catalog documents may use Japanese when that is clearer for the
-  intended maintainer.
-- Preserve code identifiers, Skill IDs, command names, and API names exactly.
+## Architecture & Data Flow
 
-## Agent behavior
+- Packs define physical ownership: `packs/software-engineering/` for engineering capabilities and `packs/operations/github/` for GitHub operations and Orca Automation prompts.
+- A Skill is a narrow selectable entry point. Its `SKILL.md` frontmatter (`name`, `description`) defines its identity and applicability; detailed topic guidance lives in `references/` and is loaded selectively.
+- Profiles are distribution metadata, not another instruction layer. They select local or upstream Skill paths and Agent IDs.
+- `scripts/install-profile` resolves selected Profiles, unions Skills, de-duplicates Agents by ID, installs Skills through `gh skill install`, and copies OMP Agent definitions separately. Do not assume those artifacts share an installation path.
 
-- Infer routine choices from the request and repository context; ask only when an unresolved choice could materially change the result, scope, or authority.
-- Follow explicit user instructions over general Skill guidance, and report verification limits plainly.
-- Keep responses concise, direct, and focused on the result.
+## Key Directories
 
-## Capability boundaries
+- `packs/`: reusable Skills, Agents, and workflow prompts, grouped by pack.
+- `profiles/`: composable Profile YAML files and their usage guide.
+- `scripts/`: repository validator, Profile installer, and automation synchronizer.
+- `tests/`: standard-library `unittest` coverage of validation and scripts.
+- `docs/`: catalogs, design notes, and external command reference.
+- `.github/workflows/`: CI validation and repository automation.
 
-- Keep specialist Skills narrow and model-selectable; do not add language,
-  database, OpenAPI, or GitHub umbrella `SKILL.md` files.
-- Keep engineering capabilities under `packs/software-engineering/` and GitHub
-  operation capabilities under `packs/operations/github/`. Add a Profile and
-  catalog entry when introducing a new pack.
-- Profiles select Skills and Agents. They are distribution metadata, not another
-  instruction layer.
-- `request-copilot-review` only requests or re-requests a Copilot review. It does
-  not review findings, reply to threads, or merge a PR.
-- `reply-to-review-thread` only replies to an existing PR review thread after
-  resolving its GraphQL thread ID and verifying the stored reply. It does not
-  create new review comments or resolve threads unless explicitly requested.
+## Development Commands
 
-## Editing Skills and Profiles
+Run from the repository root:
 
-- Follow the repository's structure, existing Skill examples, validation scripts,
-  and Profile conventions when creating or substantially changing a Skill or
-  Agent document.
-- Give every Skill a unique frontmatter `name` and a discriminating
-  `description` that states when it applies.
-- Keep external mutations explicit, scoped, and followed by state verification.
-- Do not expose secrets. In particular, never print literal values from secret
-  scanning alerts.
-- Update the README/catalog and relevant Profile when adding or removing a
-  capability; do not create speculative placeholder Skills.
-- Update `docs/commands.md` when a Skill introduces a concrete external CLI or
-  changes a required command family; keep repository-specific scripts in the
-  consumer repository.
+```sh
+python3 scripts/validate
+python3 -m unittest discover -s tests
+git diff --check
+```
 
-## Validation
+There is no separate build or configured lint/format command. Python 3.13 is used in CI; the documented maintenance scripts use Python 3 and the standard library.
 
-- Run `python3 scripts/validate` to validate Skill frontmatter, unique names,
-  local references, Profile structure/resolution, and documented catalog counts.
-- Run `python3 -m unittest discover -s tests` for installer and validation tests.
-- Run `git diff --check` before committing.
-- Do not claim checks passed unless they were actually run.
+## Code Conventions & Common Patterns
 
-## Code and comment guidance
+- Keep Skill, Agent, and Profile instruction text in English for portability; README/catalog text may use Japanese.
+- Keep Skills focused: use a Skill for independently selectable capability; put concern-level detail in its parent Skill's `references/`. Avoid umbrella or compatibility-alias Skills.
+- Keep Profiles declarative: compose paths/IDs; do not duplicate instructions there.
+- When changing a capability, update the relevant Profile and catalog/README. Update `docs/commands.md` when adding or changing a required external CLI or command family.
+- Keep external mutations explicit, scoped, and followed by verification. Avoid exposing secrets or personal data.
+- Python script tests use isolated temporary directories, `unittest.mock`, and subprocess/shim smoke tests where appropriate.
 
-Use each artifact to communicate a different kind of intent:
+## Important Files
 
-- Code should explain **How** the behavior is implemented.
-- Test code should explain **What** behavior is expected.
-- Commit messages should explain **Why** the change was made.
-- Code comments should explain **Why not**: document non-obvious constraints, rejected alternatives, trade-offs, or reasons the seemingly simpler approach is incorrect.
+- `README.md`, `README.ja.md`: capability overview, counts, and installation usage.
+- `CONTRIBUTING.md`: contribution, commit, and PR requirements.
+- `profiles/README.md`: Profile composition and installation conventions.
+- `scripts/validate`: frontmatter, references, Profile resolution, and documented-count checks.
+- `scripts/install-profile`: Profile resolution and installation behavior.
+- `docs/commands.md`: human-facing command index, not a toolchain manifest.
+- `.github/workflows/validate.yml`: CI validation, tests, and diff checks.
 
-Do not use comments to restate what the code already makes clear.
+## Runtime/Tooling Preferences
 
-## Branch And Pull Request Workflow
+Use Python 3 for repository maintenance scripts; CI uses Python 3.13. No package manager, dependency manifest, or runtime build step is required for repository checks. Capability-specific external CLIs are documented in `docs/commands.md`; consumer projects remain responsible for their own toolchain.
 
-- Do not edit, commit, or push directly to `main`. Make changes on a feature branch and merge them through a pull request.
-- Direct work on `main` is allowed only when the user explicitly authorizes it.
+## Testing & QA
 
-## GitHub workflow
+- `tests/test_validate.py` covers Skill metadata, local references, and Profile shape/resolution.
+- `tests/test_install_profile.py` covers Profile composition, installation planning, conflicts, CLI behavior, and idempotency.
+- `tests/test_install_profile_smoke.py` exercises the installer subprocess path using a temporary `gh` shim rather than the real external command.
+- `tests/test_sync_issue_automations.py` covers automation synchronization.
+- Add or update tests when behavior changes; run relevant checks above and report only those actually run. CI runs repository validation and the unittest suite.
 
-- GitHub Issues are the canonical work tracker.
-- Shared Bug / Feature / Question forms and the default Pull Request template are inherited from `yuru-sha/.github`.
-- Shared non-default labels, including `orca:*`, are synchronized from `yuru-sha/project-template`.
-- Use `orca:*` labels only for ORCA execution state; do not treat them as release categories.
-- For release execution behavior, `packs/operations/github/skills/github-release/SKILL.md` is the source of truth.
+## Contribution Workflow
 
-## Commit Messages
-
-- Follow the commit-message policy in [`CONTRIBUTING.md`](CONTRIBUTING.md#commit-messages).
-- Do not create commits unless the user explicitly requests it.
-
-## Git and GitHub
-
-- Preserve unrelated work and stage only files in the requested change.
-- Do not merge a pull request, delete branches, or change repository settings
-  unless the user explicitly requests that operation.
+- Work on a feature branch; do not edit, commit, or push directly to `main`. Do not commit unless explicitly requested.
+- Do not merge pull requests, delete branches, or change repository settings unless explicitly authorized.
