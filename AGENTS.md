@@ -40,6 +40,8 @@ There is no separate build or configured lint/format command. Python 3.13 is use
 - When changing a capability, update the relevant Profile and catalog/README. Update `docs/commands.md` when adding or changing a required external CLI or command family.
 - Keep external mutations explicit, scoped, and followed by verification. Avoid exposing secrets or personal data.
 - Python script tests use isolated temporary directories, `unittest.mock`, and subprocess/shim smoke tests where appropriate.
+- Use code to show how an implementation works; use tests to specify what behavior is expected.
+- Use comments only to explain why an apparently simple alternative was not chosen, relevant constraints, or intent not evident from the code. Avoid comments that merely restate behavior.
 
 ## Important Files
 
