@@ -1,9 +1,9 @@
 ---
-name: iot-device-websocket
+name: device-websocket
 description: Use for Authenticated bidirectional IoT WebSocket sessions, heartbeats, flow control and recovery.
 ---
 
-# iot-device-websocket
+# device-websocket
 
 Inspect target stack, SDK version, peer roles and trust boundaries before suggesting APIs. This is a language-independent, protocol-specific skill.
 
