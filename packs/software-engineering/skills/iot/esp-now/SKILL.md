@@ -1,9 +1,9 @@
 ---
-name: iot-esp-now
+name: esp-now
 description: Use for ESP-NOW peer/channel management, secure framing, command reliability and Wi-Fi coexistence.
 ---
 
-# iot-esp-now
+# esp-now
 
 Inspect target stack, SDK version, peer roles and trust boundaries before suggesting APIs. This is a language-independent, protocol-specific skill.
 
