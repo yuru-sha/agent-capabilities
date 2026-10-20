@@ -10,11 +10,11 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 
 ## 内容
 
-- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 31 個
+- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 33 個
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- 言語、データベース、Terraform、フロントエンド、外部サービス統合、外部 Skills / platform、横断機能、GitHub ワークフロー向けの組み合わせ可能な Profiles 27 個
+- 言語、データベース、Terraform、フロントエンド、外部サービス統合、外部 Skills / platform、横断機能、GitHub ワークフロー向けの組み合わせ可能な Profiles 29 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
@@ -86,6 +86,8 @@ TikTok API for Business を扱うプロジェクトでは `tiktok-business` Prof
 Google Ads API を扱うプロジェクトでは `google-ads` Profile を選択します。OAuth / developer token とアカウント階層、GAQL の検索・レポート、resource mutation、partial failure、BatchJobService、quota、構造化エラー、曖昧な write の再照合を現行仕様の確認付きで言語非依存に支援します。
 
 LINEヤフー広告の入稿・レポート運用を扱うプロジェクトでは `line-yahoo-ads` Profile を選択します。検索広告、ディスプレイ広告（運用型）、ディスプレイ広告（予約型）の商品境界、審査・配信開始前チェック、バルク操作、再現可能なパフォーマンスレポート取得を現行仕様の確認付きで支援します。
+
+組み込み C/C++ は `embedded-cpp`、ESP-IDF 開発では `embedded-cpp` と `esp-idf` を組み合わせます。toolchain、FreeRTOS、partition、OTA、検証と実機安全性を公式ドキュメントに基づいて扱います。
 
 ## Profile のインストール
 

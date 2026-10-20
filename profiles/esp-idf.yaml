@@ -1,0 +1,11 @@
+schema: 1
+id: esp-idf
+kind: platform
+description: ESP-IDF toolchain, component, FreeRTOS, storage, OTA and device diagnostics guidance; compose with embedded-cpp.
+
+skills:
+  include:
+    - packs/software-engineering/skills/embedded/esp-idf/**
+
+agents:
+  include: []
