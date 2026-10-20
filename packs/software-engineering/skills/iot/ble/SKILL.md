@@ -1,9 +1,9 @@
 ---
-name: iot-ble
+name: ble
 description: Use for BLE discovery, GATT, pairing, lifecycle and secure device communications.
 ---
 
-# iot-ble
+# ble
 
 Inspect target stack, SDK version, peer roles and trust boundaries before suggesting APIs. This is a language-independent, protocol-specific skill.
 
