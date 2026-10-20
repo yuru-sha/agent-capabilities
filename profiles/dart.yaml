@@ -1,0 +1,11 @@
+schema: 1
+id: dart
+kind: language
+description: Dart language skills for async programming, null safety, APIs, tooling and tests.
+
+skills:
+  include:
+    - packs/software-engineering/skills/languages/dart/**
+
+agents:
+  include: []
