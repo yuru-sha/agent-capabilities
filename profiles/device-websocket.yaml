@@ -1,0 +1,11 @@
+schema: 1
+id: device-websocket
+kind: integration
+description: Protocol-specific iot-device-websocket communication guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/iot/device-websocket/**
+
+agents:
+  include: []

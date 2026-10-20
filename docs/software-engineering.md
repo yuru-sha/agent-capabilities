@@ -14,11 +14,12 @@ Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++、PostgreSQL、MySQL�
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | — | 0 |
 | Embedded | ESP-IDF | 1 |
+| IoT protocols | BLE、ESP-NOW、Device WebSocket | 3 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク、Flutter | 8 |
 | Data systems | Redis | 1 |
 | Messaging | BullMQ | 1 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **35** |
+| **合計** | **専門 Skill** | **38** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -28,7 +29,11 @@ Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++、PostgreSQL、MySQL�
 
 ### Embedded development
 
-`embedded-cpp` covers target-aware C/C++ language/ABI, ISR-safe ownership, bounded resources, hardware safety and layered tests. `esp-idf` owns Espressif toolchain/CMake/Kconfig/components, FreeRTOS specifics, NVS/partition/OTA and flashing diagnostics. Compose both for ESP-IDF firmware, with the repository-pinned version and board revision. LVGL/peripherals and ESP-NOW protocols are separate follow-up concerns (issues #73 and #75).
+`embedded-cpp` covers target-aware C/C++ language/ABI, ISR-safe ownership, bounded resources, hardware safety and layered tests. `esp-idf` owns Espressif toolchain/CMake/Kconfig/components, FreeRTOS specifics, NVS/partition/OTA and flashing diagnostics. Compose both for ESP-IDF firmware, with the repository-pinned version and board revision. LVGL/peripherals remain a separate follow-up concern (issue #73).
+
+### IoT protocols
+
+`ble` handles BLE discovery, GATT, permissions, MTU, pairing versus app-level trust and lifecycle. `esp-now` handles peer/channel coexistence, bounded framing, ACK/dedup and secure device control. `device-websocket` handles authenticated sessions, per-device ACLs, heartbeat, backpressure, reconnect reconciliation and cross-layer fault injection. Compose with language/platform Skills; do not duplicate generic networking or OpenAPI.
 
 ### Generic data and messaging
 
@@ -162,7 +167,7 @@ Terraform, cloud-provider-specific, and Convex-specific Skills are not distribut
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,embedded,databases,openapi,cross-cutting,infrastructure,frontend,data-systems,messaging,integrations}/...
+│   │   ├── skills/{languages,embedded,iot,databases,openapi,cross-cutting,infrastructure,frontend,data-systems,messaging,integrations}/...
 │   │   └── agents/{database-reviewer,infrastructure-reviewer}.md
 │   └── operations/github/
 │       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,review-mode,
@@ -170,7 +175,7 @@ agent-capabilities/
 │       │           create-issue,clarify-issue,decompose-issue,security-alerts,
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
-├── profiles/{go,typescript,python3,rust,dart,flutter,embedded-cpp,esp-idf,postgresql,mysql,sqlite,openapi,
+├── profiles/{go,typescript,python3,rust,dart,flutter,embedded-cpp,esp-idf,ble,esp-now,device-websocket,postgresql,mysql,sqlite,openapi,
 │             cross-cutting,terraform,frontend,redis,bullmq,convex,tanteki,vercel-agent-skills,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
