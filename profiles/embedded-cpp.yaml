@@ -1,0 +1,11 @@
+schema: 1
+id: embedded-cpp
+kind: language
+description: Embedded C/C++ language, ownership, concurrency, resources and safety guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/languages/embedded-cpp/**
+
+agents:
+  include: []

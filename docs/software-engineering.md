@@ -1,6 +1,6 @@
 # Software Engineering Capability Pack
 
-Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ、OpenAPI、フロントエンド、外部サービス統合向けの専門 Skills を配布します。Terraform / AWS / Google Cloud / Azure 固有知識は各 vendor の公式 Agent Skills を利用します。
+Go、TypeScript、Python 3、Rust、Embedded C/C++、PostgreSQL、MySQL、SQLite、Redis、BullMQ、OpenAPI、フロントエンド、外部サービス統合向けの専門 Skills を配布します。Terraform / AWS / Google Cloud / Azure 固有知識は各 vendor の公式 Agent Skills を利用します。
 
 このリポジトリは、言語・データベース・API・インフラなどの専門知識と、GitHub 操作の Skills を提供します。各 Skill は必要に応じて個別に選択・合成でき、特定の実行環境や汎用開発ワークフローを前提としません。OMP／pstack-omp との連携は、対応する機能を使う場合に限ります。
 
@@ -8,18 +8,23 @@ Go、TypeScript、Python 3、Rust、PostgreSQL、MySQL、SQLite、Redis、BullMQ
 
 | 分類 | 内訳 | 数 |
 |---|---|---:|
-| Language | Go、TypeScript、Python 3、Rust | 4 |
+| Language | Go、TypeScript、Python 3、Rust、Embedded C/C++ | 5 |
 | Database | PostgreSQL、MySQL、SQLite | 3 |
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 1 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | — | 0 |
+| Embedded | ESP-IDF | 1 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク | 7 |
 | Data systems | Redis | 1 |
 | Messaging | BullMQ | 1 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **31** |
+| **合計** | **専門 Skill** | **33** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
+
+### Embedded development
+
+`embedded-cpp` covers target-aware C/C++ language/ABI, ISR-safe ownership, bounded resources, hardware safety and layered tests. `esp-idf` owns Espressif toolchain/CMake/Kconfig/components, FreeRTOS specifics, NVS/partition/OTA and flashing diagnostics. Compose both for ESP-IDF firmware, with the repository-pinned version and board revision. LVGL/peripherals and ESP-NOW protocols are separate follow-up concerns (issues #73 and #75).
 
 ### Generic data and messaging
 
@@ -153,7 +158,7 @@ Terraform, cloud-provider-specific, and Convex-specific Skills are not distribut
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,databases,openapi,cross-cutting,infrastructure,frontend,data-systems,messaging,integrations}/...
+│   │   ├── skills/{languages,embedded,databases,openapi,cross-cutting,infrastructure,frontend,data-systems,messaging,integrations}/...
 │   │   └── agents/{database-reviewer,infrastructure-reviewer}.md
 │   └── operations/github/
 │       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,review-mode,
@@ -161,7 +166,7 @@ agent-capabilities/
 │       │           create-issue,clarify-issue,decompose-issue,security-alerts,
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
-├── profiles/{go,typescript,python3,rust,postgresql,mysql,sqlite,openapi,
+├── profiles/{go,typescript,python3,rust,embedded-cpp,esp-idf,postgresql,mysql,sqlite,openapi,
 │             cross-cutting,terraform,frontend,redis,bullmq,convex,tanteki,vercel-agent-skills,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/
