@@ -13,13 +13,13 @@ Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++、PostgreSQL、MySQL�
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 1 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | — | 0 |
-| Embedded | ESP-IDF、LVGL、Peripheral HAL、Motion | 4 |
+| Embedded | ESP-IDF、LVGL、Peripheral HAL、Motion、Voice AI | 5 |
 | IoT protocols | BLE、ESP-NOW、Device WebSocket | 3 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク、Flutter | 8 |
 | Data systems | Redis | 1 |
 | Messaging | BullMQ | 1 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **41** |
+| **合計** | **専門 Skill** | **42** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -34,6 +34,10 @@ Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++、PostgreSQL、MySQL�
 ### Embedded UI, hardware and motion
 
 `lvgl` owns LVGL-specific task/lock lifecycle, display/touch and DMA rendering. `embedded-peripherals` owns language-independent bus/HAL, sensors, camera and audio integration. `embedded-motion` owns calibrated actuator limits, command validation, safe-stop behavior and HIL. Compose with `esp-idf` and `embedded-cpp` for actual SoC/toolchain APIs; none repeats web frontend guidance.
+
+### Embedded voice AI
+
+`voice-ai` owns device-side conversational audio pipeline design (capture/VAD/wake-word/ASR/LLM/TTS/playback), barge-in/session lifecycle, bounded audio queues, privacy/consent, real-time testing and observability. XiaoZhi details are in a conditional reference and must be revalidated against an exact upstream revision/license and target server. Compose with `embedded-peripherals`, `esp-idf` and `device-websocket` for hardware and transport-specific implementation.
 
 ### IoT protocols
 
@@ -179,7 +183,7 @@ agent-capabilities/
 │       │           create-issue,clarify-issue,decompose-issue,security-alerts,
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
-├── profiles/{go,typescript,python3,rust,dart,flutter,embedded-cpp,esp-idf,lvgl,embedded-peripherals,embedded-motion,ble,esp-now,device-websocket,postgresql,mysql,sqlite,openapi,
+├── profiles/{go,typescript,python3,rust,dart,flutter,embedded-cpp,esp-idf,lvgl,embedded-peripherals,embedded-motion,voice-ai,ble,esp-now,device-websocket,postgresql,mysql,sqlite,openapi,
 │             cross-cutting,terraform,frontend,redis,bullmq,convex,tanteki,vercel-agent-skills,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/

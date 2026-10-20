@@ -1,0 +1,11 @@
+schema: 1
+id: voice-ai
+kind: platform
+description: Language-independent embedded conversational audio and optional XiaoZhi integration guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/embedded/voice-ai/**
+
+agents:
+  include: []
