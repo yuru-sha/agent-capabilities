@@ -1,0 +1,11 @@
+schema: 1
+id: ble
+kind: integration
+description: Protocol-specific iot-ble communication guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/iot/ble/**
+
+agents:
+  include: []

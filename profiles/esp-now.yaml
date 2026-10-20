@@ -1,0 +1,11 @@
+schema: 1
+id: esp-now
+kind: integration
+description: Protocol-specific iot-esp-now communication guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/iot/esp-now/**
+
+agents:
+  include: []
