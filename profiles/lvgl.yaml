@@ -1,0 +1,11 @@
+schema: 1
+id: lvgl
+kind: platform
+description: Optional lvgl embedded development guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/embedded/lvgl/**
+
+agents:
+  include: []

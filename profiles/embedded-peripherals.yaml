@@ -1,0 +1,11 @@
+schema: 1
+id: embedded-peripherals
+kind: platform
+description: Optional embedded-peripherals embedded development guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/embedded/embedded-peripherals/**
+
+agents:
+  include: []
