@@ -1,0 +1,11 @@
+schema: 1
+id: flutter
+kind: frontend
+description: Flutter application development for Android and iOS; compose with dart.
+
+skills:
+  include:
+    - packs/software-engineering/skills/frontend/frameworks/frontend-flutter/**
+
+agents:
+  include: []

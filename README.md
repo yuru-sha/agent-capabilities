@@ -14,11 +14,11 @@ references, pstack means [negoro26/pstack-omp](https://github.com/negoro26/pstac
 
 ## Contents
 
-- 33 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 35 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 29 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, external Skills/platforms, cross-cutting guidance, and GitHub workflows
+- 31 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, external Skills/platforms, cross-cutting guidance, and GitHub workflows
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -136,6 +136,8 @@ Profile. It adds freshness-gated operational guidance for Search Ads, Display Ad
 and reproducible performance reporting across current and legacy naming.
 
 For embedded C/C++ firmware, select `embedded-cpp`; for ESP-IDF projects, compose `embedded-cpp` and `esp-idf`. The ESP-IDF profile covers reproducible toolchains, FreeRTOS, partitions, OTA, testing and device safety using versioned official references.
+
+For Dart apps select `dart`; for Flutter mobile apps compose `dart` and `flutter`. The former owns Dart types, async and tooling; the latter covers widget state, native APIs, accessibility, testing and Android/iOS release safety. Both are optional profiles.
 
 ## Install profiles
 
