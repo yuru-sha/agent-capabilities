@@ -33,7 +33,7 @@ Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++、PostgreSQL、MySQL�
 
 ### IoT protocols
 
-`iot-ble` handles BLE discovery, GATT, permissions, MTU, pairing versus app-level trust and lifecycle. `iot-esp-now` handles peer/channel coexistence, bounded framing, ACK/dedup and secure device control. `iot-device-websocket` handles authenticated sessions, per-device ACLs, heartbeat, backpressure, reconnect reconciliation and cross-layer fault injection. Compose with language/platform Skills; do not duplicate generic networking or OpenAPI.
+`ble` handles BLE discovery, GATT, permissions, MTU, pairing versus app-level trust and lifecycle. `esp-now` handles peer/channel coexistence, bounded framing, ACK/dedup and secure device control. `device-websocket` handles authenticated sessions, per-device ACLs, heartbeat, backpressure, reconnect reconciliation and cross-layer fault injection. Compose with language/platform Skills; do not duplicate generic networking or OpenAPI.
 
 ### Generic data and messaging
 
