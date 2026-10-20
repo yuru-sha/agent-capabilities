@@ -13,13 +13,13 @@ Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++、PostgreSQL、MySQL�
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 1 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | — | 0 |
-| Embedded | ESP-IDF | 1 |
+| Embedded | ESP-IDF、LVGL、Peripheral HAL、Motion | 4 |
 | IoT protocols | BLE、ESP-NOW、Device WebSocket | 3 |
 | Frontend | Web品質、ブラウザーテスト、フォーム、各フレームワーク、Flutter | 8 |
 | Data systems | Redis | 1 |
 | Messaging | BullMQ | 1 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **38** |
+| **合計** | **専門 Skill** | **41** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -29,7 +29,11 @@ Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++、PostgreSQL、MySQL�
 
 ### Embedded development
 
-`embedded-cpp` covers target-aware C/C++ language/ABI, ISR-safe ownership, bounded resources, hardware safety and layered tests. `esp-idf` owns Espressif toolchain/CMake/Kconfig/components, FreeRTOS specifics, NVS/partition/OTA and flashing diagnostics. Compose both for ESP-IDF firmware, with the repository-pinned version and board revision. LVGL/peripherals remain a separate follow-up concern (issue #73).
+`embedded-cpp` covers target-aware C/C++ language/ABI, ISR-safe ownership, bounded resources, hardware safety and layered tests. `esp-idf` owns Espressif toolchain/CMake/Kconfig/components, FreeRTOS specifics, NVS/partition/OTA and flashing diagnostics. Compose both for ESP-IDF firmware, with the repository-pinned version and board revision. Embedded UI, peripheral buses and motion safety are covered by opt-in dedicated Skills.
+
+### Embedded UI, hardware and motion
+
+`lvgl` owns LVGL-specific task/lock lifecycle, display/touch and DMA rendering. `embedded-peripherals` owns language-independent bus/HAL, sensors, camera and audio integration. `embedded-motion` owns calibrated actuator limits, command validation, safe-stop behavior and HIL. Compose with `esp-idf` and `embedded-cpp` for actual SoC/toolchain APIs; none repeats web frontend guidance.
 
 ### IoT protocols
 
@@ -175,7 +179,7 @@ agent-capabilities/
 │       │           create-issue,clarify-issue,decompose-issue,security-alerts,
 │       │           post-merge-cleanup}/SKILL.md
 │       ├── automations/{issue-omp-handoff,issue-pr-lifecycle}.md
-├── profiles/{go,typescript,python3,rust,dart,flutter,embedded-cpp,esp-idf,ble,esp-now,device-websocket,postgresql,mysql,sqlite,openapi,
+├── profiles/{go,typescript,python3,rust,dart,flutter,embedded-cpp,esp-idf,lvgl,embedded-peripherals,embedded-motion,ble,esp-now,device-websocket,postgresql,mysql,sqlite,openapi,
 │             cross-cutting,terraform,frontend,redis,bullmq,convex,tanteki,vercel-agent-skills,note-com,x-ads,dropbox,youtube,meta-marketing,smartnews-marketing,tiktok-business,line-yahoo-ads,google-ads,workflows,github}.yaml
 ├── scripts/install-profile
 └── docs/

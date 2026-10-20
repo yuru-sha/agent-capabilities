@@ -1,0 +1,11 @@
+schema: 1
+id: embedded-motion
+kind: platform
+description: Optional embedded-motion embedded development guidance.
+
+skills:
+  include:
+    - packs/software-engineering/skills/embedded/embedded-motion/**
+
+agents:
+  include: []

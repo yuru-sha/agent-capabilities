@@ -10,11 +10,11 @@ AI コーディングエージェント向けに、再利用可能な Skills、�
 
 ## 内容
 
-- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 38 個
+- 言語、データベース、OpenAPI、横断機能、インフラ、フロントエンド、外部サービス統合向けのエンジニアリング Skills 41 個
 - GitHub 操作 Skills 13 個。PR の作成・独立レビュー、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation のロック復旧を扱います。
 - Issue を ORCA から OMP に自動で引き渡す Automation と、PR stack の Babysit → Shipping を手動実行する Automation Prompt 2 個
 - 薄い専門セレクタ 2 個: `database-reviewer`、`infrastructure-reviewer`
-- 言語、データベース、Terraform、フロントエンド、外部サービス統合、外部 Skills / platform、横断機能、GitHub ワークフロー向けの組み合わせ可能な Profiles 34 個
+- 言語、データベース、Terraform、フロントエンド、外部サービス統合、外部 Skills / platform、横断機能、GitHub ワークフロー向けの組み合わせ可能な Profiles 37 個
 - `.agents/skills/verify-agent-capabilities/` 配下のローカル検証 Skill 1 個
 
 機能は [`software-engineering` pack](packs/README.md) と `operations/github` pack に分類されています。各プロジェクトでは Profiles を使って pack の機能を組み合わせます。
@@ -92,6 +92,8 @@ LINEヤフー広告の入稿・レポート運用を扱うプロジェクトで�
 Dart アプリには `dart`、Flutter モバイルアプリには `dart` と `flutter` を組み合わせます。言語の型・非同期・テストと、Widget・ネイティブ連携・アクセシビリティ・リリースを分離しています。
 
 IoT 通信は必要に応じて `ble`、`esp-now`、`device-websocket` Profile を組み合わせます。各 Skill が状態遷移・認証・再接続・障害試験を通信方式別に扱います。
+
+組み込み UI・周辺機器・駆動系には必要に応じて `lvgl`、`embedded-peripherals`、`embedded-motion` Profile を組み合わせます。LVGLの描画/スレッド、HALとバス、サーボの安全制御をそれぞれ独立させています。
 
 ## Profile のインストール
 
