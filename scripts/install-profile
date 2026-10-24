@@ -222,11 +222,15 @@ def agent_destinations(plan: InstallPlan, scope: str, target: Path | None) -> tu
     return tuple((root / f"{agent_id}.md", source) for agent_id, source in plan.agents)
 
 
-def preflight_agents(destinations: tuple[tuple[Path, Path], ...]) -> None:
+def preflight_agents(destinations: tuple[tuple[Path, Path], ...], *, overwrite_agents: bool = False) -> None:
     for destination, source in destinations:
         if not destination.exists() and not destination.is_symlink():
             continue
         if destination.is_file() and destination.read_bytes() == source.read_bytes():
+            continue
+        if overwrite_agents:
+            if destination.is_symlink() or not destination.is_file():
+                raise ValueError(f"Agent destination is not a regular file: {destination}")
             continue
         print(f"Existing Agent definition kept (different content): {destination}", file=sys.stderr)
 
@@ -283,9 +287,9 @@ def external_skill_argv(external: ExternalSkill) -> list[list[str]] | None:
     raise ValueError(f"unsupported external Skill selector {external.skills!r} for {external.source}")
 
 
-def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path | None, from_local: bool) -> int:
+def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path | None, from_local: bool, overwrite_agents: bool = False) -> int:
     destinations = agent_destinations(plan, scope, target)
-    preflight_agents(destinations)
+    preflight_agents(destinations, overwrite_agents=overwrite_agents)
     external_commands = tuple(
         (external, external_skill_argv(external))
         for external in plan.external_skills
@@ -320,7 +324,8 @@ def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path 
                 return result.returncode
     for destination, source in destinations:
         if destination.exists() or destination.is_symlink():
-            continue
+            if not overwrite_agents or destination.read_bytes() == source.read_bytes():
+                continue
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes(source.read_bytes())
     print(f"Profiles: {', '.join(plan.profile_ids)}")
@@ -334,6 +339,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--scope", required=True, choices=("project", "user"), help="gh installation scope and OMP Agent-definition target (.omp/agents for project; ~/.omp/agent/agents for user)")
     parser.add_argument("--target", help="project directory (default: current directory); OMP Agent definitions go under .omp/agents")
     parser.add_argument("--from-local", action="store_true", help="install Skills from this checkout instead of the published repository")
+    parser.add_argument("--overwrite-agents", action="store_true", help="explicitly replace existing regular OMP Agent files; never follow symlinks")
     args = parser.parse_args(argv)
     if args.scope == "user" and args.target is not None:
         parser.error("--target cannot be used with --scope user")
@@ -350,7 +356,7 @@ def main(argv: list[str] | None = None) -> int:
             return 2
     try:
         plan = build_install_plan(args.profiles)
-        return install_profiles(plan, agent=args.agent, scope=args.scope, target=target, from_local=args.from_local)
+        return install_profiles(plan, agent=args.agent, scope=args.scope, target=target, from_local=args.from_local, overwrite_agents=args.overwrite_agents)
     except (OSError, ValueError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 2
