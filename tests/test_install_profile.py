@@ -325,7 +325,7 @@ class InstallProfileTests(unittest.TestCase):
                     result = INSTALLER["install_profiles"](plan, agent="copilot", scope="user", target=None, from_local=False)
                 self.assertEqual(result, 0)
                 gh.assert_not_called()
-                self.assertEqual(home_destination.read_text(encoding="utf-8"), "different\\n")
+                self.assertEqual(home_destination.read_text(encoding="utf-8"), "different\n")
         self.assertNotEqual(destination, home_destination)
 
     def test_identical_existing_agent_is_idempotent_and_nonzero_gh_stops(self):
@@ -345,6 +345,49 @@ class InstallProfileTests(unittest.TestCase):
         self.assertEqual(result, 7)
         gh.assert_called_once()
         self.assertEqual(destination.read_bytes(), agent_source.read_bytes())
+
+    def test_explicit_overwrite_replaces_regular_agent_file(self):
+        source = self.add_agent("planner", "upstream\n")
+        self.add_profile("one", agents=["planner"])
+        plan = INSTALLER["build_install_plan"](["one"])
+        target = self.root / "target"
+        target.mkdir()
+        destination = target / ".omp" / "agents" / "planner.md"
+        destination.parent.mkdir(parents=True)
+        destination.write_text("custom\n", encoding="utf-8")
+        with patch.object(INSTALLER["subprocess"], "run") as gh:
+            result = INSTALLER["install_profiles"](
+                plan, agent="omp", scope="project", target=target,
+                from_local=False, overwrite_agents=True,
+            )
+        self.assertEqual(result, 0)
+        gh.assert_not_called()
+        self.assertEqual(destination.read_bytes(), source.read_bytes())
+
+    def test_overwrite_rejects_symlink_and_preserves_target(self):
+        self.add_agent("planner", "upstream\n")
+        self.add_profile("one", agents=["planner"])
+        plan = INSTALLER["build_install_plan"](["one"])
+        target = self.root / "target"
+        target.mkdir()
+        linked_file = self.root / "custom.md"
+        linked_file.write_text("custom\n", encoding="utf-8")
+        destination = target / ".omp" / "agents" / "planner.md"
+        destination.parent.mkdir(parents=True)
+        destination.symlink_to(linked_file)
+        with patch.object(INSTALLER["subprocess"], "run") as gh:
+            with self.assertRaisesRegex(ValueError, "not a regular file"):
+                INSTALLER["install_profiles"](
+                    plan, agent="omp", scope="project", target=target,
+                    from_local=False, overwrite_agents=True,
+                )
+            gh.assert_not_called()
+        self.assertTrue(destination.is_symlink())
+        self.assertEqual(linked_file.read_text(encoding="utf-8"), "custom\n")
+
+    def test_cli_accepts_overwrite_agents(self):
+        args = INSTALLER["parse_args"](["go", "--agent", "omp", "--scope", "project", "--overwrite-agents"])
+        self.assertTrue(args.overwrite_agents)
 
     def test_cli_requires_host_and_scope_and_rejects_user_target(self):
         with self.assertRaises(SystemExit) as missing:
