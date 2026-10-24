@@ -18,7 +18,7 @@ references, pstack means [negoro26/pstack-omp](https://github.com/negoro26/pstac
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 38 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, external Skills/platforms, cross-cutting guidance, and GitHub workflows
+- 39 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, external Skills/platforms, cross-cutting guidance, and GitHub workflows
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the
@@ -78,7 +78,7 @@ Convex is handled the same way: select the `convex` Profile to install
 Convex's official `get-convex/agent-skills` upstream package for project-scope
 Profile installs.
 
-For Japanese business and technical writing, select the `tanteki` Profile. It
+For natural Japanese prose editing, select the `yomiyasu` Profile. It installs the upstream `nanaism/yomiyasu` Skill without copying its implementation here. Use `tanteki` for technical document structure and drafting; invoke `yomiyasu` separately for final prose polishing when needed.\n\nFor Japanese business and technical writing, select the `tanteki` Profile. It
 installs the upstream `iwasa-kosui/tanteki` Agent Skill instead of vendoring a
 copy here.
 
