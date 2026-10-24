@@ -307,7 +307,7 @@ class InstallProfileTests(unittest.TestCase):
             check=False,
         )
 
-    def test_user_install_targets_expanded_home_and_rejects_different_existing_agent(self):
+    def test_user_install_targets_expanded_home_and_preserves_different_existing_agent(self):
         agent_source = self.add_agent("planner", "expected\n")
         self.add_profile("one", agents=["planner"])
         plan = INSTALLER["build_install_plan"](["one"])
@@ -321,9 +321,11 @@ class InstallProfileTests(unittest.TestCase):
             INSTALLER["preflight_agents"](destinations)
             home_destination.write_text("different\n", encoding="utf-8")
             with patch.object(INSTALLER["subprocess"], "run") as gh:
-                with self.assertRaisesRegex(ValueError, "Agent destination conflict"):
-                    INSTALLER["install_profiles"](plan, agent="copilot", scope="user", target=None, from_local=False)
+                with patch("sys.stderr"):
+                    result = INSTALLER["install_profiles"](plan, agent="copilot", scope="user", target=None, from_local=False)
+                self.assertEqual(result, 0)
                 gh.assert_not_called()
+                self.assertEqual(home_destination.read_text(encoding="utf-8"), "different\\n")
         self.assertNotEqual(destination, home_destination)
 
     def test_identical_existing_agent_is_idempotent_and_nonzero_gh_stops(self):
