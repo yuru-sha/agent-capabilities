@@ -32,7 +32,7 @@ Add `--from-local` to install Skills from the checkout instead of the published
 `yuru-sha/agent-capabilities` repository. Use `--target /path/to/project` to
 select a project when running the installer from elsewhere.
 
-Existing OMP Agent definition files are preserved when they differ from the source,\nwith a warning instead of failing installation. Identical files are skipped.\nRemove or update an existing file manually to adopt a changed Agent definition.\n\nIf a later `gh skill install` fails, earlier successful Skill installations
+Existing OMP Agent definition files are preserved when they differ from the source,\nwith a warning instead of failing installation. Identical files are skipped.\nTo adopt updated Agent definitions, pass `--overwrite-agents`. This replaces existing regular OMP Agent files with the repository copy. Symlinks and non-file destinations are never overwritten. Back up customized definitions before enabling the flag.\n\nIf a later `gh skill install` fails, earlier successful Skill installations
 remain. OMP Agent definitions are copied after all Skill installs succeed.
 
 Structured external Skills declared by Profiles are installed for project scope
