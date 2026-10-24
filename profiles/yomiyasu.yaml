@@ -1,0 +1,15 @@
+schema: 1
+id: yomiyasu
+kind: external-skill
+description: Upstream Japanese prose editing and polishing guidance from yomiyasu.
+
+skills:
+  include: []
+
+agents:
+  include: []
+
+external_skills:
+  - source: nanaism/yomiyasu
+    skills:
+      - skills/yomiyasu

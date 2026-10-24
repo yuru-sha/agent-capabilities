@@ -198,7 +198,7 @@ profiles:
   - convex
 ```
 
-The `tanteki` Profile installs the upstream `iwasa-kosui/tanteki` Skill for
+The `yomiyasu` Profile installs upstream `nanaism/yomiyasu` for Japanese prose\npolishing. Keep it separate from `tanteki`: use the latter for technical\ndocument drafting and the former for an explicitly requested final editing pass.\n\n```yaml\nprofiles:\n  - yomiyasu\n```\n\nThe `tanteki` Profile installs the upstream `iwasa-kosui/tanteki` Skill for
 Japanese business and technical writing. It is kept external so its writing
 rules, references, lint workflow, and evaluation work stay aligned with the
 upstream project:
