@@ -228,7 +228,7 @@ def preflight_agents(destinations: tuple[tuple[Path, Path], ...]) -> None:
             continue
         if destination.is_file() and destination.read_bytes() == source.read_bytes():
             continue
-        raise ValueError(f"Agent destination conflict: {destination}")
+        print(f"Existing Agent definition kept (different content): {destination}", file=sys.stderr)
 
 
 def gh_argv(repository: str, skill_name: str, skill_path: Path, *, from_local: bool, agent: str, scope: str) -> list[str]:
@@ -319,7 +319,7 @@ def install_profiles(plan: InstallPlan, *, agent: str, scope: str, target: Path 
                 )
                 return result.returncode
     for destination, source in destinations:
-        if destination.is_file() and destination.read_bytes() == source.read_bytes():
+        if destination.exists() or destination.is_symlink():
             continue
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes(source.read_bytes())
