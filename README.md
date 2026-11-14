@@ -14,11 +14,11 @@ references, pstack means [negoro26/pstack-omp](https://github.com/negoro26/pstac
 
 ## Contents
 
-- 42 language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills
+- 43 language, database, OpenAPI, architecture, cross-cutting, infrastructure, frontend, and platform integration Skills
 - 13 GitHub workflow Skills: pull request creation/review operations, issue clarification and decomposition, issue creation, Copilot review requests, review-thread replies, GitHub releases, security alerts, post-merge cleanup, and Orca Automation lock recovery
 - 2 Orca Automation prompts: scheduled Issue-to-OMP handoff and manually run PR lifecycle
 - 2 thin specialist selectors: `database-reviewer`, `infrastructure-reviewer`
-- 39 composable Profiles, spanning languages, databases, Terraform, frontend, integrations, external Skills/platforms, cross-cutting guidance, and GitHub workflows
+- 40 composable Profiles, spanning languages, databases, architecture, Terraform, frontend, integrations, external Skills/platforms, cross-cutting guidance, and GitHub workflows
 - 1 local verification Skill under `.agents/skills/verify-agent-capabilities/`
 
 The capabilities are physically grouped into the

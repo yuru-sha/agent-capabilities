@@ -1,0 +1,11 @@
+schema: 1
+id: multi-tenant-saas
+kind: architecture
+description: Provider-neutral multi-tenant SaaS architecture, tenant isolation, context propagation, PostgreSQL RLS, lifecycle, operations, and cross-tenant tests.
+
+skills:
+  include:
+    - packs/software-engineering/skills/architecture/multi-tenant-saas/**
+
+agents:
+  include: []

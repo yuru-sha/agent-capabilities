@@ -43,6 +43,14 @@ The engineering Profiles select content from
 specialist selectors (`database-reviewer`, `infrastructure-reviewer`) are
 added only when the profile's domain touches those concerns.
 
+The `multi-tenant-saas` Profile installs provider-neutral architecture guidance
+for tenant semantics, per-resource isolation, trusted request and asynchronous
+context propagation, PostgreSQL RLS, cache boundaries, lifecycle, and
+cross-tenant tests. Compose it with the relevant language, database, `redis`,
+and `bullmq` Profiles for implementation-specific mechanics. It uses the
+AWS SaaS Lens as design rationale, not as an AWS service requirement.
+
+
 The `redis` Profile installs the `redis` Skill for projects using Redis as
 a cache, data structure server, coordination primitive, stream, or ephemeral
 state store. It is language-independent. Compose it with the target language
