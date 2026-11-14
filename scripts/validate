@@ -18,7 +18,7 @@ PROFILE_ROOT = ROOT / "profiles"
 NAME_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
 LINK_PATTERN = re.compile(r"!?(?:\[[^\]]*\])\(([^)]+)\)")
 README_SKILL_COUNT = re.compile(
-    r"^- (\d+) language, database, OpenAPI, cross-cutting, infrastructure, frontend, and platform integration Skills$",
+    r"^- (\d+) language, database, OpenAPI, architecture, cross-cutting, infrastructure, frontend, and platform integration Skills$",
     re.MULTILINE,
 )
 README_PROFILE_COUNT = re.compile(r"^- (\d+) composable Profiles,", re.MULTILINE)

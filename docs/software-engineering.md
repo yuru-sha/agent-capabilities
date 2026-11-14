@@ -10,6 +10,7 @@ Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++、PostgreSQL、MySQL�
 |---|---|---:|
 | Language | Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++ | 6 |
 | Database | PostgreSQL、MySQL、SQLite | 3 |
+| Architecture | Multi-tenant SaaS | 1 |
 | OpenAPI | 契約設計、lint、生成、互換性、テスト | 1 |
 | Cross-cutting | security-review、web-security-review、operational-quality、zero-downtime-migration、technical-authoring | 5 |
 | Infrastructure | — | 0 |
@@ -19,7 +20,7 @@ Go、TypeScript、Python 3、Rust、Dart、Embedded C/C++、PostgreSQL、MySQL�
 | Data systems | Redis | 1 |
 | Messaging | BullMQ | 1 |
 | Integrations | note.com 非公式API、X Ads API、Dropbox API、YouTube API、Meta Marketing API、SmartNews Marketing API、TikTok API for Business、LINE Yahoo Ads、Google Ads API | 9 |
-| **合計** | **専門 Skill** | **42** |
+| **合計** | **専門 Skill** | **43** |
 
 このほか GitHub 操作 Skill が13個あります。Draft/Ready PR、独立 PR review、Issue の要件整理・分割・作成、Copilot review、レビュースレッドへの返信、GitHub release、security alert、マージ後の cleanup、Orca Automation lock recovery を扱います。
 
@@ -50,6 +51,19 @@ persistence, availability, observability, and security.
 
 `bullmq` owns BullMQ queue/worker semantics. Compose it with `redis` when
 Redis topology or persistence is also in scope.
+
+### Multi-tenant SaaS architecture
+
+`multi-tenant-saas` owns provider-neutral tenant semantics, resource-by-resource
+isolation decisions, trusted context propagation into asynchronous work,
+PostgreSQL RLS design considerations, cache isolation, lifecycle, and automated
+cross-tenant testing. Its decision workflow is based on
+[`magnus919/agent-skills`](https://github.com/magnus919/agent-skills/tree/main/multi-tenant-saas-architecture)
+and uses the [AWS Well-Architected SaaS Lens](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/)
+as design rationale, not as an AWS implementation requirement. Compose it with
+the project's database, language, Redis, and messaging Profiles for concrete
+implementation details.
+
 
 ### External cloud skills
 
@@ -181,7 +195,7 @@ Terraform, cloud-provider-specific, and Convex-specific Skills are not distribut
 agent-capabilities/
 ├── packs/
 │   ├── software-engineering/
-│   │   ├── skills/{languages,embedded,iot,databases,openapi,cross-cutting,infrastructure,frontend,data-systems,messaging,integrations}/...
+│   │   ├── skills/{languages,embedded,iot,databases,architecture,openapi,cross-cutting,infrastructure,frontend,data-systems,messaging,integrations}/...
 │   │   └── agents/{database-reviewer,infrastructure-reviewer}.md
 │   └── operations/github/
 │       ├── skills/{create-pr,create-draft-pr,mark-pr-ready,review-mode,
