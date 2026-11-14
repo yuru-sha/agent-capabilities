@@ -6,6 +6,10 @@ description: PostgreSQL database skills and the agents used to plan, implement, 
 skills:
   include:
     - packs/software-engineering/skills/databases/postgresql/**
+external_skills:
+  - source: davila7/claude-code-templates
+    skills:
+      - cli-tool/components/skills/database/database-architect
 
 agents:
   include:
