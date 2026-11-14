@@ -66,6 +66,12 @@ upstream Skills. Terraform guidance is delegated to HashiCorp's official Agent S
 
 ### External Skills and platforms
 
+PostgreSQL schema design and migration guidance is also available from the
+upstream `davila7/claude-code-templates` `database-architect` Skill. The
+`postgresql` Profile installs it as an external Skill alongside the local
+engine-specific guidance; its broad database-architecture coverage complements
+the repository's PostgreSQL-specific review contracts.
+
 Convex-specific coding guidance is delegated to the official
 `get-convex/agent-skills` repository. The `convex` Profile declares that external
 dependency without increasing the bundled Skill count. Project-scope Profile
