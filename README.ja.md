@@ -60,7 +60,9 @@ Cloud Skills は各 vendor の upstream repository から直接導入し、仕�
 Convex も同じ方針です。`convex` Profile を project scope で導入すると、
 Convex 公式 `get-convex/agent-skills` から Skill 一式をインストールします。
 
-自然な日本語への推敲には `yomiyasu` Profile を選択します。`nanaism/yomiyasu` の upstream Skill を直接導入し、実装は複製しません。技術文書の構成・執筆には `tanteki`、必要に応じた最終推敲には `yomiyasu` を別工程として使い分けます。\n\n日本語の業務・技術文書の執筆・推敲には `tanteki` Profile を選択します。
+自然な日本語への推敲には `yomiyasu` Profile を選択します。`nanaism/yomiyasu` の upstream Skill を直接導入し、実装は複製しません。技術文書の構成・執筆には `tanteki`、必要に応じた最終推敲には `yomiyasu` を別工程として使い分けます。
+
+日本語の業務・技術文書の執筆・推敲には `tanteki` Profile を選択します。
 独自実装は持たず、`iwasa-kosui/tanteki` の upstream Skill を導入します。
 
 Vercel が管理する Agent Skills には `vercel-agent-skills` Profile を使います。

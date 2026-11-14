@@ -78,7 +78,9 @@ Convex is handled the same way: select the `convex` Profile to install
 Convex's official `get-convex/agent-skills` upstream package for project-scope
 Profile installs.
 
-For natural Japanese prose editing, select the `yomiyasu` Profile. It installs the upstream `nanaism/yomiyasu` Skill without copying its implementation here. Use `tanteki` for technical document structure and drafting; invoke `yomiyasu` separately for final prose polishing when needed.\n\nFor Japanese business and technical writing, select the `tanteki` Profile. It
+For natural Japanese prose editing, select the `yomiyasu` Profile. It installs the upstream `nanaism/yomiyasu` Skill without copying its implementation here. Use `tanteki` for technical document structure and drafting; invoke `yomiyasu` separately for final prose polishing when needed.
+
+For Japanese business and technical writing, select the `tanteki` Profile. It
 installs the upstream `iwasa-kosui/tanteki` Agent Skill instead of vendoring a
 copy here.
 
